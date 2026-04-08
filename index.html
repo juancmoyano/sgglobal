@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SG Global — Soluciones Logísticas Integradas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Sora:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── BRAND TOKENS — Arctic Precision ── */
+:root{
+  --navy:   #1A2F4E;
+  --navy2:  #0f1e33;
+  --cyan:   #4DD9E0;
+  --sapph:  #2563EB;
+  --aqua:   #06B6D4;
+  --sky:    #38BDF8;
+  --silver: #94A3B8;
+  --fog:    #E2E8F0;
+  --white:  #FFFFFF;
+  --offwhite:#F8FAFC;
+
+  /* unit accents */
+  --data-c:    #4DD9E0;
+  --ins-c:     #2563EB;
+  --ops-c:     #06B6D4;
+  --cap-c:     #38BDF8;
+
+  --line: rgba(255,255,255,0.1);
+  --line-dark: rgba(26,47,78,0.12);
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Sora',sans-serif;
+  background:var(--navy2);
+  color:var(--white);
+  overflow-x:hidden;
+}
+
+/* ── LANG TOGGLE ── */
+.lang-toggle{
+  display:flex;align-items:center;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:100px;overflow:hidden;flex-shrink:0;
+}
+.lang-btn{
+  font-size:11px;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;padding:7px 16px;
+  cursor:pointer;border:none;background:transparent;
+  color:rgba(255,255,255,0.4);
+  transition:background .2s,color .2s;
+  font-family:'Sora',sans-serif;
+}
+.lang-btn.active{background:var(--cyan);color:var(--navy2);border-radius:100px;}
+.lang-btn:not(.active):hover{color:var(--white);}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 64px;
+  background:rgba(15,30,51,0.75);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  gap:20px;
+  transition:background .3s;
+}
+.logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;font-weight:400;letter-spacing:.1em;
+  color:var(--white);flex-shrink:0;
+}
+.logo em{font-style:normal;color:var(--cyan);}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{
+  font-size:12px;font-weight:400;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,0.55);
+  text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--cyan);}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.nav-cta{
+  font-size:12px;font-weight:500;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--cyan);
+  border:1px solid rgba(77,217,224,0.4);
+  padding:9px 24px;border-radius:100px;
+  text-decoration:none;transition:all .25s;white-space:nowrap;
+}
+.nav-cta:hover{background:var(--cyan);color:var(--navy2);border-color:var(--cyan);}
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 64px 96px;overflow:hidden;
+}
+
+/* neural network canvas background */
+.hero-img{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#060e1c 0%,#0a1628 50%,#071220 100%);
+  overflow:hidden;
+}
+#neural-canvas{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+}
+/* multi-layer overlay: preserves image, adds brand colour, ensures legibility */
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to right, rgba(15,30,51,0.88) 0%, rgba(15,30,51,0.55) 55%, rgba(15,30,51,0.2) 100%),
+    linear-gradient(to top,   rgba(15,30,51,0.95) 0%, transparent 55%);
+}
+
+/* animated Pulse SVG watermark */
+.hero-pulse{
+  position:absolute;right:5%;top:50%;transform:translateY(-50%);
+  width:min(420px,38vw);opacity:0.07;
+  pointer-events:none;
+}
+
+.hero-content{position:relative;z-index:2;max-width:700px;}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:400;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--cyan);
+  margin-bottom:32px;
+}
+.eyebrow-line{width:32px;height:1px;background:var(--cyan);}
+
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(52px,7.5vw,100px);
+  font-weight:300;line-height:.97;
+  letter-spacing:-.025em;color:var(--white);
+  margin-bottom:32px;
+}
+.hero-title em{font-style:italic;color:var(--cyan);}
+
+.hero-sub{
+  font-size:15px;font-weight:300;line-height:1.82;
+  color:rgba(255,255,255,0.62);
+  max-width:460px;margin-bottom:48px;
+}
+
+.hero-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+.btn-primary{
+  font-size:13px;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;
+  background:var(--cyan);color:var(--navy2);
+  padding:15px 36px;border-radius:100px;
+  text-decoration:none;display:inline-block;
+  transition:background .25s,transform .2s;
+}
+.btn-primary:hover{background:#7ae8ed;transform:translateY(-2px);}
+.btn-ghost{
+  font-size:13px;font-weight:300;color:rgba(255,255,255,0.6);
+  text-decoration:none;display:flex;align-items:center;gap:7px;
+  transition:color .2s;
+}
+.btn-ghost:hover{color:var(--white);}
+.btn-ghost svg{transition:transform .2s;}
+.btn-ghost:hover svg{transform:translateX(4px);}
+
+/* scroll cue */
+.hero-scroll{
+  position:absolute;bottom:36px;left:64px;z-index:2;
+  display:flex;align-items:center;gap:12px;
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);
+}
+.scroll-bar{width:40px;height:1px;background:rgba(255,255,255,0.15);position:relative;overflow:hidden;}
+.scroll-bar::after{
+  content:'';position:absolute;inset:0;background:var(--cyan);
+  transform:translateX(-100%);
+  animation:scanBar 2.4s ease-in-out infinite;
+}
+@keyframes scanBar{0%{transform:translateX(-100%)}50%{transform:translateX(0)}100%{transform:translateX(100%)}}
+
+/* stats */
+.hero-stats{
+  position:absolute;right:64px;bottom:96px;z-index:2;
+  display:flex;flex-direction:column;gap:24px;align-items:flex-end;
+}
+.stat{text-align:right;}
+.stat-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:40px;font-weight:300;color:var(--white);line-height:1;
+}
+.stat-l{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:3px;}
+.stat-div{width:1px;height:24px;background:linear-gradient(to bottom,transparent,var(--cyan),transparent);align-self:center;}
+
+/* Pulse SVG animation */
+@keyframes pulseRing{0%,100%{r:42;opacity:.6}50%{r:48;opacity:.2}}
+@keyframes nodeGlow{0%,100%{opacity:.5}50%{opacity:1}}
+.p-ring{animation:pulseRing 3s ease-in-out infinite;}
+.p-node{animation:nodeGlow 2.5s ease-in-out infinite;}
+.p-node:nth-child(2){animation-delay:.4s;}
+.p-node:nth-child(3){animation-delay:.8s;}
+.p-node:nth-child(4){animation-delay:1.2s;}
+.p-node:nth-child(5){animation-delay:1.6s;}
+.p-node:nth-child(6){animation-delay:2s;}
+
+/* ── SHARED SECTION ── */
+section{padding:120px 64px;}
+
+.s-label{
+  font-size:11px;font-weight:500;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--cyan);
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.s-label::before{content:'';width:20px;height:1px;background:var(--cyan);}
+
+.s-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,4.5vw,54px);
+  font-weight:300;line-height:1.08;
+}
+.s-title em{font-style:italic;color:var(--cyan);}
+
+/* ── ABOUT — light bg with image ── */
+#nosotros{
+  position:relative;padding:0;overflow:hidden;
+}
+.about-img{
+  position:absolute;inset:0;
+  background:
+    url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1600&q=80')
+    center/cover no-repeat;
+}
+.about-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(248,250,252,0.97) 0%,rgba(248,250,252,0.97) 55%,rgba(248,250,252,0.6) 100%);
+}
+.about-inner{
+  position:relative;z-index:2;
+  padding:120px 64px;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;
+}
+#nosotros .s-label{color:var(--navy);}
+#nosotros .s-label::before{background:var(--navy);}
+#nosotros .s-title{color:var(--navy);}
+#nosotros .s-title em{color:var(--aqua);}
+
+.about-text p{
+  font-size:15px;line-height:1.85;
+  color:#3a4a5c;margin-bottom:18px;font-weight:300;
+}
+
+.pillars{display:flex;flex-direction:column;border-top:1px solid rgba(26,47,78,0.12);}
+.pillar{
+  padding:22px 0;border-bottom:1px solid rgba(26,47,78,0.08);
+  display:flex;gap:18px;align-items:flex-start;
+  opacity:0;transform:translateY(12px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.pillar.vis{opacity:1;transform:none;}
+.p-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-weight:300;color:var(--aqua);
+  min-width:36px;line-height:1;opacity:.5;
+}
+.p-content h4{
+  font-size:12px;font-weight:500;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--navy);margin-bottom:4px;
+}
+.p-content p{font-size:13px;line-height:1.65;color:#647b94;margin:0;}
+
+/* ── LINES — dark bg with image tint ── */
+#lineas{position:relative;padding:0;overflow:hidden;}
+.lines-img{
+  position:absolute;inset:0;
+  background:
+    url('https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1600&q=80')
+    center/cover no-repeat;
+}
+.lines-overlay{
+  position:absolute;inset:0;
+  background:rgba(10,20,38,0.91);
+}
+.lines-inner{position:relative;z-index:2;padding:120px 64px;}
+
+.lines-head{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;margin-bottom:64px;gap:40px;
+}
+.lines-desc{
+  font-size:15px;font-weight:300;line-height:1.78;
+  color:rgba(255,255,255,0.5);max-width:360px;
+}
+
+.lines-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.06);
+}
+.line-card{
+  background:rgba(15,25,44,0.6);
+  backdrop-filter:blur(8px);
+  padding:48px 40px;
+  position:relative;overflow:hidden;
+  text-decoration:none;display:block;color:inherit;
+  transition:background .4s;
+}
+.line-card::after{
+  content:'';position:absolute;inset:0;opacity:0;
+  transition:opacity .4s;
+}
+.line-card[data-u="data"]::after  {background:linear-gradient(135deg,rgba(77,217,224,0.06),transparent);}
+.line-card[data-u="ins"]::after   {background:linear-gradient(135deg,rgba(37,99,235,0.08),transparent);}
+.line-card[data-u="ops"]::after   {background:linear-gradient(135deg,rgba(6,182,212,0.07),transparent);}
+.line-card[data-u="cap"]::after   {background:linear-gradient(135deg,rgba(56,189,248,0.07),transparent);}
+.line-card:hover::after{opacity:1;}
+.line-card-inner{position:relative;z-index:1;}
+
+.line-bar{width:24px;height:2px;border-radius:2px;margin-bottom:28px;transition:width .4s;}
+.line-card:hover .line-bar{width:44px;}
+.line-card[data-u="data"] .line-bar{background:var(--data-c);}
+.line-card[data-u="ins"]  .line-bar{background:var(--ins-c);}
+.line-card[data-u="ops"]  .line-bar{background:var(--ops-c);}
+.line-card[data-u="cap"]  .line-bar{background:var(--cap-c);}
+
+.line-tag{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;opacity:.5;}
+.line-card[data-u="data"] .line-tag{color:var(--data-c);}
+.line-card[data-u="ins"]  .line-tag{color:var(--ins-c);}
+.line-card[data-u="ops"]  .line-tag{color:var(--ops-c);}
+.line-card[data-u="cap"]  .line-tag{color:var(--cap-c);}
+
+.line-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-weight:400;line-height:1.12;
+  color:var(--white);margin-bottom:16px;
+}
+.line-desc{font-size:13px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.5);margin-bottom:24px;}
+.line-items{list-style:none;margin-bottom:28px;}
+.line-items li{
+  font-size:12px;color:rgba(255,255,255,0.38);
+  padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);
+  display:flex;align-items:center;gap:10px;
+}
+.line-items li::before{content:'';display:inline-block;width:4px;height:4px;border-radius:50%;flex-shrink:0;}
+.line-card[data-u="data"] .line-items li::before{background:var(--data-c);}
+.line-card[data-u="ins"]  .line-items li::before{background:var(--ins-c);}
+.line-card[data-u="ops"]  .line-items li::before{background:var(--ops-c);}
+.line-card[data-u="cap"]  .line-items li::before{background:var(--cap-c);}
+.line-arrow{font-size:16px;color:rgba(255,255,255,0.25);transition:transform .3s,color .3s;display:inline-block;}
+.line-card:hover .line-arrow{transform:translateX(6px);color:var(--white);}
+
+/* ── WHY / APPROACH — light with subtle image ── */
+#enfoque{position:relative;padding:0;overflow:hidden;}
+.enfoque-img{
+  position:absolute;inset:0;
+  background:
+    url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80')
+    center 30%/cover no-repeat;
+}
+.enfoque-overlay{position:absolute;inset:0;background:rgba(248,250,252,0.95);}
+.enfoque-inner{position:relative;z-index:2;padding:120px 64px;}
+#enfoque .s-label{color:var(--navy);}
+#enfoque .s-label::before{background:var(--navy);}
+#enfoque .s-title{color:var(--navy);}
+#enfoque .s-title em{color:var(--aqua);}
+
+.enfoque-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:72px;}
+.e-item{
+  padding-top:28px;border-top:1px solid rgba(26,47,78,0.12);
+  opacity:0;transform:translateY(16px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.e-item.vis{opacity:1;transform:none;}
+.e-item:nth-child(2){transition-delay:.12s;}
+.e-item:nth-child(3){transition-delay:.24s;}
+.e-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:50px;font-weight:300;color:var(--aqua);
+  opacity:.18;line-height:1;margin-bottom:16px;
+}
+.e-title{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:10px;}
+.e-text{font-size:14px;font-weight:300;line-height:1.8;color:#4a5e73;}
+
+/* ── CONTACT — dark image ── */
+#contacto{position:relative;padding:0;overflow:hidden;}
+.contact-img{
+  position:absolute;inset:0;
+  background:
+    url('https://images.unsplash.com/photo-1611095565494-8b0e18c7e58b?auto=format&fit=crop&w=1600&q=80')
+    center/cover no-repeat;
+}
+.contact-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom,rgba(10,20,38,0.93),rgba(10,20,38,0.97));
+}
+.contact-inner{position:relative;z-index:2;padding:120px 64px;max-width:720px;margin:0 auto;text-align:center;}
+
+.contact-inner .s-label{justify-content:center;color:var(--cyan);}
+.contact-inner .s-label::before{display:none;}
+.contact-inner .s-label::after{content:'';width:20px;height:1px;background:var(--cyan);}
+.contact-inner .s-title{color:var(--white);}
+
+.contact-sub{
+  font-size:15px;font-weight:300;line-height:1.8;
+  color:rgba(255,255,255,0.48);margin:22px auto 52px;max-width:460px;
+}
+
+.cform{display:flex;flex-direction:column;gap:14px;text-align:left;}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.cgrp{display:flex;flex-direction:column;gap:6px;}
+.cgrp label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.cgrp input,.cgrp select,.cgrp textarea{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;padding:12px 16px;
+  color:var(--white);font-family:'Sora',sans-serif;
+  font-size:14px;font-weight:300;
+  outline:none;width:100%;
+  transition:border-color .2s,background .2s;
+}
+.cgrp input::placeholder,.cgrp textarea::placeholder{color:rgba(255,255,255,0.2);}
+.cgrp input:focus,.cgrp select:focus,.cgrp textarea:focus{
+  border-color:var(--cyan);background:rgba(77,217,224,0.05);
+}
+.cgrp select option{background:#0f1e33;color:var(--white);}
+.cgrp textarea{resize:vertical;min-height:120px;}
+.csub{
+  margin-top:8px;background:var(--cyan);border:none;color:var(--navy2);
+  font-family:'Sora',sans-serif;font-size:13px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:16px 40px;border-radius:100px;
+  cursor:pointer;width:100%;
+  transition:background .2s,transform .2s;
+}
+.csub:hover{background:#7ae8ed;transform:translateY(-1px);}
+
+/* ── FOOTER ── */
+footer{
+  padding:40px 64px;
+  border-top:1px solid rgba(255,255,255,0.07);
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--navy2);
+}
+.f-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;font-weight:400;letter-spacing:.08em;color:var(--white);
+}
+.f-logo em{font-style:normal;color:var(--cyan);}
+.f-nav{display:flex;gap:28px;list-style:none;}
+.f-nav a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);text-decoration:none;transition:color .2s;}
+.f-nav a:hover{color:var(--cyan);}
+.f-copy{font-size:11px;color:rgba(255,255,255,0.18);}
+
+/* ── PULSE LOGO SVG in brand sections ── */
+.pulse-mark{
+  display:block;width:48px;height:48px;margin-bottom:16px;
+}
+
+/* ── ARTICLES ── */
+#articulos{position:relative;padding:0;overflow:hidden;}
+.art-img{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1600&q=80')
+  center/cover no-repeat;
+}
+.art-overlay{position:absolute;inset:0;background:rgba(248,250,252,0.96);}
+.art-inner{position:relative;z-index:2;padding:120px 64px;}
+#articulos .s-label{color:var(--navy);}
+#articulos .s-label::before{background:var(--navy);}
+#articulos .s-title{color:var(--navy);}
+#articulos .s-title em{color:var(--aqua);}
+
+.art-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px;}
+
+.art-card{
+  background:#fff;border:1px solid rgba(26,47,78,0.08);
+  border-radius:12px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .3s,box-shadow .3s;
+  text-decoration:none;color:inherit;
+}
+.art-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(26,47,78,0.1);}
+
+.art-thumb{
+  height:180px;position:relative;overflow:hidden;flex-shrink:0;
+}
+.art-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.art-card:hover .art-thumb img{transform:scale(1.04);}
+
+.art-cat{
+  position:absolute;top:14px;left:14px;
+  font-size:10px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;padding:4px 12px;border-radius:100px;
+  background:rgba(15,30,51,0.75);backdrop-filter:blur(6px);
+  color:var(--cyan);
+}
+
+.art-body{padding:24px;flex:1;display:flex;flex-direction:column;}
+.art-date{font-size:11px;color:#94a3b8;letter-spacing:.08em;margin-bottom:10px;}
+.art-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;font-weight:400;line-height:1.3;
+  color:var(--navy);margin-bottom:10px;
+}
+.art-excerpt{font-size:13px;font-weight:300;line-height:1.75;color:#4a5e73;flex:1;}
+.art-read{
+  margin-top:18px;font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--aqua);display:flex;align-items:center;gap:6px;
+  transition:gap .2s;
+}
+.art-card:hover .art-read{gap:10px;}
+
+/* ── NEWSLETTER ── */
+#newsletter{position:relative;padding:0;overflow:hidden;}
+.nl-img{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1600&q=80')
+  center/cover no-repeat;
+}
+.nl-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(10,20,38,0.95) 0%,rgba(26,47,78,0.9) 100%);
+}
+.nl-inner{
+  position:relative;z-index:2;
+  padding:100px 64px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.nl-left{}
+.nl-label{
+  font-size:11px;font-weight:500;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--cyan);
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.nl-label::before{content:'';width:20px;height:1px;background:var(--cyan);}
+.nl-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,4vw,50px);
+  font-weight:300;line-height:1.1;color:var(--white);margin-bottom:16px;
+}
+.nl-title em{font-style:italic;color:var(--cyan);}
+.nl-sub{font-size:15px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.55);max-width:400px;}
+
+.nl-features{margin-top:28px;display:flex;flex-direction:column;gap:10px;}
+.nl-feat{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:300;color:rgba(255,255,255,0.55);}
+.nl-feat-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);flex-shrink:0;}
+
+.nl-right{}
+.nl-form{display:flex;flex-direction:column;gap:14px;}
+.nl-form-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:400;color:var(--white);margin-bottom:4px;
+}
+.nl-form-sub{font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);margin-bottom:8px;}
+
+.nl-field{display:flex;flex-direction:column;gap:6px;}
+.nl-field label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.nl-field input,.nl-field select{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:8px;padding:12px 16px;
+  color:var(--white);font-family:'Sora',sans-serif;
+  font-size:14px;font-weight:300;outline:none;width:100%;
+  transition:border-color .2s,background .2s;
+}
+.nl-field input::placeholder{color:rgba(255,255,255,0.2);}
+.nl-field input:focus,.nl-field select:focus{border-color:var(--cyan);background:rgba(77,217,224,0.05);}
+.nl-field select option{background:#0f1e33;color:var(--white);}
+
+.nl-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+.nl-consent{display:flex;align-items:flex-start;gap:10px;margin-top:4px;}
+.nl-consent input[type="checkbox"]{
+  width:16px;height:16px;flex-shrink:0;margin-top:2px;
+  accent-color:var(--cyan);cursor:pointer;
+}
+.nl-consent label{font-size:12px;font-weight:300;color:rgba(255,255,255,0.4);line-height:1.6;cursor:pointer;}
+.nl-consent a{color:var(--cyan);text-decoration:none;}
+
+.nl-submit{
+  background:var(--cyan);border:none;color:var(--navy2);
+  font-family:'Sora',sans-serif;font-size:13px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:15px 40px;border-radius:100px;
+  cursor:pointer;width:100%;
+  transition:background .2s,transform .2s;margin-top:4px;
+}
+.nl-submit:hover{background:#7ae8ed;transform:translateY(-1px);}
+
+.nl-privacy{
+  font-size:11px;font-weight:300;color:rgba(255,255,255,0.25);
+  text-align:center;margin-top:8px;
+}
+
+@media(max-width:900px){
+  .art-grid{grid-template-columns:1fr;}
+  .nl-inner{grid-template-columns:1fr;gap:48px;padding:80px 24px;}
+  .nl-row{grid-template-columns:1fr;}
+  .art-inner{padding:80px 24px;}
+}
+
+.rev{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+.rev.vis{opacity:1;transform:none;}
+.rev2{transition-delay:.1s;}
+.rev3{transition-delay:.2s;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:16px 24px;}
+  .nav-links{display:none;}
+  section{padding:80px 24px;}
+  .hero{padding:0 24px 80px;}
+  .hero-stats{display:none;}
+  .hero-scroll{left:24px;}
+  .about-inner,.lines-inner,.lines-head,.enfoque-inner,.contact-inner{padding:80px 24px;}
+  .about-inner{grid-template-columns:1fr;gap:48px;}
+  .lines-grid{grid-template-columns:1fr;}
+  .lines-head{flex-direction:column;}
+  .enfoque-grid{grid-template-columns:1fr;gap:32px;}
+  .crow{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:20px;text-align:center;padding:32px 24px;}
+  .f-nav{flex-wrap:wrap;justify-content:center;}
+  .about-overlay{background:rgba(248,250,252,0.97)!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="logo">SG <em>Global</em></div>
+  <ul class="nav-links">
+    <li><a href="#nosotros" data-i18n="nav.about">Nosotros</a></li>
+    <li><a href="#lineas"   data-i18n="nav.lines">Líneas</a></li>
+    <li><a href="#enfoque"  data-i18n="nav.why">Enfoque</a></li>
+    <li><a href="seguros.html" data-i18n="nav.insurance">Insurance</a></li>
+    <li><a href="#articulos" data-i18n="nav.articles">Artículos</a></li>
+    <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn"        id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="#contacto" class="nav-cta" data-i18n="nav.cta">Conectar</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-img">
+    <canvas id="neural-canvas"></canvas>
+  </div>
+  <div class="hero-overlay"></div>
+
+  <!-- Pulse watermark SVG -->
+  <svg class="hero-pulse" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle class="p-ring" cx="200" cy="200" r="42" stroke="white" stroke-width="1.5"/>
+    <circle cx="200" cy="200" r="10" fill="white"/>
+    <!-- 5 nodes + spokes -->
+    <line x1="200" y1="190" x2="200" y2="80"  stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="200" y1="210" x2="200" y2="320" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="190" y1="200" x2="90"  y2="140" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="210" y1="200" x2="310" y2="140" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="210" y1="200" x2="310" y2="270" stroke="white" stroke-width="1" opacity=".6"/>
+    <circle class="p-node" cx="200" cy="72"  r="8" fill="white"/>
+    <circle class="p-node" cx="200" cy="328" r="8" fill="white"/>
+    <circle class="p-node" cx="82"  cy="132" r="8" fill="white"/>
+    <circle class="p-node" cx="318" cy="132" r="8" fill="white"/>
+    <circle class="p-node" cx="318" cy="278" r="8" fill="white"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-line"></span>
+      <span data-i18n="hero.eyebrow">Soluciones Logísticas Integradas</span>
+    </div>
+    <h1 class="hero-title" data-i18n-html="hero.title">
+      Inteligencia<br><em>para mover</em><br>el mundo
+    </h1>
+    <p class="hero-sub" data-i18n="hero.sub">
+      Cuatro líneas especializadas que integran datos, seguros, operaciones y capital para transformar la cadena logística en una ventaja competitiva sostenible.
+    </p>
+    <div class="hero-actions">
+      <a href="#lineas"   class="btn-primary" data-i18n="hero.cta1">Explorar Soluciones</a>
+      <a href="#contacto" class="btn-ghost">
+        <span data-i18n="hero.cta2">Hablar con un experto</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-bar"></div>
+    <span data-i18n="hero.scroll">Scroll</span>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n">4</div><div class="stat-l" data-i18n="hero.s1">Líneas</div></div>
+    <div class="stat-div"></div>
+    <div class="stat"><div class="stat-n">360°</div><div class="stat-l" data-i18n="hero.s2">Cobertura</div></div>
+    <div class="stat-div"></div>
+    <div class="stat"><div class="stat-n">1</div><div class="stat-l" data-i18n="hero.s3">Socio Estratégico</div></div>
+  </div>
+</section>
+
+<!-- ══ NOSOTROS ══ -->
+<section id="nosotros">
+  <div class="about-img"></div>
+  <div class="about-overlay"></div>
+  <div class="about-inner">
+    <div>
+      <!-- Pulse mark in brand color -->
+      <svg class="pulse-mark" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="5" fill="var(--aqua)"/>
+        <line x1="24" y1="19" x2="24" y2="8"  stroke="var(--aqua)" stroke-width="1.2" opacity=".6"/>
+        <line x1="24" y1="29" x2="24" y2="40" stroke="var(--aqua)" stroke-width="1.2" opacity=".6"/>
+        <line x1="20" y1="22" x2="10" y2="16" stroke="var(--aqua)" stroke-width="1.2" opacity=".6"/>
+        <line x1="28" y1="22" x2="38" y2="16" stroke="var(--aqua)" stroke-width="1.2" opacity=".6"/>
+        <line x1="28" y1="26" x2="38" y2="32" stroke="var(--aqua)" stroke-width="1.2" opacity=".6"/>
+        <circle cx="24" cy="6"  r="3" fill="var(--aqua)" opacity=".7"/>
+        <circle cx="24" cy="42" r="3" fill="var(--aqua)" opacity=".7"/>
+        <circle cx="8"  cy="14" r="3" fill="var(--aqua)" opacity=".7"/>
+        <circle cx="40" cy="14" r="3" fill="var(--aqua)" opacity=".7"/>
+        <circle cx="40" cy="34" r="3" fill="var(--aqua)" opacity=".7"/>
+      </svg>
+      <div class="s-label rev" data-i18n="about.label">Sobre Nosotros</div>
+      <h2 class="s-title rev rev2" data-i18n-html="about.title">Expertos en la<br><em>cadena logística</em></h2>
+      <div class="about-text" style="margin-top:32px">
+        <p class="rev rev2" data-i18n="about.p1">SG Global es un grupo especializado en soluciones integrales para el sector logístico y de transporte, que combina tecnología de telemetría, instrumentos financieros, gestión operacional y capital estratégico en un solo ecosistema.</p>
+        <p class="rev rev3" data-i18n="about.p2">Entendemos que la logística moderna requiere más que eficiencia operativa: demanda visibilidad en tiempo real, protección ante riesgos, acceso a financiamiento y la inteligencia para tomar decisiones que transformen la cadena de valor.</p>
+        <p class="rev rev3" data-i18n="about.p3">Nuestro modelo multidisciplinario permite a los actores de la cadena acceder a soluciones coordinadas que maximizan la continuidad, la seguridad y la rentabilidad de sus operaciones.</p>
+      </div>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><div class="p-num">01</div><div class="p-content"><h4 data-i18n="ab.p1t">Visibilidad total</h4><p data-i18n="ab.p1d">Trazabilidad en tiempo real de cada eslabón de la cadena, desde el origen hasta la entrega.</p></div></div>
+      <div class="pillar"><div class="p-num">02</div><div class="p-content"><h4 data-i18n="ab.p2t">Protección integral</h4><p data-i18n="ab.p2d">Coberturas específicas para los riesgos únicos del sector logístico y transporte.</p></div></div>
+      <div class="pillar"><div class="p-num">03</div><div class="p-content"><h4 data-i18n="ab.p3t">Excelencia operativa</h4><p data-i18n="ab.p3d">Estructuración y acompañamiento para optimizar cada proceso de la operación logística.</p></div></div>
+      <div class="pillar"><div class="p-num">04</div><div class="p-content"><h4 data-i18n="ab.p4t">Capital estratégico</h4><p data-i18n="ab.p4d">Soluciones financieras y de M&amp;A para el crecimiento sostenido del sector.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LÍNEAS ══ -->
+<section id="lineas">
+  <div class="lines-img"></div>
+  <div class="lines-overlay"></div>
+  <div class="lines-inner">
+    <div class="lines-head">
+      <div>
+        <div class="s-label rev" data-i18n="lines.label">Líneas de Negocio</div>
+        <h2 class="s-title rev rev2" data-i18n-html="lines.title">Cuatro pilares,<br><em>un ecosistema</em></h2>
+      </div>
+      <p class="lines-desc rev rev3" data-i18n="lines.desc">Cada línea está diseñada para funcionar de forma independiente o en conjunto, creando sinergias únicas que potencian el valor para nuestros clientes.</p>
+    </div>
+    <div class="lines-grid">
+      <a class="line-card rev" data-u="data" href="#contacto">
+        <div class="line-card-inner">
+          <div class="line-bar"></div>
+          <div class="line-tag">SG Global Data</div>
+          <h3 class="line-name" data-i18n-html="l.data.name">Telemetría &amp;<br>Trazabilidad</h3>
+          <p class="line-desc" data-i18n="l.data.desc">Soluciones basadas en telemetría avanzada que aseguran la visibilidad, trazabilidad y continuidad de la información a lo largo de toda la cadena logística.</p>
+          <ul class="line-items">
+            <li data-i18n="l.data.i1">Solución para optimización de rutas</li>
+            <li data-i18n="l.data.i2">Solución para entregas certificadas</li>
+            <li data-i18n="l.data.i3">Cumplimiento normativo ante el RNDC en Colombia</li>
+            <li data-i18n="l.data.i4">Sensorización de variables sensibles para su negocio</li>
+            <li data-i18n="l.data.i5">Visibilidad total vía Torre de Control</li>
+            <li data-i18n="l.data.i6">Integración con ERP, WMS o TMS</li>
+          </ul>
+          <span class="line-arrow">→</span>
+        </div>
+      </a>
+      <a class="line-card rev rev2" data-u="ins" href="#contacto">
+        <div class="line-card-inner">
+          <div class="line-bar"></div>
+          <div class="line-tag">SG Global Insurance</div>
+          <h3 class="line-name" data-i18n-html="l.ins.name">Seguros &amp; Microseguros<br>Gestión de Riesgos</h3>
+          <p class="line-desc" data-i18n="l.ins.desc">Soluciones de seguros y microseguros especializados que cubren los riesgos propios de las operaciones logísticas, protegiendo a todos los actores de la cadena.</p>
+          <ul class="line-items">
+            <li data-i18n="l.ins.i1">Microseguros para transportadores y operadores</li>
+            <li data-i18n="l.ins.i2">Cobertura de carga, flota y responsabilidad civil</li>
+            <li data-i18n="l.ins.i3">Seguros paramétricos basados en telemetría</li>
+            <li data-i18n="l.ins.i4">Gestión de siniestros especializada en logística</li>
+          </ul>
+          <span class="line-arrow">→</span>
+        </div>
+      </a>
+      <a class="line-card rev rev2" data-u="ops" href="#contacto">
+        <div class="line-card-inner">
+          <div class="line-bar"></div>
+          <div class="line-tag">SG Global Operations</div>
+          <h3 class="line-name" data-i18n-html="l.ops.name">Operación &amp;<br>Estructuración Logística</h3>
+          <p class="line-desc" data-i18n="l.ops.desc">Consultoría y acompañamiento integral en la estructuración, diseño y puesta a punto de operaciones logísticas eficientes y escalables.</p>
+          <ul class="line-items">
+            <li data-i18n="l.ops.i1">Montaje de operaciones logísticas a la medida</li>
+            <li data-i18n="l.ops.i2">Diagnóstico y rediseño de procesos logísticos</li>
+            <li data-i18n="l.ops.i3">Análisis de datos y evaluación de brechas en continuidad de negocio</li>
+            <li data-i18n="l.ops.i4">Formación de equipos y cultura operativa</li>
+          </ul>
+          <span class="line-arrow">→</span>
+        </div>
+      </a>
+      <a class="line-card rev rev3" data-u="cap" href="#contacto">
+        <div class="line-card-inner">
+          <div class="line-bar"></div>
+          <div class="line-tag">SG Global Capital</div>
+          <h3 class="line-name" data-i18n-html="l.cap.name">M&amp;A &amp;<br>Financiamiento Logístico</h3>
+          <p class="line-desc" data-i18n="l.cap.desc">Soluciones de fusiones &amp; adquisiciones y financiamiento especializado para compañías del sector logístico y de transporte que buscan crecer o transformarse.</p>
+          <ul class="line-items">
+            <li data-i18n="l.cap.i1">Asesoría en M&amp;A para el sector logístico</li>
+            <li data-i18n="l.cap.i2">Estructuración de financiamiento de flota y activos</li>
+            <li data-i18n="l.cap.i3">Valoración y due diligence especializado</li>
+            <li data-i18n="l.cap.i4">Conexión con fondos e inversionistas del sector</li>
+          </ul>
+          <span class="line-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ENFOQUE ══ -->
+<section id="enfoque">
+  <div class="enfoque-img"></div>
+  <div class="enfoque-overlay"></div>
+  <div class="enfoque-inner">
+    <div class="s-label" data-i18n="why.label">Nuestro Enfoque</div>
+    <h2 class="s-title" data-i18n-html="why.title">Por qué elegir<br><em>SG Global</em></h2>
+    <div class="enfoque-grid">
+      <div class="e-item"><div class="e-num">01</div><h3 class="e-title" data-i18n="why.i1t">Especialización Sectorial</h3><p class="e-text" data-i18n="why.i1d">No somos un proveedor genérico. Cada solución fue diseñada específicamente para los desafíos del sector logístico y de transporte en Latinoamérica.</p></div>
+      <div class="e-item"><div class="e-num">02</div><h3 class="e-title" data-i18n="why.i2t">Ecosistema Integrado</h3><p class="e-text" data-i18n="why.i2d">Nuestras cuatro líneas se complementan, creando sinergias que ningún proveedor individual puede replicar. Los datos informan los seguros; las operaciones optimizadas reducen el riesgo financiero.</p></div>
+      <div class="e-item"><div class="e-num">03</div><h3 class="e-title" data-i18n="why.i3t">Acompañamiento Continuo</h3><p class="e-text" data-i18n="why.i3d">No entregamos proyectos y nos retiramos. Nuestro modelo es de alianza estratégica a largo plazo, donde el éxito del cliente es el éxito de SG Global.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACTO ══ -->
+<section id="contacto">
+  <div class="contact-img"></div>
+  <div class="contact-overlay"></div>
+  <div class="contact-inner">
+    <div class="s-label rev" data-i18n="cont.label">Contacto</div>
+    <h2 class="s-title rev rev2" data-i18n-html="cont.title">Comencemos<br><em>la conversación</em></h2>
+    <p class="contact-sub rev rev3" data-i18n="cont.sub">Cuéntenos sobre su operación y el equipo de SG Global le contactará para explorar cómo podemos trabajar juntos.</p>
+    <form class="cform rev" onsubmit="handleSubmit(event)">
+      <div class="crow">
+        <div class="cgrp"><label data-i18n="cf.name">Nombre</label><input type="text" name="nombre" data-i18n-ph="cf.namePh" placeholder="Su nombre completo" required></div>
+        <div class="cgrp"><label data-i18n="cf.company">Empresa</label><input type="text" name="empresa" data-i18n-ph="cf.companyPh" placeholder="Nombre de su compañía" required></div>
+      </div>
+      <div class="crow">
+        <div class="cgrp"><label data-i18n="cf.email">Email</label><input type="email" name="email" placeholder="correo@empresa.com" required></div>
+        <div class="cgrp"><label data-i18n="cf.phone">Teléfono</label><input type="tel" name="telefono" placeholder="+57 300 000 0000"></div>
+      </div>
+      <div class="cgrp">
+        <label data-i18n="cf.line">Línea de interés</label>
+        <select name="linea">
+          <option value="" disabled selected data-i18n="cf.lo0">Seleccione una línea de negocio</option>
+          <option data-i18n="cf.lo1">SG Global Data — Telemetría y Trazabilidad</option>
+          <option data-i18n="cf.lo2">SG Global Insurance — Seguros y Microseguros</option>
+          <option data-i18n="cf.lo3">SG Global Operations — Operación Logística</option>
+          <option data-i18n="cf.lo4">SG Global Capital — M&amp;A y Financiamiento</option>
+          <option data-i18n="cf.lo5">Varias líneas / No estoy seguro</option>
+        </select>
+      </div>
+      <div class="cgrp"><label data-i18n="cf.msg">Mensaje</label><textarea name="mensaje" data-i18n-ph="cf.msgPh" placeholder="Cuéntenos brevemente sobre su operación y sus necesidades…"></textarea></div>
+      <button type="submit" class="csub" data-i18n="cf.submit">Enviar Mensaje</button>
+    </form>
+  </div>
+</section>
+
+<!-- ══ ARTÍCULOS ══ -->
+<section id="articulos">
+  <div class="art-img"></div>
+  <div class="art-overlay"></div>
+  <div class="art-inner">
+    <div class="s-label rev" data-i18n="art.label">Artículos de Interés</div>
+    <h2 class="s-title rev rev2" data-i18n-html="art.title">Conocimiento que<br><em>mueve la industria</em></h2>
+
+    <div class="art-grid">
+      <!-- Artículo 1 -->
+      <a class="art-card rev" href="#articulos">
+        <div class="art-thumb">
+          <img src="https://images.unsplash.com/photo-1586528116493-a029325540fa?auto=format&fit=crop&w=800&q=80" alt="Trazabilidad logística">
+          <span class="art-cat" data-i18n="art.cat1">Data & Telemetría</span>
+        </div>
+        <div class="art-body">
+          <div class="art-date" data-i18n="art.date1">Marzo 2025</div>
+          <h3 class="art-title" data-i18n="art.t1">Trazabilidad en tiempo real: el nuevo estándar de la cadena logística en Latinoamérica</h3>
+          <p class="art-excerpt" data-i18n="art.e1">Cómo la telemetría avanzada está transformando la visibilidad operacional y reduciendo brechas en la continuidad del negocio para operadores logísticos.</p>
+          <div class="art-read"><span data-i18n="art.read">Leer artículo</span> →</div>
+        </div>
+      </a>
+      <!-- Artículo 2 -->
+      <a class="art-card rev rev2" href="#articulos">
+        <div class="art-thumb">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Microseguros logísticos">
+          <span class="art-cat" data-i18n="art.cat2">Seguros & Riesgos</span>
+        </div>
+        <div class="art-body">
+          <div class="art-date" data-i18n="art.date2">Febrero 2025</div>
+          <h3 class="art-title" data-i18n="art.t2">Microseguros paramétricos: protección inteligente para transportadores y operadores</h3>
+          <p class="art-excerpt" data-i18n="art.e2">Los seguros paramétricos vinculados a telemetría permiten coberturas dinámicas y liquidación automática de siniestros. Una revolución para el sector.</p>
+          <div class="art-read"><span data-i18n="art.read">Leer artículo</span> →</div>
+        </div>
+      </a>
+      <!-- Artículo 3 -->
+      <a class="art-card rev rev3" href="#articulos">
+        <div class="art-thumb">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" alt="M&A logístico">
+          <span class="art-cat" data-i18n="art.cat3">Capital & M&A</span>
+        </div>
+        <div class="art-body">
+          <div class="art-date" data-i18n="art.date3">Enero 2025</div>
+          <h3 class="art-title" data-i18n="art.t3">Consolidación logística en LATAM: tendencias de M&A y oportunidades de financiamiento para 2025</h3>
+          <p class="art-excerpt" data-i18n="art.e3">El sector logístico latinoamericano atraviesa una fase de consolidación acelerada. Analizamos las dinámicas de capital y las operaciones que están redefiniendo el mapa del transporte.</p>
+          <div class="art-read"><span data-i18n="art.read">Leer artículo</span> →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NEWSLETTER ══ -->
+<section id="newsletter">
+  <div class="nl-img"></div>
+  <div class="nl-overlay"></div>
+  <div class="nl-inner">
+    <div class="nl-left rev">
+      <div class="nl-label" data-i18n="nl.label">Newsletter</div>
+      <h2 class="nl-title" data-i18n-html="nl.title">Inteligencia logística<br><em>en su bandeja</em></h2>
+      <p class="nl-sub" data-i18n="nl.sub">Un boletín mensual con análisis, tendencias y casos prácticos del sector logístico y de transporte en Latinoamérica. Sin ruido, solo lo que importa.</p>
+      <div class="nl-features">
+        <div class="nl-feat"><span class="nl-feat-dot"></span><span data-i18n="nl.f1">Análisis de tendencias del sector logístico</span></div>
+        <div class="nl-feat"><span class="nl-feat-dot"></span><span data-i18n="nl.f2">Actualizaciones regulatorias y de mercado</span></div>
+        <div class="nl-feat"><span class="nl-feat-dot"></span><span data-i18n="nl.f3">Casos de uso y mejores prácticas operativas</span></div>
+        <div class="nl-feat"><span class="nl-feat-dot"></span><span data-i18n="nl.f4">Frecuencia mensual — sin spam</span></div>
+      </div>
+    </div>
+    <div class="nl-right rev rev2">
+      <form class="nl-form" onsubmit="handleNL(event)">
+        <div class="nl-form-title" data-i18n="nl.formTitle">Suscríbase al boletín</div>
+        <div class="nl-form-sub" data-i18n="nl.formSub">Más de 500 profesionales del sector ya lo reciben</div>
+        <div class="nl-row">
+          <div class="nl-field">
+            <label data-i18n="nl.fname">Nombre</label>
+            <input type="text" name="nombre" data-i18n-ph="nl.fnamePh" placeholder="Su nombre" required>
+          </div>
+          <div class="nl-field">
+            <label data-i18n="nl.flname">Apellido</label>
+            <input type="text" name="apellido" data-i18n-ph="nl.flnamePh" placeholder="Su apellido" required>
+          </div>
+        </div>
+        <div class="nl-field">
+          <label data-i18n="nl.femail">Email corporativo</label>
+          <input type="email" name="email" placeholder="correo@empresa.com" required>
+        </div>
+        <div class="nl-field">
+          <label data-i18n="nl.frole">Cargo</label>
+          <select name="cargo">
+            <option value="" disabled selected data-i18n="nl.frolePh">Seleccione su cargo</option>
+            <option data-i18n="nl.r1">Director / Gerente de Operaciones</option>
+            <option data-i18n="nl.r2">Gerente de Logística / Supply Chain</option>
+            <option data-i18n="nl.r3">Director Financiero / CFO</option>
+            <option data-i18n="nl.r4">CEO / Fundador</option>
+            <option data-i18n="nl.r5">Consultor / Asesor</option>
+            <option data-i18n="nl.r6">Otro</option>
+          </select>
+        </div>
+        <div class="nl-consent">
+          <input type="checkbox" id="nl-check" required>
+          <label for="nl-check" data-i18n="nl.consent">Acepto recibir comunicaciones de SG Global y puedo cancelar mi suscripción en cualquier momento.</label>
+        </div>
+        <button type="submit" class="nl-submit" id="nl-btn" data-i18n="nl.submit">Suscribirse al boletín</button>
+        <p class="nl-privacy" data-i18n="nl.privacy">Su información es confidencial y nunca será compartida con terceros.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="f-logo">SG <em>Global</em></div>
+  <ul class="f-nav">
+    <li><a href="#nosotros"  data-i18n="nav.about">Nosotros</a></li>
+    <li><a href="#lineas"    data-i18n="nav.lines">Líneas</a></li>
+    <li><a href="#enfoque"   data-i18n="nav.why">Enfoque</a></li>
+    <li><a href="#articulos" data-i18n="nav.articles">Artículos</a></li>
+    <li><a href="#newsletter" data-i18n="nav.newsletter">Newsletter</a></li>
+    <li><a href="#contacto"  data-i18n="nav.contact">Contacto</a></li>
+  </ul>
+  <div class="f-copy" data-i18n="footer.copy">© 2025 SG Global. Todos los derechos reservados.</div>
+</footer>
+
+<script>
+/* ══ SCROLL REVEAL ══ */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      // pillar children staggered
+      if(e.target.classList.contains('pillars')){
+        e.target.querySelectorAll('.pillar').forEach((p,i)=>{
+          setTimeout(()=>p.classList.add('vis'),i*100);
+        });
+      }
+      if(e.target.classList.contains('enfoque-grid')){
+        e.target.querySelectorAll('.e-item').forEach((el,i)=>{
+          setTimeout(()=>el.classList.add('vis'),i*120);
+        });
+      }
+    }
+  });
+},{threshold:0.1});
+
+document.querySelectorAll('.rev,.pillars,.enfoque-grid').forEach(el=>io.observe(el));
+
+// enfoque items — also observe individually
+document.querySelectorAll('.e-item').forEach(el=>io.observe(el));
+
+/* ══ i18n ══ */
+const T={
+  es:{
+    "nav.about":"Nosotros","nav.lines":"Líneas","nav.why":"Enfoque","nav.insurance":"Insurance","nav.contact":"Contacto","nav.cta":"Conectar",
+    "hero.eyebrow":"Soluciones Logísticas Integradas",
+    "hero.title":"Inteligencia<br><em>para mover</em><br>el mundo",
+    "hero.sub":"Cuatro líneas especializadas que integran datos, seguros, operaciones y capital para transformar la cadena logística en una ventaja competitiva sostenible.",
+    "hero.cta1":"Explorar Soluciones","hero.cta2":"Hablar con un experto","hero.scroll":"Scroll",
+    "hero.s1":"Líneas","hero.s2":"Cobertura","hero.s3":"Socio Estratégico",
+    "about.label":"Sobre Nosotros","about.title":"Expertos en la<br><em>cadena logística</em>",
+    "about.p1":"SG Global es un grupo especializado en soluciones integrales para el sector logístico y de transporte, que combina tecnología de telemetría, instrumentos financieros, gestión operacional y capital estratégico en un solo ecosistema.",
+    "about.p2":"Entendemos que la logística moderna requiere más que eficiencia operativa: demanda visibilidad en tiempo real, protección ante riesgos, acceso a financiamiento y la inteligencia para tomar decisiones que transformen la cadena de valor.",
+    "about.p3":"Nuestro modelo multidisciplinario permite a los actores de la cadena acceder a soluciones coordinadas que maximizan la continuidad, la seguridad y la rentabilidad de sus operaciones.",
+    "ab.p1t":"Visibilidad total","ab.p1d":"Trazabilidad en tiempo real de cada eslabón de la cadena, desde el origen hasta la entrega.",
+    "ab.p2t":"Protección integral","ab.p2d":"Coberturas específicas para los riesgos únicos del sector logístico y transporte.",
+    "ab.p3t":"Excelencia operativa","ab.p3d":"Estructuración y acompañamiento para optimizar cada proceso de la operación logística.",
+    "ab.p4t":"Capital estratégico","ab.p4d":"Soluciones financieras y de M&A para el crecimiento sostenido del sector.",
+    "lines.label":"Líneas de Negocio","lines.title":"Cuatro pilares,<br><em>un ecosistema</em>",
+    "lines.desc":"Cada línea está diseñada para funcionar de forma independiente o en conjunto, creando sinergias únicas que potencian el valor para nuestros clientes.",
+    "l.data.name":"Telemetría &amp;<br>Trazabilidad",
+    "l.data.desc":"Soluciones basadas en telemetría avanzada que aseguran la visibilidad, trazabilidad y continuidad de la información a lo largo de toda la cadena logística.",
+    "l.data.i1":"Solución para optimización de rutas","l.data.i2":"Solución para entregas certificadas",
+    "l.data.i3":"Cumplimiento normativo ante el RNDC en Colombia","l.data.i4":"Sensorización de variables sensibles para su negocio",
+    "l.data.i5":"Visibilidad total vía Torre de Control","l.data.i6":"Integración con ERP, WMS o TMS",
+    "l.ins.name":"Seguros &amp; Microseguros<br>Gestión de Riesgos",
+    "l.ins.desc":"Soluciones de seguros y microseguros especializados que cubren los riesgos propios de las operaciones logísticas, protegiendo a todos los actores de la cadena.",
+    "l.ins.i1":"Microseguros para transportadores y operadores","l.ins.i2":"Cobertura de carga, flota y responsabilidad civil",
+    "l.ins.i3":"Seguros paramétricos basados en telemetría","l.ins.i4":"Gestión de siniestros especializada en logística",
+    "l.ops.name":"Operación &amp;<br>Estructuración Logística",
+    "l.ops.desc":"Consultoría y acompañamiento integral en la estructuración, diseño y puesta a punto de operaciones logísticas eficientes y escalables.",
+    "l.ops.i1":"Montaje de operaciones logísticas a la medida","l.ops.i2":"Diagnóstico y rediseño de procesos logísticos",
+    "l.ops.i3":"Análisis de datos y evaluación de brechas en continuidad de negocio","l.ops.i4":"Formación de equipos y cultura operativa",
+    "l.cap.name":"M&amp;A &amp;<br>Financiamiento Logístico",
+    "l.cap.desc":"Soluciones de fusiones & adquisiciones y financiamiento especializado para compañías del sector logístico y de transporte que buscan crecer o transformarse.",
+    "l.cap.i1":"Asesoría en M&A para el sector logístico","l.cap.i2":"Estructuración de financiamiento de flota y activos",
+    "l.cap.i3":"Valoración y due diligence especializado","l.cap.i4":"Conexión con fondos e inversionistas del sector",
+    "why.label":"Nuestro Enfoque","why.title":"Por qué elegir<br><em>SG Global</em>",
+    "why.i1t":"Especialización Sectorial","why.i1d":"No somos un proveedor genérico. Cada solución fue diseñada específicamente para los desafíos del sector logístico y de transporte en Latinoamérica.",
+    "why.i2t":"Ecosistema Integrado","why.i2d":"Nuestras cuatro líneas se complementan, creando sinergias que ningún proveedor individual puede replicar. Los datos informan los seguros; las operaciones optimizadas reducen el riesgo financiero.",
+    "why.i3t":"Acompañamiento Continuo","why.i3d":"No entregamos proyectos y nos retiramos. Nuestro modelo es de alianza estratégica a largo plazo, donde el éxito del cliente es el éxito de SG Global.",
+    "cont.label":"Contacto","cont.title":"Comencemos<br><em>la conversación</em>",
+    "cont.sub":"Cuéntenos sobre su operación y el equipo de SG Global le contactará para explorar cómo podemos trabajar juntos.",
+    "cf.name":"Nombre","cf.namePh":"Su nombre completo","cf.company":"Empresa","cf.companyPh":"Nombre de su compañía",
+    "cf.email":"Email","cf.phone":"Teléfono","cf.line":"Línea de interés",
+    "cf.lo0":"Seleccione una línea de negocio","cf.lo1":"SG Global Data — Telemetría y Trazabilidad",
+    "cf.lo2":"SG Global Insurance — Seguros y Microseguros","cf.lo3":"SG Global Operations — Operación Logística",
+    "cf.lo4":"SG Global Capital — M&A y Financiamiento","cf.lo5":"Varias líneas / No estoy seguro",
+    "cf.msg":"Mensaje","cf.msgPh":"Cuéntenos brevemente sobre su operación y sus necesidades…",
+    "cf.submit":"Enviar Mensaje","cf.success":"✓ Mensaje enviado",
+    "nav.articles":"Artículos","nav.newsletter":"Newsletter",
+    "art.label":"Artículos de Interés","art.title":"Conocimiento que<br><em>mueve la industria</em>",
+    "art.cat1":"Data & Telemetría","art.cat2":"Seguros & Riesgos","art.cat3":"Capital & M&A",
+    "art.date1":"Marzo 2025","art.date2":"Febrero 2025","art.date3":"Enero 2025",
+    "art.t1":"Trazabilidad en tiempo real: el nuevo estándar de la cadena logística en Latinoamérica",
+    "art.e1":"Cómo la telemetría avanzada está transformando la visibilidad operacional y reduciendo brechas en la continuidad del negocio para operadores logísticos.",
+    "art.t2":"Microseguros paramétricos: protección inteligente para transportadores y operadores",
+    "art.e2":"Los seguros paramétricos vinculados a telemetría permiten coberturas dinámicas y liquidación automática de siniestros. Una revolución para el sector.",
+    "art.t3":"Consolidación logística en LATAM: tendencias de M&A y oportunidades de financiamiento para 2025",
+    "art.e3":"El sector logístico latinoamericano atraviesa una fase de consolidación acelerada. Analizamos las dinámicas de capital y las operaciones que están redefiniendo el mapa del transporte.",
+    "art.read":"Leer artículo",
+    "nl.label":"Newsletter","nl.title":"Inteligencia logística<br><em>en su bandeja</em>",
+    "nl.sub":"Un boletín mensual con análisis, tendencias y casos prácticos del sector logístico y de transporte en Latinoamérica. Sin ruido, solo lo que importa.",
+    "nl.f1":"Análisis de tendencias del sector logístico","nl.f2":"Actualizaciones regulatorias y de mercado",
+    "nl.f3":"Casos de uso y mejores prácticas operativas","nl.f4":"Frecuencia mensual — sin spam",
+    "nl.formTitle":"Suscríbase al boletín","nl.formSub":"Más de 500 profesionales del sector ya lo reciben",
+    "nl.fname":"Nombre","nl.fnamePh":"Su nombre","nl.flname":"Apellido","nl.flnamePh":"Su apellido",
+    "nl.femail":"Email corporativo","nl.frole":"Cargo","nl.frolePh":"Seleccione su cargo",
+    "nl.r1":"Director / Gerente de Operaciones","nl.r2":"Gerente de Logística / Supply Chain",
+    "nl.r3":"Director Financiero / CFO","nl.r4":"CEO / Fundador","nl.r5":"Consultor / Asesor","nl.r6":"Otro",
+    "nl.consent":"Acepto recibir comunicaciones de SG Global y puedo cancelar mi suscripción en cualquier momento.",
+    "nl.submit":"Suscribirse al boletín","nl.privacy":"Su información es confidencial y nunca será compartida con terceros.",
+    "footer.copy":"© 2025 SG Global. Todos los derechos reservados."
+  },
+  en:{
+    "nav.about":"About","nav.lines":"Solutions","nav.why":"Approach","nav.insurance":"Insurance","nav.contact":"Contact","nav.cta":"Connect",
+    "hero.eyebrow":"Integrated Logistics Solutions",
+    "hero.title":"Intelligence<br><em>to move</em><br>the world",
+    "hero.sub":"Four specialized business lines integrating data, insurance, operations and capital to transform the logistics chain into a sustainable competitive advantage.",
+    "hero.cta1":"Explore Solutions","hero.cta2":"Talk to an expert","hero.scroll":"Scroll",
+    "hero.s1":"Lines","hero.s2":"Coverage","hero.s3":"Strategic Partner",
+    "about.label":"About Us","about.title":"Experts across the<br><em>logistics chain</em>",
+    "about.p1":"SG Global is a specialized group delivering comprehensive solutions for the logistics and transportation sector, combining telemetry technology, financial instruments, operational management and strategic capital in a single ecosystem.",
+    "about.p2":"We understand that modern logistics demands more than operational efficiency: it requires real-time visibility, risk protection, access to financing and the intelligence to make decisions that transform the value chain.",
+    "about.p3":"Our multidisciplinary model allows all chain actors to access coordinated solutions that maximize continuity, security and profitability of their operations.",
+    "ab.p1t":"Total visibility","ab.p1d":"Real-time traceability at every link in the chain, from origin to delivery.",
+    "ab.p2t":"Comprehensive protection","ab.p2d":"Specific coverage for the unique risks of the logistics and transportation sector.",
+    "ab.p3t":"Operational excellence","ab.p3d":"Structuring and support to optimize every process in the logistics operation.",
+    "ab.p4t":"Strategic capital","ab.p4d":"Financial and M&A solutions for sustained growth in the sector.",
+    "lines.label":"Business Lines","lines.title":"Four pillars,<br><em>one ecosystem</em>",
+    "lines.desc":"Each line is designed to operate independently or together, creating unique synergies that enhance value for our clients.",
+    "l.data.name":"Telemetry &amp;<br>Traceability",
+    "l.data.desc":"Advanced telemetry-based solutions that ensure visibility, traceability and information continuity throughout the entire logistics chain.",
+    "l.data.i1":"Route optimization solution","l.data.i2":"Certified delivery solution",
+    "l.data.i3":"Regulatory compliance with Colombia's RNDC","l.data.i4":"Sensorization of sensitive variables for your business",
+    "l.data.i5":"Full visibility via Control Tower","l.data.i6":"Integration with ERP, WMS or TMS",
+    "l.ins.name":"Insurance &amp; Microinsurance<br>Risk Management",
+    "l.ins.desc":"Insurance and microinsurance solutions covering the risks inherent in logistics operations, protecting all actors across the chain.",
+    "l.ins.i1":"Microinsurance for carriers and operators","l.ins.i2":"Cargo, fleet and civil liability coverage",
+    "l.ins.i3":"Telemetry-based parametric insurance","l.ins.i4":"Claims management specialized in logistics",
+    "l.ops.name":"Logistics Operations<br>&amp; Structuring",
+    "l.ops.desc":"Comprehensive consulting and support in the structuring, design and fine-tuning of efficient and scalable logistics operations.",
+    "l.ops.i1":"Custom logistics operation setup","l.ops.i2":"Logistics process diagnosis and redesign",
+    "l.ops.i3":"Data analysis and business continuity gap assessment","l.ops.i4":"Team development and operational culture",
+    "l.cap.name":"M&amp;A &amp;<br>Logistics Financing",
+    "l.cap.desc":"M&A advisory and specialized financing for logistics and transportation companies seeking growth or transformation.",
+    "l.cap.i1":"M&A advisory for the logistics sector","l.cap.i2":"Fleet and asset financing structuring",
+    "l.cap.i3":"Valuation and specialized due diligence","l.cap.i4":"Connection to sector funds and investors",
+    "why.label":"Our Approach","why.title":"Why choose<br><em>SG Global</em>",
+    "why.i1t":"Sector Specialization","why.i1d":"We are not a generic provider. Every solution was designed specifically for the challenges of the logistics and transportation sector in Latin America.",
+    "why.i2t":"Integrated Ecosystem","why.i2d":"Our four lines complement each other, creating synergies no single provider can replicate. Telemetry data informs insurance; optimized operations reduce financial risk.",
+    "why.i3t":"Ongoing Partnership","why.i3d":"We don't deliver projects and walk away. Our model is a long-term strategic alliance where client success is SG Global's success.",
+    "cont.label":"Contact","cont.title":"Let's start<br><em>the conversation</em>",
+    "cont.sub":"Tell us about your operation and the SG Global team will reach out to explore how we can work together.",
+    "cf.name":"Name","cf.namePh":"Your full name","cf.company":"Company","cf.companyPh":"Your company name",
+    "cf.email":"Email","cf.phone":"Phone","cf.line":"Area of interest",
+    "cf.lo0":"Select a business line","cf.lo1":"SG Global Data — Telemetry & Traceability",
+    "cf.lo2":"SG Global Insurance — Insurance & Microinsurance","cf.lo3":"SG Global Operations — Logistics Operations",
+    "cf.lo4":"SG Global Capital — M&A & Financing","cf.lo5":"Multiple lines / Not sure yet",
+    "cf.msg":"Message","cf.msgPh":"Tell us briefly about your operation and needs…",
+    "cf.submit":"Send Message","cf.success":"✓ Message sent",
+    "nav.articles":"Insights","nav.newsletter":"Newsletter",
+    "art.label":"Industry Insights","art.title":"Knowledge that<br><em>moves the industry</em>",
+    "art.cat1":"Data & Telemetry","art.cat2":"Insurance & Risk","art.cat3":"Capital & M&A",
+    "art.date1":"March 2025","art.date2":"February 2025","art.date3":"January 2025",
+    "art.t1":"Real-time traceability: the new standard for the logistics chain in Latin America",
+    "art.e1":"How advanced telemetry is transforming operational visibility and reducing business continuity gaps for logistics operators.",
+    "art.t2":"Parametric microinsurance: intelligent protection for carriers and operators",
+    "art.e2":"Telemetry-linked parametric insurance enables dynamic coverage and automatic claims settlement — a revolution for the sector.",
+    "art.t3":"Logistics consolidation in LATAM: M&A trends and financing opportunities for 2025",
+    "art.e3":"The Latin American logistics sector is undergoing accelerated consolidation. We analyze the capital dynamics and operations redefining the transportation landscape.",
+    "art.read":"Read article",
+    "nl.label":"Newsletter","nl.title":"Logistics intelligence<br><em>in your inbox</em>",
+    "nl.sub":"A monthly bulletin with analysis, trends and practical cases from the logistics and transportation sector in Latin America. No noise — only what matters.",
+    "nl.f1":"Logistics sector trend analysis","nl.f2":"Regulatory and market updates",
+    "nl.f3":"Use cases and operational best practices","nl.f4":"Monthly frequency — no spam",
+    "nl.formTitle":"Subscribe to the bulletin","nl.formSub":"Over 500 sector professionals already receive it",
+    "nl.fname":"First name","nl.fnamePh":"Your first name","nl.flname":"Last name","nl.flnamePh":"Your last name",
+    "nl.femail":"Corporate email","nl.frole":"Role","nl.frolePh":"Select your role",
+    "nl.r1":"Operations Director / Manager","nl.r2":"Logistics / Supply Chain Manager",
+    "nl.r3":"CFO / Finance Director","nl.r4":"CEO / Founder","nl.r5":"Consultant / Advisor","nl.r6":"Other",
+    "nl.consent":"I agree to receive communications from SG Global and may unsubscribe at any time.",
+    "nl.submit":"Subscribe to the newsletter","nl.privacy":"Your information is confidential and will never be shared with third parties.",
+    "footer.copy":"© 2025 SG Global. All rights reserved."
+  }
+};
+
+let lang='es';
+function setLang(l){
+  lang=l;
+  document.documentElement.lang=l;
+  document.getElementById('btn-es').classList.toggle('active',l==='es');
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  const t=T[l];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.textContent=t[k];});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');if(t[k]!==undefined)el.innerHTML=t[k];});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(t[k]!==undefined)el.placeholder=t[k];});
+}
+
+function handleNL(e){
+  e.preventDefault();
+  const btn=document.getElementById('nl-btn');
+  btn.textContent='✓ '+(lang==='es'?'¡Suscrito con éxito!':'Successfully subscribed!');
+  btn.style.background='#22c55e';btn.style.color='#fff';
+  setTimeout(()=>{
+    btn.textContent=T[lang]['nl.submit'];
+    btn.style.background='';btn.style.color='';
+    e.target.reset();
+  },3500);
+}
+
+function handleSubmit(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('.csub');
+  btn.textContent=T[lang]['cf.success'];
+  btn.style.background='#22c55e';btn.style.color='#fff';
+  setTimeout(()=>{btn.textContent=T[lang]['cf.submit'];btn.style.background='';btn.style.color='';e.target.reset();},3000);
+}
+
+/* Nav scroll effect */
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').style.background=
+    window.scrollY>60?'rgba(10,20,38,0.96)':'rgba(15,30,51,0.75)';
+});
+
+/* ══ NEURAL NETWORK CANVAS ══ */
+(function(){
+  const canvas = document.getElementById('neural-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, nodes, mouse = {x:-9999, y:-9999};
+  let raf;
+
+  /* Brand palette */
+  const CYAN  = {r:77,  g:217, b:224};
+  const BLUE  = {r:37,  g:99,  b:235};
+  const AQUA  = {r:6,   g:182, b:212};
+  const SKY   = {r:56,  g:189, b:248};
+  const COLS  = [CYAN, AQUA, SKY, BLUE];
+
+  const NODE_COUNT   = 110;
+  const CONN_DIST    = 180;
+  const MOUSE_DIST   = 220;
+  const PULSE_SPEED  = 0.012;
+
+  function resize(){
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function randCol(){ return COLS[Math.floor(Math.random()*COLS.length)]; }
+
+  function makeNode(){
+    const col = randCol();
+    return {
+      x:  rand(0, W),
+      y:  rand(0, H),
+      vx: rand(-0.25, 0.25),
+      vy: rand(-0.20, 0.20),
+      r:  rand(1.5, 4),
+      col,
+      phase: rand(0, Math.PI*2),      // for pulsing glow
+      pulseR: rand(6, 14),            // max glow radius
+      opacity: rand(0.35, 0.85),
+    };
+  }
+
+  function init(){
+    resize();
+    nodes = Array.from({length: NODE_COUNT}, makeNode);
+  }
+
+  function rgba(c, a){ return `rgba(${c.r},${c.g},${c.b},${a})`; }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    /* subtle radial glow at centre — depth feel */
+    const grd = ctx.createRadialGradient(W*.5,H*.55,0,W*.5,H*.55,Math.max(W,H)*.6);
+    grd.addColorStop(0, 'rgba(6,182,212,0.04)');
+    grd.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0,0,W,H);
+
+    const t = performance.now() * 0.001;
+
+    /* ── connections ── */
+    for(let i=0;i<nodes.length;i++){
+      const a = nodes[i];
+      for(let j=i+1;j<nodes.length;j++){
+        const b  = nodes[j];
+        const dx = a.x-b.x, dy = a.y-b.y;
+        const d  = Math.sqrt(dx*dx+dy*dy);
+        if(d > CONN_DIST) continue;
+
+        const alpha = (1 - d/CONN_DIST) * 0.18;
+        /* blend the two node colours for the line */
+        const r = (a.col.r+b.col.r)>>1;
+        const g = (a.col.g+b.col.g)>>1;
+        const bl= (a.col.b+b.col.b)>>1;
+
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(${r},${g},${bl},${alpha})`;
+        ctx.lineWidth   = 0.7;
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+
+        /* travelling pulse along the line */
+        const progress = (Math.sin(t*1.2 + i*0.4 + j*0.3)*0.5+0.5);
+        const px = a.x + (b.x-a.x)*progress;
+        const py = a.y + (b.y-a.y)*progress;
+        ctx.beginPath();
+        ctx.arc(px, py, 1.4, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(${r},${g},${bl},${alpha*3})`;
+        ctx.fill();
+      }
+    }
+
+    /* ── mouse attraction lines ── */
+    nodes.forEach(n=>{
+      const dx=n.x-mouse.x, dy=n.y-mouse.y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d < MOUSE_DIST){
+        const alpha = (1-d/MOUSE_DIST)*0.35;
+        ctx.beginPath();
+        ctx.strokeStyle = rgba(CYAN, alpha);
+        ctx.lineWidth   = 0.9;
+        ctx.moveTo(n.x, n.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      }
+    });
+
+    /* ── nodes ── */
+    nodes.forEach((n,i)=>{
+      n.phase += PULSE_SPEED;
+      const glow = 0.5 + 0.5*Math.sin(n.phase);
+
+      /* outer halo */
+      const halo = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.pulseR*glow);
+      halo.addColorStop(0, rgba(n.col, 0.18*glow));
+      halo.addColorStop(1, rgba(n.col, 0));
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.pulseR*glow, 0, Math.PI*2);
+      ctx.fillStyle = halo;
+      ctx.fill();
+
+      /* core dot */
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fillStyle = rgba(n.col, n.opacity);
+      ctx.fill();
+
+      /* move */
+      n.x += n.vx; n.y += n.vy;
+      if(n.x<-20) n.x=W+20;
+      if(n.x>W+20) n.x=-20;
+      if(n.y<-20) n.y=H+20;
+      if(n.y>H+20) n.y=-20;
+
+      /* mouse repulsion — gentle push away */
+      const dx=n.x-mouse.x, dy=n.y-mouse.y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d < 100 && d > 0){
+        const force = (100-d)/100 * 0.4;
+        n.vx += (dx/d)*force;
+        n.vy += (dy/d)*force;
+        /* dampen so they don't accelerate forever */
+        n.vx *= 0.96;
+        n.vy *= 0.96;
+      }
+    });
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  /* init */
+  init();
+  draw();
+  window.addEventListener('resize', ()=>{ resize(); });
+
+  /* mouse tracking scoped to hero */
+  const hero = document.querySelector('.hero');
+  hero.addEventListener('mousemove', e=>{
+    const r=canvas.getBoundingClientRect();
+    mouse.x=e.clientX-r.left;
+    mouse.y=e.clientY-r.top;
+  });
+  hero.addEventListener('mouseleave', ()=>{ mouse.x=-9999; mouse.y=-9999; });
+})();
+</script>
+</body>
+</html>

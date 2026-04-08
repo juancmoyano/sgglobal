@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SG Global Insurance — Seguros y Microseguros Logísticos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Sora:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── BRAND TOKENS ── */
+:root{
+  --navy:   #1A2F4E;
+  --navy2:  #0f1e33;
+  --cyan:   #4DD9E0;
+  --sapph:  #2563EB;
+  --sapph2: #1d4ed8;
+  --sapph-light: #3b82f6;
+  --aqua:   #06B6D4;
+  --sky:    #38BDF8;
+  --silver: #94A3B8;
+  --fog:    #E2E8F0;
+  --white:  #FFFFFF;
+  --offwhite:#F8FAFC;
+
+  /* Insurance unit accent */
+  --acc:    #2563EB;
+  --acc2:   #1d4ed8;
+  --acc-light: #3b82f6;
+
+  --line: rgba(255,255,255,0.1);
+  --line-dark: rgba(26,47,78,0.12);
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Sora',sans-serif;
+  background:var(--navy2);
+  color:var(--white);
+  overflow-x:hidden;
+}
+
+/* ── LANG TOGGLE ── */
+.lang-toggle{
+  display:flex;align-items:center;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:100px;overflow:hidden;flex-shrink:0;
+}
+.lang-btn{
+  font-size:11px;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;padding:7px 16px;
+  cursor:pointer;border:none;background:transparent;
+  color:rgba(255,255,255,0.4);
+  transition:background .2s,color .2s;
+  font-family:'Sora',sans-serif;
+}
+.lang-btn.active{background:var(--acc);color:var(--white);border-radius:100px;}
+.lang-btn:not(.active):hover{color:var(--white);}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 64px;
+  background:rgba(15,30,51,0.75);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  gap:20px;
+  transition:background .3s;
+}
+.logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;font-weight:400;letter-spacing:.1em;
+  color:var(--white);flex-shrink:0;text-decoration:none;
+}
+.logo em{font-style:normal;color:var(--acc);}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{
+  font-size:12px;font-weight:400;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,0.55);
+  text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--acc-light);}
+.nav-links a.active{color:var(--white);}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.nav-cta{
+  font-size:12px;font-weight:500;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--acc-light);
+  border:1px solid rgba(59,130,246,0.4);
+  padding:9px 24px;border-radius:100px;
+  text-decoration:none;transition:all .25s;white-space:nowrap;
+}
+.nav-cta:hover{background:var(--acc);color:var(--white);border-color:var(--acc);}
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 64px 96px;overflow:hidden;
+}
+.hero-img{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#060e1c 0%,#080f20 50%,#060c1a 100%);
+  overflow:hidden;
+}
+#neural-canvas{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to right, rgba(15,30,51,0.92) 0%, rgba(15,30,51,0.6) 55%, rgba(15,30,51,0.25) 100%),
+    linear-gradient(to top,   rgba(15,30,51,0.97) 0%, transparent 55%);
+}
+
+/* Insurance badge */
+.hero-badge{
+  position:absolute;top:120px;right:64px;z-index:2;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(37,99,235,0.12);
+  border:1px solid rgba(37,99,235,0.3);
+  border-radius:100px;padding:8px 18px;
+}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--acc-light);}
+.hero-badge-text{font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--acc-light);}
+
+/* Pulse watermark */
+.hero-pulse{
+  position:absolute;right:5%;top:50%;transform:translateY(-50%);
+  width:min(420px,38vw);opacity:0.06;
+  pointer-events:none;
+}
+
+.hero-content{position:relative;z-index:2;max-width:700px;}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:400;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--acc-light);
+  margin-bottom:32px;
+}
+.eyebrow-line{width:32px;height:1px;background:var(--acc);}
+
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(48px,7vw,96px);
+  font-weight:300;line-height:.97;
+  letter-spacing:-.025em;color:var(--white);
+  margin-bottom:32px;
+}
+.hero-title em{font-style:italic;color:var(--acc-light);}
+
+.hero-sub{
+  font-size:15px;font-weight:300;line-height:1.82;
+  color:rgba(255,255,255,0.62);
+  max-width:480px;margin-bottom:48px;
+}
+
+.hero-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+.btn-primary{
+  font-size:13px;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;
+  background:var(--acc);color:var(--white);
+  padding:15px 36px;border-radius:100px;
+  text-decoration:none;display:inline-block;
+  transition:background .25s,transform .2s;
+}
+.btn-primary:hover{background:var(--acc-light);transform:translateY(-2px);}
+.btn-ghost{
+  font-size:13px;font-weight:300;color:rgba(255,255,255,0.6);
+  text-decoration:none;display:flex;align-items:center;gap:7px;
+  transition:color .2s;
+}
+.btn-ghost:hover{color:var(--white);}
+.btn-ghost svg{transition:transform .2s;}
+.btn-ghost:hover svg{transform:translateX(4px);}
+
+/* scroll cue */
+.hero-scroll{
+  position:absolute;bottom:36px;left:64px;z-index:2;
+  display:flex;align-items:center;gap:12px;
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);
+}
+.scroll-bar{width:40px;height:1px;background:rgba(255,255,255,0.15);position:relative;overflow:hidden;}
+.scroll-bar::after{
+  content:'';position:absolute;inset:0;background:var(--acc);
+  transform:translateX(-100%);
+  animation:scanBar 2.4s ease-in-out infinite;
+}
+@keyframes scanBar{0%{transform:translateX(-100%)}50%{transform:translateX(0)}100%{transform:translateX(100%)}}
+
+/* Pulse SVG animation */
+@keyframes pulseRing{0%,100%{r:42;opacity:.6}50%{r:48;opacity:.2}}
+@keyframes nodeGlow{0%,100%{opacity:.5}50%{opacity:1}}
+.p-ring{animation:pulseRing 3s ease-in-out infinite;}
+.p-node{animation:nodeGlow 2.5s ease-in-out infinite;}
+.p-node:nth-child(2){animation-delay:.4s;}
+.p-node:nth-child(3){animation-delay:.8s;}
+.p-node:nth-child(4){animation-delay:1.2s;}
+.p-node:nth-child(5){animation-delay:1.6s;}
+.p-node:nth-child(6){animation-delay:2s;}
+
+/* ── SHARED SECTION ── */
+section{padding:120px 64px;}
+
+.s-label{
+  font-size:11px;font-weight:500;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--acc-light);
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.s-label::before{content:'';width:20px;height:1px;background:var(--acc);}
+
+.s-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,4.5vw,54px);
+  font-weight:300;line-height:1.08;
+}
+.s-title em{font-style:italic;color:var(--acc-light);}
+
+/* ── COBERTURAS — dark ── */
+#coberturas{
+  position:relative;padding:0;overflow:hidden;
+  background:var(--navy2);
+}
+.coberturas-inner{padding:120px 64px;}
+
+.cov-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.06);
+  margin-top:64px;
+}
+.cov-card{
+  background:rgba(15,25,44,0.8);
+  padding:40px 32px;
+  position:relative;overflow:hidden;
+  transition:background .3s;
+}
+.cov-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(37,99,235,0.08),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.cov-card:hover::after{opacity:1;}
+.cov-card-inner{position:relative;z-index:1;}
+.cov-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:rgba(37,99,235,0.15);
+  border:1px solid rgba(37,99,235,0.25);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:22px;transition:background .3s;
+}
+.cov-card:hover .cov-icon{background:rgba(37,99,235,0.25);}
+.cov-icon svg{width:20px;height:20px;stroke:var(--acc-light);}
+.cov-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:11px;font-weight:400;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--acc-light);
+  opacity:.6;margin-bottom:8px;
+}
+.cov-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:21px;font-weight:400;line-height:1.2;
+  color:var(--white);margin-bottom:12px;
+}
+.cov-desc{font-size:13px;font-weight:300;line-height:1.78;color:rgba(255,255,255,0.5);}
+
+/* ── ACTORES — light ── */
+#actores{
+  position:relative;padding:0;overflow:hidden;
+}
+.actores-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1586528116493-a029325540fa?auto=format&fit=crop&w=1600&q=80')
+  center/cover no-repeat;
+}
+.actores-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(248,250,252,0.97) 0%,rgba(248,250,252,0.97) 50%,rgba(248,250,252,0.7) 100%);
+}
+.actores-inner{
+  position:relative;z-index:2;
+  padding:120px 64px;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+#actores .s-label{color:var(--navy);}
+#actores .s-label::before{background:var(--sapph2);}
+#actores .s-title{color:var(--navy);}
+#actores .s-title em{color:var(--sapph);}
+
+.actores-text{font-size:15px;font-weight:300;line-height:1.85;color:#3a4a5c;margin-bottom:32px;}
+
+.actor-list{display:flex;flex-direction:column;gap:0;}
+.actor-item{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:20px 0;border-bottom:1px solid rgba(26,47,78,0.1);
+  opacity:0;transform:translateX(-12px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+.actor-item.vis{opacity:1;transform:none;}
+.actor-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:300;color:var(--sapph);
+  opacity:.4;min-width:36px;line-height:1;
+}
+.actor-content h4{
+  font-size:13px;font-weight:500;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--navy);margin-bottom:4px;
+}
+.actor-content p{font-size:13px;font-weight:300;line-height:1.65;color:#647b94;}
+
+/* ── PROCESO — dark image ── */
+#proceso{position:relative;padding:0;overflow:hidden;}
+.proceso-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80')
+  center/cover no-repeat;
+}
+.proceso-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(8,15,32,0.96) 0%,rgba(15,25,50,0.94) 100%);
+}
+.proceso-inner{position:relative;z-index:2;padding:120px 64px;}
+
+.proceso-steps{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;margin-top:72px;position:relative;
+}
+.proceso-steps::before{
+  content:'';position:absolute;top:28px;left:calc(12.5% + 16px);
+  right:calc(12.5% + 16px);height:1px;
+  background:linear-gradient(to right,transparent,rgba(37,99,235,0.4),rgba(37,99,235,0.4),transparent);
+}
+.step{
+  text-align:center;padding:0 24px;
+  opacity:0;transform:translateY(16px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.step.vis{opacity:1;transform:none;}
+.step:nth-child(2){transition-delay:.15s;}
+.step:nth-child(3){transition-delay:.30s;}
+.step:nth-child(4){transition-delay:.45s;}
+.step-circle{
+  width:56px;height:56px;border-radius:50%;
+  background:rgba(37,99,235,0.15);
+  border:1px solid rgba(37,99,235,0.35);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  transition:background .3s,border-color .3s;
+}
+.step:hover .step-circle{background:rgba(37,99,235,0.3);border-color:rgba(37,99,235,0.6);}
+.step-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;font-weight:300;color:var(--acc-light);
+}
+.step-title{
+  font-size:13px;font-weight:500;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--white);margin-bottom:10px;
+}
+.step-desc{font-size:13px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.5);}
+
+/* ── DIFERENCIADORES — light ── */
+#diferenciadores{position:relative;padding:0;overflow:hidden;}
+.dif-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80')
+  center 30%/cover no-repeat;
+}
+.dif-overlay{position:absolute;inset:0;background:rgba(248,250,252,0.95);}
+.dif-inner{position:relative;z-index:2;padding:120px 64px;}
+#diferenciadores .s-label{color:var(--navy);}
+#diferenciadores .s-label::before{background:var(--sapph2);}
+#diferenciadores .s-title{color:var(--navy);}
+#diferenciadores .s-title em{color:var(--sapph);}
+
+.dif-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px;}
+.dif-item{
+  background:#fff;border:1px solid rgba(26,47,78,0.08);
+  border-radius:12px;padding:36px 28px;
+  border-top:3px solid var(--sapph);
+  opacity:0;transform:translateY(14px);
+  transition:opacity .6s ease,transform .6s ease,box-shadow .3s;
+}
+.dif-item.vis{opacity:1;transform:none;}
+.dif-item:nth-child(2){transition-delay:.12s;}
+.dif-item:nth-child(3){transition-delay:.24s;}
+.dif-item:hover{box-shadow:0 12px 36px rgba(37,99,235,0.1);}
+.dif-icon{
+  width:40px;height:40px;border-radius:8px;
+  background:rgba(37,99,235,0.08);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;
+}
+.dif-icon svg{width:18px;height:18px;stroke:var(--sapph);}
+.dif-title{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:10px;}
+.dif-desc{font-size:13px;font-weight:300;line-height:1.8;color:#4a5e73;}
+
+/* ── COTIZACIÓN — dark ── */
+#cotizacion{position:relative;padding:0;overflow:hidden;}
+.cotiz-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1611095565494-8b0e18c7e58b?auto=format&fit=crop&w=1600&q=80')
+  center/cover no-repeat;
+}
+.cotiz-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(8,15,32,0.95),rgba(8,15,32,0.98));
+}
+.cotiz-inner{
+  position:relative;z-index:2;
+  padding:120px 64px;
+  max-width:760px;margin:0 auto;text-align:center;
+}
+.cotiz-inner .s-label{justify-content:center;color:var(--acc-light);}
+.cotiz-inner .s-label::before{display:none;}
+.cotiz-inner .s-label::after{content:'';width:20px;height:1px;background:var(--acc);}
+.cotiz-inner .s-title{color:var(--white);}
+
+.cotiz-sub{
+  font-size:15px;font-weight:300;line-height:1.8;
+  color:rgba(255,255,255,0.48);margin:22px auto 52px;max-width:480px;
+}
+
+.qform{display:flex;flex-direction:column;gap:14px;text-align:left;}
+.qrow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.qgrp{display:flex;flex-direction:column;gap:6px;}
+.qgrp label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.qgrp input,.qgrp select,.qgrp textarea{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;padding:12px 16px;
+  color:var(--white);font-family:'Sora',sans-serif;
+  font-size:14px;font-weight:300;
+  outline:none;width:100%;
+  transition:border-color .2s,background .2s;
+}
+.qgrp input::placeholder,.qgrp textarea::placeholder{color:rgba(255,255,255,0.2);}
+.qgrp input:focus,.qgrp select:focus,.qgrp textarea:focus{
+  border-color:var(--acc-light);background:rgba(37,99,235,0.06);
+}
+.qgrp select option{background:#0f1e33;color:var(--white);}
+.qgrp textarea{resize:vertical;min-height:110px;}
+.qsub{
+  margin-top:8px;background:var(--acc);border:none;color:var(--white);
+  font-family:'Sora',sans-serif;font-size:13px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:16px 40px;border-radius:100px;
+  cursor:pointer;width:100%;
+  transition:background .2s,transform .2s;
+}
+.qsub:hover{background:var(--acc-light);transform:translateY(-1px);}
+
+/* ── FOOTER ── */
+footer{
+  padding:40px 64px;
+  border-top:1px solid rgba(255,255,255,0.07);
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--navy2);
+}
+.f-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;font-weight:400;letter-spacing:.08em;color:var(--white);
+  text-decoration:none;
+}
+.f-logo em{font-style:normal;color:var(--acc-light);}
+.f-nav{display:flex;gap:28px;list-style:none;}
+.f-nav a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);text-decoration:none;transition:color .2s;}
+.f-nav a:hover{color:var(--acc-light);}
+.f-copy{font-size:11px;color:rgba(255,255,255,0.18);}
+
+/* ── PULSE LOGO ── */
+.pulse-mark{display:block;width:48px;height:48px;margin-bottom:16px;}
+
+/* ── REVEAL ── */
+.rev{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+.rev.vis{opacity:1;transform:none;}
+.rev2{transition-delay:.1s;}
+.rev3{transition-delay:.2s;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:16px 24px;}
+  .nav-links{display:none;}
+  .hero{padding:0 24px 80px;}
+  .hero-badge{display:none;}
+  .hero-scroll{left:24px;}
+  .coberturas-inner{padding:80px 24px;}
+  .cov-grid{grid-template-columns:1fr;}
+  .actores-inner{grid-template-columns:1fr;gap:48px;padding:80px 24px;}
+  .actores-overlay{background:rgba(248,250,252,0.97)!important;}
+  .proceso-inner{padding:80px 24px;}
+  .proceso-steps{grid-template-columns:1fr 1fr;gap:40px;}
+  .proceso-steps::before{display:none;}
+  .dif-inner{padding:80px 24px;}
+  .dif-grid{grid-template-columns:1fr;}
+  .cotiz-inner{padding:80px 24px;}
+  .qrow{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:20px;text-align:center;padding:32px 24px;}
+  .f-nav{flex-wrap:wrap;justify-content:center;}
+}
+@media(max-width:480px){
+  .proceso-steps{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a class="logo" href="index.html">SG <em>Global</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html#nosotros" data-i18n="nav.about">Nosotros</a></li>
+    <li><a href="index.html#lineas"   data-i18n="nav.lines">Líneas</a></li>
+    <li><a href="index.html#enfoque"  data-i18n="nav.why">Enfoque</a></li>
+    <li><a href="seguros.html"        class="active" data-i18n="nav.insurance">Insurance</a></li>
+    <li><a href="index.html#articulos" data-i18n="nav.articles">Artículos</a></li>
+    <li><a href="#cotizacion"          data-i18n="nav.contact">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn"        id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="#cotizacion" class="nav-cta" data-i18n="nav.cta">Cotizar</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-img">
+    <canvas id="neural-canvas"></canvas>
+  </div>
+  <div class="hero-overlay"></div>
+
+  <!-- Insurance badge -->
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    <span class="hero-badge-text">SG Global Insurance</span>
+  </div>
+
+  <!-- Pulse watermark -->
+  <svg class="hero-pulse" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle class="p-ring" cx="200" cy="200" r="42" stroke="white" stroke-width="1.5"/>
+    <circle cx="200" cy="200" r="10" fill="white"/>
+    <line x1="200" y1="190" x2="200" y2="80"  stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="200" y1="210" x2="200" y2="320" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="190" y1="200" x2="90"  y2="140" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="210" y1="200" x2="310" y2="140" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="210" y1="200" x2="310" y2="270" stroke="white" stroke-width="1" opacity=".6"/>
+    <circle class="p-node" cx="200" cy="72"  r="8" fill="white"/>
+    <circle class="p-node" cx="200" cy="328" r="8" fill="white"/>
+    <circle class="p-node" cx="82"  cy="132" r="8" fill="white"/>
+    <circle class="p-node" cx="318" cy="132" r="8" fill="white"/>
+    <circle class="p-node" cx="318" cy="278" r="8" fill="white"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-line"></span>
+      <span data-i18n="hero.eyebrow">SG Global Insurance</span>
+    </div>
+    <h1 class="hero-title" data-i18n-html="hero.title">
+      Protección <em>inteligente</em><br>para la logística
+    </h1>
+    <p class="hero-sub" data-i18n="hero.sub">
+      Seguros y microseguros especializados que cubren cada riesgo de la cadena logística — desde la carga hasta la flota — con tecnología paramétrica vinculada a telemetría.
+    </p>
+    <div class="hero-actions">
+      <a href="#cotizacion" class="btn-primary" data-i18n="hero.cta1">Solicitar Cotización</a>
+      <a href="#coberturas" class="btn-ghost">
+        <span data-i18n="hero.cta2">Ver coberturas</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-bar"></div>
+    <span data-i18n="hero.scroll">Scroll</span>
+  </div>
+</section>
+
+<!-- ══ COBERTURAS ══ -->
+<section id="coberturas">
+  <div class="coberturas-inner">
+    <!-- Pulse mark -->
+    <svg class="pulse-mark" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="5" fill="var(--acc)"/>
+      <line x1="24" y1="19" x2="24" y2="8"  stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+      <line x1="24" y1="29" x2="24" y2="40" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+      <line x1="20" y1="22" x2="10" y2="16" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+      <line x1="28" y1="22" x2="38" y2="16" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+      <line x1="28" y1="26" x2="38" y2="32" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+      <circle cx="24" cy="6"  r="3" fill="var(--acc)" opacity=".7"/>
+      <circle cx="24" cy="42" r="3" fill="var(--acc)" opacity=".7"/>
+      <circle cx="8"  cy="14" r="3" fill="var(--acc)" opacity=".7"/>
+      <circle cx="40" cy="14" r="3" fill="var(--acc)" opacity=".7"/>
+      <circle cx="40" cy="34" r="3" fill="var(--acc)" opacity=".7"/>
+    </svg>
+    <div class="s-label rev" data-i18n="cov.label">Coberturas</div>
+    <h2 class="s-title rev rev2" data-i18n-html="cov.title">¿Qué<br><em>cubrimos?</em></h2>
+
+    <div class="cov-grid">
+      <!-- Card 1 -->
+      <div class="cov-card rev">
+        <div class="cov-card-inner">
+          <div class="cov-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <div class="cov-num">01</div>
+          <h3 class="cov-title" data-i18n="cov.t1">Seguros de Carga</h3>
+          <p class="cov-desc" data-i18n="cov.d1">Cobertura integral para mercancías en tránsito — terrestre, aéreo y marítimo. Protección contra pérdida, daño, robo y deterioro durante toda la cadena de distribución.</p>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="cov-card rev rev2">
+        <div class="cov-card-inner">
+          <div class="cov-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+          </div>
+          <div class="cov-num">02</div>
+          <h3 class="cov-title" data-i18n="cov.t2">Seguro de Flota</h3>
+          <p class="cov-desc" data-i18n="cov.d2">Protección completa para vehículos de transporte de carga: camiones, tractomulas y vehículos especiales. Cubre daños propios, responsabilidad civil y accidentes viales.</p>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="cov-card rev rev3">
+        <div class="cov-card-inner">
+          <div class="cov-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="cov-num">03</div>
+          <h3 class="cov-title" data-i18n="cov.t3">Responsabilidad Civil</h3>
+          <p class="cov-desc" data-i18n="cov.d3">Cobertura de responsabilidad civil del transportador y del operador logístico frente a terceros, daños a la carga de clientes y reclamaciones derivadas de la operación.</p>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="cov-card rev">
+        <div class="cov-card-inner">
+          <div class="cov-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <div class="cov-num">04</div>
+          <h3 class="cov-title" data-i18n="cov.t4">Seguros Paramétricos</h3>
+          <p class="cov-desc" data-i18n="cov.d4">Productos innovadores vinculados a telemetría y variables objetivas: velocidad, temperatura, eventos de impacto, rutas. Liquidación automática sin papeleo ni peritaje prolongado.</p>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="cov-card rev rev2">
+        <div class="cov-card-inner">
+          <div class="cov-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="cov-num">05</div>
+          <h3 class="cov-title" data-i18n="cov.t5">Microseguros</h3>
+          <p class="cov-desc" data-i18n="cov.d5">Productos de bajo costo y alta penetración para conductores independientes, propietarios de vehículos y pequeños operadores. Accesibles, flexibles y fáciles de contratar.</p>
+        </div>
+      </div>
+      <!-- Card 6 -->
+      <div class="cov-card rev rev3">
+        <div class="cov-card-inner">
+          <div class="cov-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+            </svg>
+          </div>
+          <div class="cov-num">06</div>
+          <h3 class="cov-title" data-i18n="cov.t6">Gestión de Siniestros</h3>
+          <p class="cov-desc" data-i18n="cov.d6">Acompañamiento especializado en el proceso de reclamación. Nuestro equipo conoce el sector logístico y gestiona cada siniestro con agilidad, transparencia y orientación al resultado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ACTORES ══ -->
+<section id="actores">
+  <div class="actores-bg"></div>
+  <div class="actores-overlay"></div>
+  <div class="actores-inner">
+    <div>
+      <div class="s-label rev" data-i18n="act.label">¿A quién va dirigido?</div>
+      <h2 class="s-title rev rev2" data-i18n-html="act.title">Para todos los<br><em>actores de la cadena</em></h2>
+      <p class="actores-text rev rev3" data-i18n="act.text">Cada actor de la cadena logística enfrenta riesgos distintos. En SG Global Insurance diseñamos coberturas específicas para cada rol, garantizando protección real donde más se necesita.</p>
+    </div>
+    <div>
+      <div class="actor-list">
+        <div class="actor-item">
+          <div class="actor-num">01</div>
+          <div class="actor-content">
+            <h4 data-i18n="act.a1t">Transportadores y Propietarios de Flota</h4>
+            <p data-i18n="act.a1d">Desde camioneros independientes hasta empresas con flotas de cientos de vehículos. Protección de activos, responsabilidad y carga.</p>
+          </div>
+        </div>
+        <div class="actor-item">
+          <div class="actor-num">02</div>
+          <div class="actor-content">
+            <h4 data-i18n="act.a2t">Operadores Logísticos y 3PL</h4>
+            <p data-i18n="act.a2d">Empresas que gestionan operaciones de terceros. Cobertura de responsabilidad civil, daños a carga de clientes y errores operativos.</p>
+          </div>
+        </div>
+        <div class="actor-item">
+          <div class="actor-num">03</div>
+          <div class="actor-content">
+            <h4 data-i18n="act.a3t">Generadores de Carga</h4>
+            <p data-i18n="act.a3d">Industrias y comercios que despachan mercancías. Seguro de carga para proteger el valor de su mercancía durante el tránsito.</p>
+          </div>
+        </div>
+        <div class="actor-item">
+          <div class="actor-num">04</div>
+          <div class="actor-content">
+            <h4 data-i18n="act.a4t">Agencias de Carga y Agentes de Aduanas</h4>
+            <p data-i18n="act.a4d">Intermediarios que coordinan el movimiento de mercancías. Responsabilidad civil profesional y cobertura ante reclamaciones de clientes.</p>
+          </div>
+        </div>
+        <div class="actor-item">
+          <div class="actor-num">05</div>
+          <div class="actor-content">
+            <h4 data-i18n="act.a5t">Conductores Independientes</h4>
+            <p data-i18n="act.a5d">Microseguros accesibles para conductores que trabajan de forma independiente, con coberturas flexibles adaptadas a su realidad.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROCESO ══ -->
+<section id="proceso">
+  <div class="proceso-bg"></div>
+  <div class="proceso-overlay"></div>
+  <div class="proceso-inner">
+    <div class="s-label rev" data-i18n="proc.label">Cómo Funciona</div>
+    <h2 class="s-title rev rev2" data-i18n-html="proc.title">Proceso simple,<br><em>protección total</em></h2>
+    <div class="proceso-steps">
+      <div class="step">
+        <div class="step-circle"><span class="step-n">01</span></div>
+        <h4 class="step-title" data-i18n="proc.s1t">Diagnóstico</h4>
+        <p class="step-desc" data-i18n="proc.s1d">Analizamos su operación, flota y perfil de riesgo para identificar las coberturas más adecuadas.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle"><span class="step-n">02</span></div>
+        <h4 class="step-title" data-i18n="proc.s2t">Cotización</h4>
+        <p class="step-desc" data-i18n="proc.s2d">Elaboramos una propuesta a la medida con condiciones claras, sin letra pequeña.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle"><span class="step-n">03</span></div>
+        <h4 class="step-title" data-i18n="proc.s3t">Vinculación</h4>
+        <p class="step-desc" data-i18n="proc.s3d">Proceso ágil de contratación, con integración opcional a su plataforma de telemetría existente.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle"><span class="step-n">04</span></div>
+        <h4 class="step-title" data-i18n="proc.s4t">Acompañamiento</h4>
+        <p class="step-desc" data-i18n="proc.s4d">Soporte continuo y gestión especializada de siniestros durante toda la vigencia de la póliza.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DIFERENCIADORES ══ -->
+<section id="diferenciadores">
+  <div class="dif-bg"></div>
+  <div class="dif-overlay"></div>
+  <div class="dif-inner">
+    <div class="s-label" data-i18n="dif.label">Por qué SG Global Insurance</div>
+    <h2 class="s-title" data-i18n-html="dif.title">Seguros diseñados<br><em>para la logística real</em></h2>
+    <div class="dif-grid">
+      <div class="dif-item">
+        <div class="dif-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <h3 class="dif-title" data-i18n="dif.t1">Seguros Paramétricos + Telemetría</h3>
+        <p class="dif-desc" data-i18n="dif.d1">Vinculamos las coberturas a datos reales de telemetría. Cuando se activa un evento (impacto, temperatura, desvío de ruta), la liquidación es automática — sin esperas ni peritajes complejos.</p>
+      </div>
+      <div class="dif-item">
+        <div class="dif-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3 class="dif-title" data-i18n="dif.t2">Especialización Sectorial</h3>
+        <p class="dif-desc" data-i18n="dif.d2">No somos un broker genérico. Nuestro equipo conoce en detalle los riesgos del transporte y la logística en Latinoamérica. Diseñamos pólizas que realmente cubren lo que necesita el sector.</p>
+      </div>
+      <div class="dif-item">
+        <div class="dif-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3 class="dif-title" data-i18n="dif.t3">Acceso para Todos los Actores</h3>
+        <p class="dif-desc" data-i18n="dif.d3">Desde microseguros para conductores independientes hasta pólizas corporativas para grandes operadores. Un ecosistema de protección que cubre toda la cadena, sin importar el tamaño.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COTIZACIÓN ══ -->
+<section id="cotizacion">
+  <div class="cotiz-bg"></div>
+  <div class="cotiz-overlay"></div>
+  <div class="cotiz-inner">
+    <div class="s-label rev" data-i18n="quot.label">Cotización</div>
+    <h2 class="s-title rev rev2" data-i18n-html="quot.title">Solicite su<br><em>cotización</em></h2>
+    <p class="cotiz-sub rev rev3" data-i18n="quot.sub">Complete el formulario y un especialista de SG Global Insurance le contactará en menos de 24 horas con una propuesta a su medida.</p>
+    <form class="qform rev" onsubmit="handleQuot(event)">
+      <div class="qrow">
+        <div class="qgrp"><label data-i18n="qf.name">Nombre</label><input type="text" name="nombre" data-i18n-ph="qf.namePh" placeholder="Su nombre completo" required></div>
+        <div class="qgrp"><label data-i18n="qf.company">Empresa</label><input type="text" name="empresa" data-i18n-ph="qf.companyPh" placeholder="Nombre de su compañía" required></div>
+      </div>
+      <div class="qrow">
+        <div class="qgrp"><label data-i18n="qf.email">Email</label><input type="email" name="email" placeholder="correo@empresa.com" required></div>
+        <div class="qgrp"><label data-i18n="qf.phone">Teléfono</label><input type="tel" name="telefono" placeholder="+57 300 000 0000"></div>
+      </div>
+      <div class="qgrp">
+        <label data-i18n="qf.coverage">Cobertura de interés</label>
+        <select name="cobertura">
+          <option value="" disabled selected data-i18n="qf.co0">Seleccione una cobertura</option>
+          <option data-i18n="qf.co1">Seguro de Carga</option>
+          <option data-i18n="qf.co2">Seguro de Flota</option>
+          <option data-i18n="qf.co3">Responsabilidad Civil</option>
+          <option data-i18n="qf.co4">Seguro Paramétrico</option>
+          <option data-i18n="qf.co5">Microseguro</option>
+          <option data-i18n="qf.co6">Gestión de Siniestros</option>
+          <option data-i18n="qf.co7">Varias / No estoy seguro</option>
+        </select>
+      </div>
+      <div class="qgrp">
+        <label data-i18n="qf.fleet">Tamaño de flota / operación</label>
+        <select name="flota">
+          <option value="" disabled selected data-i18n="qf.fl0">Seleccione tamaño</option>
+          <option data-i18n="qf.fl1">1–5 vehículos / Independiente</option>
+          <option data-i18n="qf.fl2">6–20 vehículos</option>
+          <option data-i18n="qf.fl3">21–100 vehículos</option>
+          <option data-i18n="qf.fl4">Más de 100 vehículos</option>
+          <option data-i18n="qf.fl5">No aplica (operador / generador de carga)</option>
+        </select>
+      </div>
+      <div class="qgrp"><label data-i18n="qf.msg">Información adicional</label><textarea name="mensaje" data-i18n-ph="qf.msgPh" placeholder="Cuéntenos sobre su operación, tipo de carga o necesidad específica…"></textarea></div>
+      <button type="submit" class="qsub" id="quot-btn" data-i18n="qf.submit">Solicitar Cotización</button>
+    </form>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <a class="f-logo" href="index.html">SG <em>Global</em></a>
+  <ul class="f-nav">
+    <li><a href="index.html#nosotros"  data-i18n="nav.about">Nosotros</a></li>
+    <li><a href="index.html#lineas"    data-i18n="nav.lines">Líneas</a></li>
+    <li><a href="seguros.html"         data-i18n="nav.insurance">Insurance</a></li>
+    <li><a href="index.html#articulos" data-i18n="nav.articles">Artículos</a></li>
+    <li><a href="#cotizacion"          data-i18n="nav.contact">Contacto</a></li>
+  </ul>
+  <div class="f-copy" data-i18n="footer.copy">© 2025 SG Global Insurance. Todos los derechos reservados.</div>
+</footer>
+
+<script>
+/* ══ SCROLL REVEAL ══ */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      if(e.target.classList.contains('actor-list')){
+        e.target.querySelectorAll('.actor-item').forEach((p,i)=>{
+          setTimeout(()=>p.classList.add('vis'),i*100);
+        });
+      }
+      if(e.target.classList.contains('proceso-steps')){
+        e.target.querySelectorAll('.step').forEach((el,i)=>{
+          setTimeout(()=>el.classList.add('vis'),i*140);
+        });
+      }
+    }
+  });
+},{threshold:0.1});
+
+document.querySelectorAll('.rev,.actor-list,.proceso-steps').forEach(el=>io.observe(el));
+document.querySelectorAll('.dif-item,.step').forEach(el=>io.observe(el));
+
+/* ══ i18n ══ */
+const T={
+  es:{
+    "nav.about":"Nosotros","nav.lines":"Líneas","nav.why":"Enfoque",
+    "nav.insurance":"Insurance","nav.articles":"Artículos","nav.contact":"Contacto","nav.cta":"Cotizar",
+    "hero.eyebrow":"SG Global Insurance",
+    "hero.title":"Protección <em>inteligente</em><br>para la logística",
+    "hero.sub":"Seguros y microseguros especializados que cubren cada riesgo de la cadena logística — desde la carga hasta la flota — con tecnología paramétrica vinculada a telemetría.",
+    "hero.cta1":"Solicitar Cotización","hero.cta2":"Ver coberturas","hero.scroll":"Scroll",
+    "cov.label":"Coberturas","cov.title":"¿Qué<br><em>cubrimos?</em>",
+    "cov.t1":"Seguros de Carga","cov.d1":"Cobertura integral para mercancías en tránsito — terrestre, aéreo y marítimo. Protección contra pérdida, daño, robo y deterioro durante toda la cadena de distribución.",
+    "cov.t2":"Seguro de Flota","cov.d2":"Protección completa para vehículos de transporte de carga: camiones, tractomulas y vehículos especiales. Cubre daños propios, responsabilidad civil y accidentes viales.",
+    "cov.t3":"Responsabilidad Civil","cov.d3":"Cobertura de responsabilidad civil del transportador y del operador logístico frente a terceros, daños a la carga de clientes y reclamaciones derivadas de la operación.",
+    "cov.t4":"Seguros Paramétricos","cov.d4":"Productos innovadores vinculados a telemetría y variables objetivas: velocidad, temperatura, eventos de impacto, rutas. Liquidación automática sin papeleo ni peritaje prolongado.",
+    "cov.t5":"Microseguros","cov.d5":"Productos de bajo costo y alta penetración para conductores independientes, propietarios de vehículos y pequeños operadores. Accesibles, flexibles y fáciles de contratar.",
+    "cov.t6":"Gestión de Siniestros","cov.d6":"Acompañamiento especializado en el proceso de reclamación. Nuestro equipo conoce el sector logístico y gestiona cada siniestro con agilidad, transparencia y orientación al resultado.",
+    "act.label":"¿A quién va dirigido?","act.title":"Para todos los<br><em>actores de la cadena</em>",
+    "act.text":"Cada actor de la cadena logística enfrenta riesgos distintos. En SG Global Insurance diseñamos coberturas específicas para cada rol, garantizando protección real donde más se necesita.",
+    "act.a1t":"Transportadores y Propietarios de Flota","act.a1d":"Desde camioneros independientes hasta empresas con flotas de cientos de vehículos. Protección de activos, responsabilidad y carga.",
+    "act.a2t":"Operadores Logísticos y 3PL","act.a2d":"Empresas que gestionan operaciones de terceros. Cobertura de responsabilidad civil, daños a carga de clientes y errores operativos.",
+    "act.a3t":"Generadores de Carga","act.a3d":"Industrias y comercios que despachan mercancías. Seguro de carga para proteger el valor de su mercancía durante el tránsito.",
+    "act.a4t":"Agencias de Carga y Agentes de Aduanas","act.a4d":"Intermediarios que coordinan el movimiento de mercancías. Responsabilidad civil profesional y cobertura ante reclamaciones de clientes.",
+    "act.a5t":"Conductores Independientes","act.a5d":"Microseguros accesibles para conductores que trabajan de forma independiente, con coberturas flexibles adaptadas a su realidad.",
+    "proc.label":"Cómo Funciona","proc.title":"Proceso simple,<br><em>protección total</em>",
+    "proc.s1t":"Diagnóstico","proc.s1d":"Analizamos su operación, flota y perfil de riesgo para identificar las coberturas más adecuadas.",
+    "proc.s2t":"Cotización","proc.s2d":"Elaboramos una propuesta a la medida con condiciones claras, sin letra pequeña.",
+    "proc.s3t":"Vinculación","proc.s3d":"Proceso ágil de contratación, con integración opcional a su plataforma de telemetría existente.",
+    "proc.s4t":"Acompañamiento","proc.s4d":"Soporte continuo y gestión especializada de siniestros durante toda la vigencia de la póliza.",
+    "dif.label":"Por qué SG Global Insurance","dif.title":"Seguros diseñados<br><em>para la logística real</em>",
+    "dif.t1":"Seguros Paramétricos + Telemetría","dif.d1":"Vinculamos las coberturas a datos reales de telemetría. Cuando se activa un evento, la liquidación es automática — sin esperas ni peritajes complejos.",
+    "dif.t2":"Especialización Sectorial","dif.d2":"No somos un broker genérico. Nuestro equipo conoce en detalle los riesgos del transporte y la logística en Latinoamérica. Diseñamos pólizas que realmente cubren lo que necesita el sector.",
+    "dif.t3":"Acceso para Todos los Actores","dif.d3":"Desde microseguros para conductores independientes hasta pólizas corporativas para grandes operadores. Un ecosistema de protección que cubre toda la cadena.",
+    "quot.label":"Cotización","quot.title":"Solicite su<br><em>cotización</em>",
+    "quot.sub":"Complete el formulario y un especialista de SG Global Insurance le contactará en menos de 24 horas con una propuesta a su medida.",
+    "qf.name":"Nombre","qf.namePh":"Su nombre completo","qf.company":"Empresa","qf.companyPh":"Nombre de su compañía",
+    "qf.email":"Email","qf.phone":"Teléfono","qf.coverage":"Cobertura de interés",
+    "qf.co0":"Seleccione una cobertura","qf.co1":"Seguro de Carga","qf.co2":"Seguro de Flota",
+    "qf.co3":"Responsabilidad Civil","qf.co4":"Seguro Paramétrico","qf.co5":"Microseguro",
+    "qf.co6":"Gestión de Siniestros","qf.co7":"Varias / No estoy seguro",
+    "qf.fleet":"Tamaño de flota / operación",
+    "qf.fl0":"Seleccione tamaño","qf.fl1":"1–5 vehículos / Independiente","qf.fl2":"6–20 vehículos",
+    "qf.fl3":"21–100 vehículos","qf.fl4":"Más de 100 vehículos","qf.fl5":"No aplica (operador / generador de carga)",
+    "qf.msg":"Información adicional","qf.msgPh":"Cuéntenos sobre su operación, tipo de carga o necesidad específica…",
+    "qf.submit":"Solicitar Cotización","qf.success":"✓ Solicitud enviada",
+    "footer.copy":"© 2025 SG Global Insurance. Todos los derechos reservados."
+  },
+  en:{
+    "nav.about":"About","nav.lines":"Solutions","nav.why":"Approach",
+    "nav.insurance":"Insurance","nav.articles":"Insights","nav.contact":"Contact","nav.cta":"Get a Quote",
+    "hero.eyebrow":"SG Global Insurance",
+    "hero.title":"<em>Intelligent</em> protection<br>for logistics",
+    "hero.sub":"Specialized insurance and microinsurance covering every risk in the logistics chain — from cargo to fleet — with parametric technology linked to real-time telemetry.",
+    "hero.cta1":"Request a Quote","hero.cta2":"View coverages","hero.scroll":"Scroll",
+    "cov.label":"Coverages","cov.title":"What do<br><em>we cover?</em>",
+    "cov.t1":"Cargo Insurance","cov.d1":"Comprehensive coverage for goods in transit — road, air and sea. Protection against loss, damage, theft and deterioration throughout the entire distribution chain.",
+    "cov.t2":"Fleet Insurance","cov.d2":"Full protection for freight vehicles: trucks, tractor-trailers and special vehicles. Covers own damage, civil liability and road accidents.",
+    "cov.t3":"Civil Liability","cov.d3":"Civil liability coverage for carriers and logistics operators toward third parties, client cargo damage, and claims arising from operations.",
+    "cov.t4":"Parametric Insurance","cov.d4":"Innovative products linked to telemetry and objective variables: speed, temperature, impact events, routes. Automatic settlement without lengthy paperwork or expert assessments.",
+    "cov.t5":"Microinsurance","cov.d5":"Low-cost, high-penetration products for independent drivers, vehicle owners and small operators. Accessible, flexible and easy to purchase.",
+    "cov.t6":"Claims Management","cov.d6":"Specialized support throughout the claims process. Our team understands logistics and handles every claim with speed, transparency and a results-oriented approach.",
+    "act.label":"Who is it for?","act.title":"For every<br><em>actor in the chain</em>",
+    "act.text":"Every actor in the logistics chain faces different risks. At SG Global Insurance we design specific coverages for each role, ensuring real protection exactly where it is needed most.",
+    "act.a1t":"Carriers and Fleet Owners","act.a1d":"From independent truck drivers to companies with fleets of hundreds of vehicles. Asset protection, liability coverage, and cargo insurance.",
+    "act.a2t":"Logistics Operators and 3PLs","act.a2d":"Companies managing third-party operations. Civil liability coverage, client cargo damage, and protection against operational errors.",
+    "act.a3t":"Cargo Generators","act.a3d":"Industries and businesses that ship goods. Cargo insurance to protect the value of merchandise during transit.",
+    "act.a4t":"Freight Agencies and Customs Brokers","act.a4d":"Intermediaries coordinating the movement of goods. Professional civil liability and coverage against client claims.",
+    "act.a5t":"Independent Drivers","act.a5d":"Accessible microinsurance for self-employed drivers, with flexible coverages adapted to their real-world needs.",
+    "proc.label":"How It Works","proc.title":"Simple process,<br><em>total protection</em>",
+    "proc.s1t":"Diagnosis","proc.s1d":"We analyze your operation, fleet and risk profile to identify the most appropriate coverages.",
+    "proc.s2t":"Quote","proc.s2d":"We prepare a tailored proposal with clear terms — no fine print.",
+    "proc.s3t":"Onboarding","proc.s3d":"Agile contracting process, with optional integration into your existing telemetry platform.",
+    "proc.s4t":"Ongoing Support","proc.s4d":"Continuous support and specialized claims management throughout the policy period.",
+    "dif.label":"Why SG Global Insurance","dif.title":"Insurance built<br><em>for real logistics</em>",
+    "dif.t1":"Parametric Insurance + Telemetry","dif.d1":"We link coverages to real telemetry data. When an event triggers (impact, temperature, route deviation), settlement is automatic — no waiting, no complex assessments.",
+    "dif.t2":"Sector Specialization","dif.d2":"We are not a generic broker. Our team has deep knowledge of transportation and logistics risks across Latin America. We design policies that actually cover what the sector needs.",
+    "dif.t3":"Access for All Actors","dif.d3":"From microinsurance for independent drivers to corporate policies for large operators. A protection ecosystem that covers the entire chain, regardless of size.",
+    "quot.label":"Quote","quot.title":"Request your<br><em>quote</em>",
+    "quot.sub":"Fill in the form and an SG Global Insurance specialist will contact you within 24 hours with a tailored proposal.",
+    "qf.name":"Name","qf.namePh":"Your full name","qf.company":"Company","qf.companyPh":"Your company name",
+    "qf.email":"Email","qf.phone":"Phone","qf.coverage":"Coverage of interest",
+    "qf.co0":"Select a coverage","qf.co1":"Cargo Insurance","qf.co2":"Fleet Insurance",
+    "qf.co3":"Civil Liability","qf.co4":"Parametric Insurance","qf.co5":"Microinsurance",
+    "qf.co6":"Claims Management","qf.co7":"Multiple / Not sure yet",
+    "qf.fleet":"Fleet / operation size",
+    "qf.fl0":"Select size","qf.fl1":"1–5 vehicles / Independent","qf.fl2":"6–20 vehicles",
+    "qf.fl3":"21–100 vehicles","qf.fl4":"Over 100 vehicles","qf.fl5":"N/A (operator / cargo generator)",
+    "qf.msg":"Additional information","qf.msgPh":"Tell us about your operation, cargo type or specific need…",
+    "qf.submit":"Request a Quote","qf.success":"✓ Request sent",
+    "footer.copy":"© 2025 SG Global Insurance. All rights reserved."
+  }
+};
+
+let lang='es';
+function setLang(l){
+  lang=l;
+  document.documentElement.lang=l;
+  document.getElementById('btn-es').classList.toggle('active',l==='es');
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  const t=T[l];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.textContent=t[k];});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');if(t[k]!==undefined)el.innerHTML=t[k];});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(t[k]!==undefined)el.placeholder=t[k];});
+}
+
+function handleQuot(e){
+  e.preventDefault();
+  const btn=document.getElementById('quot-btn');
+  btn.textContent=T[lang]['qf.success'];
+  btn.style.background='#22c55e';btn.style.color='#fff';
+  setTimeout(()=>{
+    btn.textContent=T[lang]['qf.submit'];
+    btn.style.background='';btn.style.color='';
+    e.target.reset();
+  },3500);
+}
+
+/* Nav scroll effect */
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').style.background=
+    window.scrollY>60?'rgba(10,20,38,0.96)':'rgba(15,30,51,0.75)';
+});
+
+/* ══ NEURAL NETWORK CANVAS ══ */
+(function(){
+  const canvas = document.getElementById('neural-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, nodes, mouse = {x:-9999, y:-9999};
+
+  const BLUE  = {r:37,  g:99,  b:235};
+  const SAPPH = {r:59,  g:130, b:246};
+  const SKY   = {r:56,  g:189, b:248};
+  const INDIGO= {r:99,  g:102, b:241};
+  const COLS  = [BLUE, SAPPH, SKY, INDIGO];
+
+  const NODE_COUNT   = 110;
+  const CONN_DIST    = 180;
+  const MOUSE_DIST   = 220;
+  const PULSE_SPEED  = 0.012;
+
+  function resize(){
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function randCol(){ return COLS[Math.floor(Math.random()*COLS.length)]; }
+
+  function makeNode(){
+    const col = randCol();
+    return {
+      x:rand(0,W), y:rand(0,H),
+      vx:rand(-0.25,0.25), vy:rand(-0.20,0.20),
+      r:rand(1.5,4), col,
+      phase:rand(0,Math.PI*2), pulseR:rand(6,14),
+      opacity:rand(0.35,0.85),
+    };
+  }
+
+  function init(){ resize(); nodes=Array.from({length:NODE_COUNT},makeNode); }
+  function rgba(c,a){ return `rgba(${c.r},${c.g},${c.b},${a})`; }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const grd=ctx.createRadialGradient(W*.5,H*.55,0,W*.5,H*.55,Math.max(W,H)*.6);
+    grd.addColorStop(0,'rgba(37,99,235,0.04)');
+    grd.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=grd; ctx.fillRect(0,0,W,H);
+
+    const t=performance.now()*0.001;
+
+    for(let i=0;i<nodes.length;i++){
+      const a=nodes[i];
+      for(let j=i+1;j<nodes.length;j++){
+        const b=nodes[j];
+        const dx=a.x-b.x, dy=a.y-b.y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d>CONN_DIST) continue;
+        const alpha=(1-d/CONN_DIST)*0.18;
+        const r=(a.col.r+b.col.r)>>1;
+        const g=(a.col.g+b.col.g)>>1;
+        const bl=(a.col.b+b.col.b)>>1;
+        ctx.beginPath();
+        ctx.strokeStyle=`rgba(${r},${g},${bl},${alpha})`;
+        ctx.lineWidth=0.7;
+        ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        const progress=(Math.sin(t*1.2+i*0.4+j*0.3)*0.5+0.5);
+        const px=a.x+(b.x-a.x)*progress;
+        const py=a.y+(b.y-a.y)*progress;
+        ctx.beginPath();
+        ctx.arc(px,py,1.4,0,Math.PI*2);
+        ctx.fillStyle=`rgba(${r},${g},${bl},${alpha*3})`;
+        ctx.fill();
+      }
+    }
+
+    nodes.forEach(n=>{
+      const dx=n.x-mouse.x, dy=n.y-mouse.y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<MOUSE_DIST){
+        const alpha=(1-d/MOUSE_DIST)*0.35;
+        ctx.beginPath();
+        ctx.strokeStyle=rgba(SAPPH,alpha);
+        ctx.lineWidth=0.9;
+        ctx.moveTo(n.x,n.y); ctx.lineTo(mouse.x,mouse.y); ctx.stroke();
+      }
+    });
+
+    nodes.forEach(n=>{
+      n.phase+=PULSE_SPEED;
+      const glow=0.5+0.5*Math.sin(n.phase);
+      const halo=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.pulseR*glow);
+      halo.addColorStop(0,rgba(n.col,0.18*glow));
+      halo.addColorStop(1,rgba(n.col,0));
+      ctx.beginPath(); ctx.arc(n.x,n.y,n.pulseR*glow,0,Math.PI*2);
+      ctx.fillStyle=halo; ctx.fill();
+      ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle=rgba(n.col,n.opacity); ctx.fill();
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<-20)n.x=W+20; if(n.x>W+20)n.x=-20;
+      if(n.y<-20)n.y=H+20; if(n.y>H+20)n.y=-20;
+      const dx2=n.x-mouse.x, dy2=n.y-mouse.y;
+      const d2=Math.sqrt(dx2*dx2+dy2*dy2);
+      if(d2<100&&d2>0){
+        const force=(100-d2)/100*0.4;
+        n.vx+=(dx2/d2)*force; n.vy+=(dy2/d2)*force;
+        n.vx*=0.96; n.vy*=0.96;
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+
+  init(); draw();
+  window.addEventListener('resize',()=>resize());
+  const hero=document.querySelector('.hero');
+  hero.addEventListener('mousemove',e=>{
+    const r=canvas.getBoundingClientRect();
+    mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top;
+  });
+  hero.addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999;});
+})();
+</script>
+</body>
+</html>
