@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SG Global — 3 Opciones de Diseño</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Sora:wght@300;400;500&family=DM+Serif+Display:ital@0;1&family=Manrope:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sora', sans-serif; background: #f0ede8; }
+
+/* ── SELECTOR UI ── */
+.selector {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  display: flex; align-items: center; justify-content: center;
+  padding: 14px 40px; gap: 12px;
+}
+.selector-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #888; margin-right: 8px;
+}
+.sel-btn {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+  padding: 8px 22px; border-radius: 100px;
+  border: 1.5px solid #ddd; background: transparent;
+  color: #666; cursor: pointer;
+  transition: all 0.25s; font-family: 'Sora', sans-serif;
+  white-space: nowrap;
+}
+.sel-btn.active { background: #111; border-color: #111; color: #fff; }
+.sel-btn:hover:not(.active) { border-color: #aaa; color: #333; }
+
+/* ── SCREENS ── */
+.screen { display: none; height: 100vh; overflow: hidden; position: relative; }
+.screen.active { display: block; }
+
+/* ══════════════════════════════════════════
+   OPCIÓN 1 — PARTICLE FIELD
+   Tendencia: "Barely-there UI" + partículas flotantes
+   Fondo blanco roto, tipografía Playfair editorial
+══════════════════════════════════════════ */
+#opt1 { background: #faf9f7; }
+
+#opt1 canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+}
+
+.opt1-nav {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 32px 64px;
+}
+.opt1-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 400; letter-spacing: 0.08em;
+  color: #1a1a1a;
+}
+.opt1-logo span { font-weight: 300; opacity: 0.5; }
+.opt1-nav-links { display: flex; gap: 40px; }
+.opt1-nav-links a {
+  font-size: 12px; font-weight: 400; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #888; text-decoration: none;
+  transition: color 0.2s;
+}
+.opt1-nav-links a:hover { color: #1a1a1a; }
+.opt1-nav-cta {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #1a1a1a;
+  border: 1px solid rgba(26,26,26,0.3);
+  padding: 10px 24px; border-radius: 100px; text-decoration: none;
+  transition: background 0.25s, color 0.25s;
+}
+.opt1-nav-cta:hover { background: #1a1a1a; color: #fff; }
+
+.opt1-content {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  padding: 0 64px; z-index: 10;
+}
+
+.opt1-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(26,26,26,0.05);
+  border: 1px solid rgba(26,26,26,0.1);
+  border-radius: 100px; padding: 6px 16px;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #666; margin-bottom: 40px;
+}
+.opt1-badge-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: #c9a84c; animation: blink1 2s ease-in-out infinite;
+}
+@keyframes blink1 { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.opt1-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(56px, 7.5vw, 108px);
+  font-weight: 300; line-height: 0.95;
+  letter-spacing: -0.03em; color: #111;
+  margin-bottom: 36px; max-width: 720px;
+}
+.opt1-title em { font-style: italic; color: #c9a84c; }
+
+.opt1-sub {
+  font-family: 'Sora', sans-serif;
+  font-size: 15px; font-weight: 300; line-height: 1.75;
+  color: #777; max-width: 420px; margin-bottom: 48px;
+}
+
+.opt1-actions { display: flex; gap: 16px; align-items: center; }
+.opt1-btn-primary {
+  font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
+  background: #111; color: #fff;
+  padding: 15px 34px; border-radius: 100px; text-decoration: none;
+  transition: background 0.25s, transform 0.2s; display: inline-block;
+}
+.opt1-btn-primary:hover { background: #333; transform: translateY(-1px); }
+.opt1-btn-ghost {
+  font-size: 13px; font-weight: 400; color: #888; text-decoration: none;
+  display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+}
+.opt1-btn-ghost:hover { color: #111; }
+
+.opt1-scroll-indicator {
+  position: absolute; bottom: 40px; left: 64px; z-index: 10;
+  display: flex; align-items: center; gap: 12px;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #aaa;
+}
+.opt1-scroll-line {
+  width: 40px; height: 1px; background: #ccc;
+  position: relative; overflow: hidden;
+}
+.opt1-scroll-line::after {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%; background: #111;
+  animation: scanline 2s ease-in-out infinite;
+}
+@keyframes scanline { to { left: 100%; } }
+
+.opt1-float-right {
+  position: absolute; right: 64px; bottom: 80px; z-index: 10;
+  display: flex; flex-direction: column; gap: 28px; align-items: flex-end;
+}
+.opt1-stat { text-align: right; }
+.opt1-stat-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px; font-weight: 300; color: #1a1a1a; line-height: 1;
+}
+.opt1-stat-l { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #bbb; margin-top: 3px; }
+.opt1-vline { width: 1px; height: 32px; background: linear-gradient(to bottom, transparent, #ccc, transparent); align-self: center; }
+
+/* ══════════════════════════════════════════
+   OPCIÓN 2 — GLASSMORPHISM + GRADIENT MESH
+   Tendencia: Glassmorphism 2026, pastel airy
+   Fondo gradient malla suave, paneles vidrio
+══════════════════════════════════════════ */
+#opt2 { background: #f5f3ef; overflow: hidden; }
+
+.opt2-mesh {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 15% 50%, rgba(193,214,232,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 70% at 85% 20%, rgba(218,207,240,0.45) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 60% 85%, rgba(208,232,218,0.5) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 40% 10%, rgba(240,224,196,0.4) 0%, transparent 50%),
+    #f5f3ef;
+  animation: meshMove 12s ease-in-out infinite alternate;
+}
+@keyframes meshMove {
+  0% { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%; }
+  100% { background-position: 5% 8%, 95% 5%, 92% 95%, 3% 92%; }
+}
+
+.opt2-noise {
+  position: absolute; inset: 0; opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.opt2-nav {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 60px;
+}
+.opt2-logo {
+  font-family: 'Manrope', sans-serif;
+  font-size: 17px; font-weight: 500; letter-spacing: 0.06em;
+  color: #1e1e2e;
+}
+.opt2-logo span { font-weight: 300; opacity: 0.45; }
+
+.opt2-nav-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 100px; padding: 8px 8px 8px 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+.opt2-nav-pill a {
+  font-size: 12px; font-weight: 400; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #666; text-decoration: none;
+  padding: 0 14px; transition: color 0.2s;
+}
+.opt2-nav-pill a:hover { color: #1e1e2e; }
+.opt2-pill-cta {
+  font-size: 12px; font-weight: 500;
+  background: #1e1e2e; color: #fff;
+  padding: 8px 20px; border-radius: 100px; text-decoration: none;
+  transition: background 0.2s;
+}
+.opt2-pill-cta:hover { background: #3a3a50; }
+
+.opt2-content {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 5; padding: 0 60px;
+  gap: 60px;
+}
+
+.opt2-left { flex: 1; max-width: 580px; }
+
+.opt2-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: #888; margin-bottom: 28px;
+}
+.opt2-eyebrow::before { content: ''; width: 24px; height: 1px; background: #aaa; }
+
+.opt2-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(48px, 6.5vw, 88px);
+  font-weight: 400; line-height: 1.02;
+  letter-spacing: -0.025em; color: #1a1a2e;
+  margin-bottom: 28px;
+}
+.opt2-title em { font-style: italic; opacity: 0.65; }
+
+.opt2-sub {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px; font-weight: 300; line-height: 1.8;
+  color: #6b6b7e; max-width: 400px; margin-bottom: 44px;
+}
+
+.opt2-ctas { display: flex; gap: 14px; align-items: center; }
+.opt2-primary {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+  background: #1a1a2e; color: #fff;
+  padding: 14px 30px; border-radius: 100px; text-decoration: none;
+  transition: background 0.25s, transform 0.2s; display: inline-block;
+}
+.opt2-primary:hover { background: #2e2e4a; transform: translateY(-1px); }
+.opt2-secondary {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px; font-weight: 400; color: #888; text-decoration: none;
+  display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+}
+.opt2-secondary:hover { color: #1a1a2e; }
+
+/* Glass cards on the right */
+.opt2-right { display: flex; flex-direction: column; gap: 14px; flex-shrink: 0; }
+
+.opt2-glass-card {
+  background: rgba(255,255,255,0.58);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.85);
+  border-radius: 20px; padding: 24px 28px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.06), 0 1px 0 rgba(255,255,255,0.9) inset;
+  min-width: 240px;
+  animation: floatCard 6s ease-in-out infinite;
+}
+.opt2-glass-card:nth-child(2) { animation-delay: 1.5s; animation-duration: 7s; }
+.opt2-glass-card:nth-child(3) { animation-delay: 0.8s; animation-duration: 8s; }
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+.opt2-card-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; margin-bottom: 12px;
+}
+.opt2-card-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px; font-weight: 500; color: #1a1a2e; margin-bottom: 4px;
+}
+.opt2-card-sub {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px; font-weight: 300; color: #888; line-height: 1.5;
+}
+.opt2-card-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
+  margin-top: 10px;
+}
+
+/* ══════════════════════════════════════════
+   OPCIÓN 3 — ORGANIC GRID BRUTALISM SOFT
+   Tendencia: Anti-grid editorial, "Archival Index"
+   Fondo marfil cálido, tipografía Libre Baskerville
+   Grid asimétrico partido, líneas finas
+══════════════════════════════════════════ */
+#opt3 { background: #f8f6f1; overflow: hidden; }
+
+.opt3-bg-lines {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 120px 80px;
+}
+.opt3-blob1 {
+  position: absolute; top: -10%; right: -5%;
+  width: 55vw; height: 55vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(210,195,170,0.35) 0%, transparent 70%);
+  animation: blobPulse 10s ease-in-out infinite;
+}
+.opt3-blob2 {
+  position: absolute; bottom: -15%; left: -5%;
+  width: 40vw; height: 40vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(175,210,195,0.25) 0%, transparent 70%);
+  animation: blobPulse 13s ease-in-out infinite reverse;
+}
+@keyframes blobPulse {
+  0%, 100% { transform: scale(1) translate(0,0); }
+  33% { transform: scale(1.06) translate(2%, 2%); }
+  66% { transform: scale(0.97) translate(-2%, 1%); }
+}
+
+.opt3-nav {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  display: flex; align-items: flex-start;
+  padding: 40px 60px; gap: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+.opt3-logo-block { margin-right: auto; }
+.opt3-logo-main {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 16px; font-weight: 400; letter-spacing: 0.06em;
+  color: #1a1714; margin-bottom: 2px;
+}
+.opt3-logo-sub {
+  font-size: 10px; font-weight: 400; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #aaa;
+}
+.opt3-nav-right { display: flex; align-items: center; gap: 48px; }
+.opt3-nav-right a {
+  font-size: 11px; font-weight: 400; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #888; text-decoration: none;
+  transition: color 0.2s;
+}
+.opt3-nav-right a:hover { color: #1a1714; }
+.opt3-nav-cta {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #1a1714;
+  border-bottom: 1.5px solid #1a1714; padding-bottom: 2px;
+  text-decoration: none; transition: opacity 0.2s;
+}
+.opt3-nav-cta:hover { opacity: 0.5; }
+
+/* asymmetric grid layout */
+.opt3-grid {
+  position: absolute; inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  grid-template-rows: 1fr;
+  z-index: 5;
+}
+
+.opt3-main {
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 60px 80px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+}
+
+.opt3-issue {
+  font-size: 10px; font-weight: 400; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #aaa; margin-bottom: 24px;
+}
+
+.opt3-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(50px, 6.5vw, 96px);
+  font-weight: 400; line-height: 0.97;
+  letter-spacing: -0.03em; color: #1a1714;
+  margin-bottom: 40px;
+}
+.opt3-title em {
+  font-style: italic; color: #8a7a5a;
+}
+.opt3-title .opt3-outlined {
+  -webkit-text-stroke: 1.5px #1a1714;
+  color: transparent; display: inline-block;
+}
+
+.opt3-bottom-row {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  border-top: 1px solid rgba(0,0,0,0.1); padding-top: 28px;
+}
+
+.opt3-sub {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 300; line-height: 1.75; color: #7a7060;
+  max-width: 360px;
+}
+
+.opt3-cta-group { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0; }
+.opt3-primary {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: #1a1714; color: #f8f6f1;
+  padding: 14px 28px; border-radius: 2px; text-decoration: none;
+  transition: background 0.2s; display: inline-block;
+}
+.opt3-primary:hover { background: #3a342a; }
+.opt3-ghost-link {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 400; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #aaa; text-decoration: none;
+  transition: color 0.2s; display: flex; align-items: center; gap: 6px;
+}
+.opt3-ghost-link:hover { color: #1a1714; }
+
+/* Right sidebar — archival index style */
+.opt3-sidebar {
+  display: flex; flex-direction: column;
+  padding: 120px 40px 60px;
+  gap: 0;
+}
+.opt3-sidebar-label {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: #bbb; margin-bottom: 24px; padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.opt3-entry {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  display: flex; gap: 16px; align-items: flex-start;
+  cursor: pointer; transition: opacity 0.2s;
+  text-decoration: none;
+}
+.opt3-entry:hover { opacity: 0.65; }
+.opt3-entry-num {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 11px; color: #ccc; margin-top: 2px; min-width: 20px;
+}
+.opt3-entry-content {}
+.opt3-entry-tag {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #aaa; margin-bottom: 4px;
+}
+.opt3-entry-name {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 14px; font-weight: 400; color: #1a1714; line-height: 1.3;
+  margin-bottom: 4px;
+}
+.opt3-entry-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 300; color: #9a9080; line-height: 1.5;
+}
+
+.opt3-sidebar-footer {
+  margin-top: auto; padding-top: 24px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.opt3-langs {
+  display: flex; gap: 16px;
+}
+.opt3-langs a {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #bbb; text-decoration: none; transition: color 0.2s;
+}
+.opt3-langs a.active, .opt3-langs a:hover { color: #1a1714; }
+
+/* ══════════════════
+   LABEL BADGE OPTION
+══════════════════ */
+.option-badge {
+  position: absolute; top: 80px; right: 24px; z-index: 20;
+  background: rgba(0,0,0,0.06); backdrop-filter: blur(8px);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 100px; padding: 6px 14px;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #666;
+}
+
+/* OPCIÓN 2 card icon backgrounds */
+.ic-data { background: rgba(59,130,246,0.1); color: #3b82f6; }
+.ic-ins  { background: rgba(34,197,94,0.1);  color: #22c55e; }
+.ic-cap  { background: rgba(124,58,237,0.1); color: #7c3aed; }
+.tag-data { background: rgba(59,130,246,0.08); color: #3b82f6; }
+.tag-ins  { background: rgba(34,197,94,0.08);  color: #22c55e; }
+.tag-cap  { background: rgba(124,58,237,0.08); color: #7c3aed; }
+
+/* Choose button */
+.choose-btn {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  z-index: 20;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.08em;
+  padding: 12px 32px; border-radius: 100px;
+  border: 1.5px solid rgba(0,0,0,0.15); background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(8px); cursor: pointer; color: #333;
+  transition: all 0.2s; font-family: 'Sora', sans-serif;
+  white-space: nowrap;
+}
+.choose-btn:hover { background: #111; color: #fff; border-color: #111; }
+</style>
+</head>
+<body>
+
+<!-- SELECTOR -->
+<div class="selector">
+  <span class="selector-label">Opciones de diseño</span>
+  <button class="sel-btn active" onclick="show(1)">① Particle Field</button>
+  <button class="sel-btn" onclick="show(2)">② Glassmorphism</button>
+  <button class="sel-btn" onclick="show(3)">③ Archival Editorial</button>
+</div>
+
+<!-- ══════════ OPCIÓN 1 ══════════ -->
+<div class="screen active" id="opt1">
+  <canvas id="canvas1"></canvas>
+  <div class="option-badge">Opción 1</div>
+
+  <nav class="opt1-nav">
+    <div class="opt1-logo">SG <span>Global</span></div>
+    <div class="opt1-nav-links">
+      <a href="#">Nosotros</a>
+      <a href="#">Líneas</a>
+      <a href="#">Enfoque</a>
+      <a href="#">Contacto</a>
+    </div>
+    <a href="#" class="opt1-nav-cta">Conectar</a>
+  </nav>
+
+  <div class="opt1-content">
+    <div class="opt1-badge">
+      <span class="opt1-badge-dot"></span>
+      Soluciones Logísticas Integradas
+    </div>
+    <h1 class="opt1-title">
+      Inteligencia<br>
+      <em>para mover</em><br>
+      el mundo
+    </h1>
+    <p class="opt1-sub">
+      Cuatro líneas que integran datos, seguros, operaciones y capital para transformar su cadena logística en ventaja competitiva.
+    </p>
+    <div class="opt1-actions">
+      <a href="#" class="opt1-btn-primary">Explorar Soluciones</a>
+      <a href="#" class="opt1-btn-ghost">
+        Hablar con un experto
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M7.5 2.5L12 7l-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="opt1-scroll-indicator">
+    <div class="opt1-scroll-line"></div>
+    Scroll
+  </div>
+
+  <div class="opt1-float-right">
+    <div class="opt1-stat"><div class="opt1-stat-n">4</div><div class="opt1-stat-l">Líneas</div></div>
+    <div class="opt1-vline"></div>
+    <div class="opt1-stat"><div class="opt1-stat-n">360°</div><div class="opt1-stat-l">Cobertura</div></div>
+    <div class="opt1-vline"></div>
+    <div class="opt1-stat"><div class="opt1-stat-n">1</div><div class="opt1-stat-l">Socio</div></div>
+  </div>
+
+  <button class="choose-btn" onclick="alert('¡Opción 1 seleccionada! Se aplicará este diseño.')">✓ Elegir este diseño</button>
+</div>
+
+<!-- ══════════ OPCIÓN 2 ══════════ -->
+<div class="screen" id="opt2">
+  <div class="opt2-mesh"></div>
+  <div class="opt2-noise"></div>
+  <div class="option-badge">Opción 2</div>
+
+  <nav class="opt2-nav">
+    <div class="opt2-logo">SG <span>Global</span></div>
+    <div class="opt2-nav-pill">
+      <a href="#">Nosotros</a>
+      <a href="#">Líneas</a>
+      <a href="#">Enfoque</a>
+      <a href="#" class="opt2-pill-cta">Conectar</a>
+    </div>
+  </nav>
+
+  <div class="opt2-content">
+    <div class="opt2-left">
+      <div class="opt2-eyebrow">Soluciones Logísticas Integradas</div>
+      <h1 class="opt2-title">
+        Inteligencia<br>
+        <em>para mover</em><br>
+        el mundo
+      </h1>
+      <p class="opt2-sub">
+        Cuatro líneas especializadas que integran datos, seguros, operaciones y capital para transformar la cadena logística en ventaja competitiva.
+      </p>
+      <div class="opt2-ctas">
+        <a href="#" class="opt2-primary">Explorar Soluciones</a>
+        <a href="#" class="opt2-secondary">
+          Hablar con un experto
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M7.5 2.5L12 7l-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="opt2-right">
+      <div class="opt2-glass-card">
+        <div class="opt2-card-icon ic-data">📡</div>
+        <div class="opt2-card-title">SG Global Data</div>
+        <div class="opt2-card-sub">Telemetría y trazabilidad en tiempo real</div>
+        <span class="opt2-card-tag tag-data">Telemetría</span>
+      </div>
+      <div class="opt2-glass-card">
+        <div class="opt2-card-icon ic-ins">🛡️</div>
+        <div class="opt2-card-title">SG Global Insurance</div>
+        <div class="opt2-card-sub">Seguros y microseguros logísticos</div>
+        <span class="opt2-card-tag tag-ins">Riesgos</span>
+      </div>
+      <div class="opt2-glass-card">
+        <div class="opt2-card-icon ic-cap">💼</div>
+        <div class="opt2-card-title">SG Global Capital</div>
+        <div class="opt2-card-sub">M&A y financiamiento del sector</div>
+        <span class="opt2-card-tag tag-cap">Capital</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="choose-btn" onclick="alert('¡Opción 2 seleccionada! Se aplicará este diseño.')">✓ Elegir este diseño</button>
+</div>
+
+<!-- ══════════ OPCIÓN 3 ══════════ -->
+<div class="screen" id="opt3">
+  <div class="opt3-bg-lines"></div>
+  <div class="opt3-blob1"></div>
+  <div class="opt3-blob2"></div>
+  <div class="option-badge">Opción 3</div>
+
+  <nav class="opt3-nav">
+    <div class="opt3-logo-block">
+      <div class="opt3-logo-main">SG Global</div>
+      <div class="opt3-logo-sub">Logistics Group</div>
+    </div>
+    <div class="opt3-nav-right">
+      <a href="#">Nosotros</a>
+      <a href="#">Líneas</a>
+      <a href="#">Enfoque</a>
+      <a href="#" class="opt3-nav-cta">Conectar →</a>
+    </div>
+  </nav>
+
+  <div class="opt3-grid">
+    <div class="opt3-main">
+      <div class="opt3-issue">Vol. I — Soluciones logísticas integradas</div>
+      <h1 class="opt3-title">
+        Inteligencia<br>
+        <em>para mover</em><br>
+        <span class="opt3-outlined">el mundo</span>
+      </h1>
+      <div class="opt3-bottom-row">
+        <p class="opt3-sub">
+          Cuatro líneas que integran datos, seguros, operaciones y capital para transformar su cadena logística en ventaja competitiva sostenible.
+        </p>
+        <div class="opt3-cta-group">
+          <a href="#" class="opt3-primary">Explorar Soluciones</a>
+          <a href="#" class="opt3-ghost-link">Conocer más →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="opt3-sidebar">
+      <div class="opt3-sidebar-label">Líneas de negocio — 2025</div>
+
+      <a href="#" class="opt3-entry">
+        <div class="opt3-entry-num">01</div>
+        <div class="opt3-entry-content">
+          <div class="opt3-entry-tag">Data</div>
+          <div class="opt3-entry-name">SG Global Data</div>
+          <div class="opt3-entry-desc">Telemetría y trazabilidad</div>
+        </div>
+      </a>
+      <a href="#" class="opt3-entry">
+        <div class="opt3-entry-num">02</div>
+        <div class="opt3-entry-content">
+          <div class="opt3-entry-tag">Insurance</div>
+          <div class="opt3-entry-name">SG Global Insurance</div>
+          <div class="opt3-entry-desc">Seguros y microseguros</div>
+        </div>
+      </a>
+      <a href="#" class="opt3-entry">
+        <div class="opt3-entry-num">03</div>
+        <div class="opt3-entry-content">
+          <div class="opt3-entry-tag">Operations</div>
+          <div class="opt3-entry-name">SG Global Operations</div>
+          <div class="opt3-entry-desc">Estructuración logística</div>
+        </div>
+      </a>
+      <a href="#" class="opt3-entry">
+        <div class="opt3-entry-num">04</div>
+        <div class="opt3-entry-content">
+          <div class="opt3-entry-tag">Capital</div>
+          <div class="opt3-entry-name">SG Global Capital</div>
+          <div class="opt3-entry-desc">M&A y financiamiento</div>
+        </div>
+      </a>
+
+      <div class="opt3-sidebar-footer">
+        <div class="opt3-langs">
+          <a href="#" class="active">ES</a>
+          <a href="#">EN</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="choose-btn" onclick="alert('¡Opción 3 seleccionada! Se aplicará este diseño.')">✓ Elegir este diseño</button>
+</div>
+
+<script>
+/* ── Screen switcher ── */
+function show(n) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sel-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('opt' + n).classList.add('active');
+  document.querySelectorAll('.sel-btn')[n - 1].classList.add('active');
+  if (n === 1) initCanvas();
+}
+
+/* ── Opción 1: Canvas particle field ── */
+function initCanvas() {
+  const canvas = document.getElementById('canvas1');
+  if (!canvas || canvas._init) return;
+  canvas._init = true;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const PARTICLE_COUNT = 90;
+  const particles = [];
+
+  function randRange(a, b) { return a + Math.random() * (b - a); }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: randRange(1, 3.5),
+      speedX: randRange(-0.18, 0.18),
+      speedY: randRange(-0.22, 0.08),
+      opacity: randRange(0.06, 0.22),
+      color: Math.random() > 0.6 ? '201,168,76' : '180,170,155'
+    });
+  }
+
+  const CONN_DIST = 140;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < CONN_DIST) {
+          const alpha = (1 - d / CONN_DIST) * 0.09;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(180,170,155,${alpha})`;
+          ctx.lineWidth = 0.6;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // particles
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color},${p.opacity})`;
+      ctx.fill();
+
+      p.x += p.speedX;
+      p.y += p.speedY;
+
+      if (p.x < -10) p.x = canvas.width + 10;
+      if (p.x > canvas.width + 10) p.x = -10;
+      if (p.y < -10) p.y = canvas.height + 10;
+      if (p.y > canvas.height + 10) p.y = -10;
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+}
+
+// Init canvas on load since opt1 is active
+window.addEventListener('load', initCanvas);
+</script>
+</body>
+</html>
