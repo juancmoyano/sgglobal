@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SG Global Capital — M&A y Financiamiento Logístico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Sora:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1A2F4E;--navy2:#0f1e33;
+  --acc:#38BDF8;--acc2:#0284c7;--acc-light:#7dd3fc;
+  --white:#FFFFFF;--offwhite:#F8FAFC;
+  --line:rgba(255,255,255,0.1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Sora',sans-serif;background:var(--navy2);color:var(--white);overflow-x:hidden;}
+.lang-toggle{display:flex;align-items:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:100px;overflow:hidden;flex-shrink:0;}
+.lang-btn{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:7px 16px;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,0.4);transition:background .2s,color .2s;font-family:'Sora',sans-serif;}
+.lang-btn.active{background:var(--acc);color:var(--navy2);border-radius:100px;}
+.lang-btn:not(.active):hover{color:var(--white);}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 64px;background:rgba(15,30,51,0.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);gap:20px;transition:background .3s;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;letter-spacing:.1em;color:var(--white);flex-shrink:0;text-decoration:none;}
+.logo em{font-style:normal;color:var(--acc);}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{font-size:12px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.nav-cta{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--acc-light);border:1px solid rgba(56,189,248,0.4);padding:9px 24px;border-radius:100px;text-decoration:none;transition:all .25s;white-space:nowrap;}
+.nav-cta:hover{background:var(--acc);color:var(--navy2);border-color:var(--acc);}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 64px 96px;overflow:hidden;}
+.hero-img{position:absolute;inset:0;background:linear-gradient(135deg,#030c18 0%,#060f1e 50%,#040c16 100%);overflow:hidden;}
+#neural-canvas{position:absolute;inset:0;width:100%;height:100%;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,30,51,0.92) 0%,rgba(15,30,51,0.6) 55%,rgba(15,30,51,0.25) 100%),linear-gradient(to top,rgba(15,30,51,0.97) 0%,transparent 55%);}
+.hero-badge{position:absolute;top:120px;right:64px;z-index:2;display:flex;align-items:center;gap:10px;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.3);border-radius:100px;padding:8px 18px;}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--acc-light);}
+.hero-badge-text{font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--acc-light);}
+.hero-pulse{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:min(420px,38vw);opacity:0.06;pointer-events:none;}
+.hero-content{position:relative;z-index:2;max-width:700px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--acc-light);margin-bottom:32px;}
+.eyebrow-line{width:32px;height:1px;background:var(--acc);}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,96px);font-weight:300;line-height:.97;letter-spacing:-.025em;color:var(--white);margin-bottom:32px;}
+.hero-title em{font-style:italic;color:var(--acc-light);}
+.hero-sub{font-size:15px;font-weight:300;line-height:1.82;color:rgba(255,255,255,0.62);max-width:480px;margin-bottom:48px;}
+.hero-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+.btn-primary{font-size:13px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;background:var(--acc);color:var(--navy2);padding:15px 36px;border-radius:100px;text-decoration:none;display:inline-block;transition:background .25s,transform .2s;}
+.btn-primary:hover{background:var(--acc-light);transform:translateY(-2px);}
+.btn-ghost{font-size:13px;font-weight:300;color:rgba(255,255,255,0.6);text-decoration:none;display:flex;align-items:center;gap:7px;transition:color .2s;}
+.btn-ghost:hover{color:var(--white);}
+.btn-ghost svg{transition:transform .2s;}
+.btn-ghost:hover svg{transform:translateX(4px);}
+.hero-scroll{position:absolute;bottom:36px;left:64px;z-index:2;display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.scroll-bar{width:40px;height:1px;background:rgba(255,255,255,0.15);position:relative;overflow:hidden;}
+.scroll-bar::after{content:'';position:absolute;inset:0;background:var(--acc);transform:translateX(-100%);animation:scanBar 2.4s ease-in-out infinite;}
+@keyframes scanBar{0%{transform:translateX(-100%)}50%{transform:translateX(0)}100%{transform:translateX(100%)}}
+@keyframes pulseRing{0%,100%{r:42;opacity:.6}50%{r:48;opacity:.2}}
+@keyframes nodeGlow{0%,100%{opacity:.5}50%{opacity:1}}
+.p-ring{animation:pulseRing 3s ease-in-out infinite;}
+.p-node{animation:nodeGlow 2.5s ease-in-out infinite;}
+.p-node:nth-child(2){animation-delay:.4s;}.p-node:nth-child(3){animation-delay:.8s;}.p-node:nth-child(4){animation-delay:1.2s;}.p-node:nth-child(5){animation-delay:1.6s;}.p-node:nth-child(6){animation-delay:2s;}
+.s-label{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--acc-light);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.s-label::before{content:'';width:20px;height:1px;background:var(--acc);}
+.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4.5vw,54px);font-weight:300;line-height:1.08;}
+.s-title em{font-style:italic;color:var(--acc-light);}
+.pulse-mark{display:block;width:48px;height:48px;margin-bottom:16px;}
+
+/* SERVICIOS */
+#servicios{background:var(--navy2);padding:120px 64px;}
+.serv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);margin-top:64px;}
+.serv-card{background:rgba(15,25,44,0.8);padding:48px 40px;position:relative;overflow:hidden;transition:background .3s;}
+.serv-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(56,189,248,0.08),transparent);opacity:0;transition:opacity .3s;}
+.serv-card:hover::after{opacity:1;}
+.serv-inner{position:relative;z-index:1;}
+.serv-icon{width:48px;height:48px;border-radius:10px;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:24px;transition:background .3s;}
+.serv-card:hover .serv-icon{background:rgba(56,189,248,0.2);}
+.serv-icon svg{width:22px;height:22px;stroke:var(--acc-light);}
+.serv-num{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc-light);opacity:.6;margin-bottom:8px;}
+.serv-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;line-height:1.2;color:var(--white);margin-bottom:14px;}
+.serv-desc{font-size:13px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.5);margin-bottom:18px;}
+.serv-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.serv-tag{font-size:11px;font-weight:400;letter-spacing:.08em;color:var(--acc-light);background:rgba(56,189,248,0.07);border:1px solid rgba(56,189,248,0.18);border-radius:100px;padding:4px 12px;}
+
+/* CLIENTES — light */
+#clientes{position:relative;padding:0;overflow:hidden;}
+.cli-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;}
+.cli-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(248,250,252,0.97) 0%,rgba(248,250,252,0.97) 55%,rgba(248,250,252,0.65) 100%);}
+.cli-inner{position:relative;z-index:2;padding:120px 64px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+#clientes .s-label{color:var(--navy);}
+#clientes .s-label::before{background:var(--acc2);}
+#clientes .s-title{color:var(--navy);}
+#clientes .s-title em{color:var(--acc2);}
+.cli-text{font-size:15px;font-weight:300;line-height:1.85;color:#3a4a5c;margin-bottom:32px;}
+.client-list{display:flex;flex-direction:column;}
+.client-item{display:flex;align-items:flex-start;gap:16px;padding:20px 0;border-bottom:1px solid rgba(26,47,78,0.1);opacity:0;transform:translateX(-12px);transition:opacity .5s,transform .5s;}
+.client-item.vis{opacity:1;transform:none;}
+.client-num{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--acc2);opacity:.4;min-width:36px;line-height:1;}
+.client-content h4{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin-bottom:4px;}
+.client-content p{font-size:13px;font-weight:300;line-height:1.65;color:#647b94;}
+
+/* PROCESO — dark */
+#proceso{position:relative;padding:0;overflow:hidden;}
+.proc-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;}
+.proc-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(3,12,24,0.97) 0%,rgba(6,18,36,0.95) 100%);}
+.proc-inner{position:relative;z-index:2;padding:120px 64px;}
+.proc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:72px;position:relative;}
+.proc-steps::before{content:'';position:absolute;top:28px;left:calc(12.5% + 16px);right:calc(12.5% + 16px);height:1px;background:linear-gradient(to right,transparent,rgba(56,189,248,0.4),rgba(56,189,248,0.4),transparent);}
+.step{text-align:center;padding:0 24px;opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+.step.vis{opacity:1;transform:none;}
+.step:nth-child(2){transition-delay:.15s;}.step:nth-child(3){transition-delay:.30s;}.step:nth-child(4){transition-delay:.45s;}
+.step-circle{width:56px;height:56px;border-radius:50%;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.step-n{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--acc-light);}
+.step-title{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--white);margin-bottom:10px;}
+.step-desc{font-size:13px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.5);}
+
+/* DIFERENCIADORES — light */
+#diferenciadores{position:relative;padding:0;overflow:hidden;}
+.dif-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80') center 30%/cover no-repeat;}
+.dif-overlay{position:absolute;inset:0;background:rgba(248,250,252,0.95);}
+.dif-inner{position:relative;z-index:2;padding:120px 64px;}
+#diferenciadores .s-label{color:var(--navy);}
+#diferenciadores .s-label::before{background:var(--acc2);}
+#diferenciadores .s-title{color:var(--navy);}
+#diferenciadores .s-title em{color:var(--acc2);}
+.dif-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px;}
+.dif-item{background:#fff;border:1px solid rgba(26,47,78,0.08);border-radius:12px;padding:36px 28px;border-top:3px solid var(--acc);opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease,box-shadow .3s;}
+.dif-item.vis{opacity:1;transform:none;}
+.dif-item:nth-child(2){transition-delay:.12s;}.dif-item:nth-child(3){transition-delay:.24s;}
+.dif-item:hover{box-shadow:0 12px 36px rgba(56,189,248,0.1);}
+.dif-icon{width:40px;height:40px;border-radius:8px;background:rgba(56,189,248,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.dif-icon svg{width:18px;height:18px;stroke:var(--acc2);}
+.dif-title{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:10px;}
+.dif-desc{font-size:13px;font-weight:300;line-height:1.8;color:#4a5e73;}
+
+/* CONTACTO */
+#contacto{position:relative;padding:0;overflow:hidden;}
+.cont-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1611095565494-8b0e18c7e58b?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;}
+.cont-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(3,10,22,0.95),rgba(3,10,22,0.98));}
+.cont-inner{position:relative;z-index:2;padding:120px 64px;max-width:760px;margin:0 auto;text-align:center;}
+.cont-inner .s-label{justify-content:center;color:var(--acc-light);}
+.cont-inner .s-label::before{display:none;}
+.cont-inner .s-label::after{content:'';width:20px;height:1px;background:var(--acc);}
+.cont-inner .s-title{color:var(--white);}
+.cont-sub{font-size:15px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.48);margin:22px auto 52px;max-width:480px;}
+.cform{display:flex;flex-direction:column;gap:14px;text-align:left;}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.cgrp{display:flex;flex-direction:column;gap:6px;}
+.cgrp label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.cgrp input,.cgrp select,.cgrp textarea{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px 16px;color:var(--white);font-family:'Sora',sans-serif;font-size:14px;font-weight:300;outline:none;width:100%;transition:border-color .2s,background .2s;}
+.cgrp input::placeholder,.cgrp textarea::placeholder{color:rgba(255,255,255,0.2);}
+.cgrp input:focus,.cgrp select:focus,.cgrp textarea:focus{border-color:var(--acc-light);background:rgba(56,189,248,0.05);}
+.cgrp select option{background:#0f1e33;color:var(--white);}
+.cgrp textarea{resize:vertical;min-height:110px;}
+.csub{margin-top:8px;background:var(--acc);border:none;color:var(--navy2);font-family:'Sora',sans-serif;font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:16px 40px;border-radius:100px;cursor:pointer;width:100%;transition:background .2s,transform .2s;}
+.csub:hover{background:var(--acc-light);transform:translateY(-1px);}
+footer{padding:40px 64px;border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;background:var(--navy2);}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;letter-spacing:.08em;color:var(--white);text-decoration:none;}
+.f-logo em{font-style:normal;color:var(--acc-light);}
+.f-nav{display:flex;gap:28px;list-style:none;}
+.f-nav a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);text-decoration:none;transition:color .2s;}
+.f-nav a:hover{color:var(--acc-light);}
+.f-copy{font-size:11px;color:rgba(255,255,255,0.18);}
+.rev{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+.rev.vis{opacity:1;transform:none;}
+.rev2{transition-delay:.1s;}.rev3{transition-delay:.2s;}
+@media(max-width:900px){
+  nav{padding:16px 24px;}.nav-links{display:none;}
+  .hero{padding:0 24px 80px;}.hero-badge{display:none;}.hero-scroll{left:24px;}
+  #servicios{padding:80px 24px;}.serv-grid{grid-template-columns:1fr;}
+  .cli-inner{grid-template-columns:1fr;gap:48px;padding:80px 24px;}.cli-overlay{background:rgba(248,250,252,0.97)!important;}
+  .proc-inner{padding:80px 24px;}.proc-steps{grid-template-columns:1fr 1fr;gap:40px;}.proc-steps::before{display:none;}
+  .dif-inner{padding:80px 24px;}.dif-grid{grid-template-columns:1fr;}
+  .cont-inner{padding:80px 24px;}.crow{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:20px;text-align:center;padding:32px 24px;}.f-nav{flex-wrap:wrap;justify-content:center;}
+}
+@media(max-width:480px){.proc-steps{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">SG <em>Global</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html#nosotros" data-i18n="nav.about">Nosotros</a></li>
+    <li><a href="index.html#lineas"   data-i18n="nav.lines">Líneas</a></li>
+    <li><a href="data.html"           data-i18n="nav.data">Data</a></li>
+    <li><a href="seguros.html"        data-i18n="nav.insurance">Insurance</a></li>
+    <li><a href="operations.html"     data-i18n="nav.ops">Operations</a></li>
+    <li><a href="capital.html"        class="active" data-i18n="nav.cap">Capital</a></li>
+    <li><a href="#contacto"           data-i18n="nav.contact">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn"        id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="#contacto" class="nav-cta" data-i18n="nav.cta">Contactar</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-img"><canvas id="neural-canvas"></canvas></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-badge"><span class="hero-badge-dot"></span><span class="hero-badge-text">SG Global Capital</span></div>
+  <svg class="hero-pulse" viewBox="0 0 400 400" fill="none">
+    <circle class="p-ring" cx="200" cy="200" r="42" stroke="white" stroke-width="1.5"/>
+    <circle cx="200" cy="200" r="10" fill="white"/>
+    <line x1="200" y1="190" x2="200" y2="80" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="200" y1="210" x2="200" y2="320" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="190" y1="200" x2="90" y2="140" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="210" y1="200" x2="310" y2="140" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="210" y1="200" x2="310" y2="270" stroke="white" stroke-width="1" opacity=".6"/>
+    <circle class="p-node" cx="200" cy="72" r="8" fill="white"/>
+    <circle class="p-node" cx="200" cy="328" r="8" fill="white"/>
+    <circle class="p-node" cx="82" cy="132" r="8" fill="white"/>
+    <circle class="p-node" cx="318" cy="132" r="8" fill="white"/>
+    <circle class="p-node" cx="318" cy="278" r="8" fill="white"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="eyebrow-line"></span><span data-i18n="hero.eyebrow">SG Global Capital</span></div>
+    <h1 class="hero-title" data-i18n-html="hero.title">Capital <em>estratégico</em><br>para la logística</h1>
+    <p class="hero-sub" data-i18n="hero.sub">Asesoría en M&A, estructuración de financiamiento y conexión con inversionistas especializados para compañías del sector logístico y de transporte que buscan crecer o transformarse.</p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-primary" data-i18n="hero.cta1">Hablar con un Asesor</a>
+      <a href="#servicios" class="btn-ghost">
+        <span data-i18n="hero.cta2">Ver servicios</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-bar"></div><span data-i18n="hero.scroll">Scroll</span></div>
+</section>
+
+<section id="servicios">
+  <svg class="pulse-mark" viewBox="0 0 48 48" fill="none">
+    <circle cx="24" cy="24" r="5" fill="var(--acc)"/>
+    <line x1="24" y1="19" x2="24" y2="8" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+    <line x1="24" y1="29" x2="24" y2="40" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+    <line x1="20" y1="22" x2="10" y2="16" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+    <line x1="28" y1="22" x2="38" y2="16" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+    <line x1="28" y1="26" x2="38" y2="32" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+    <circle cx="24" cy="6" r="3" fill="var(--acc)" opacity=".7"/>
+    <circle cx="24" cy="42" r="3" fill="var(--acc)" opacity=".7"/>
+    <circle cx="8" cy="14" r="3" fill="var(--acc)" opacity=".7"/>
+    <circle cx="40" cy="14" r="3" fill="var(--acc)" opacity=".7"/>
+    <circle cx="40" cy="34" r="3" fill="var(--acc)" opacity=".7"/>
+  </svg>
+  <div class="s-label rev" data-i18n="serv.label">Servicios</div>
+  <h2 class="s-title rev rev2" data-i18n-html="serv.title">Soluciones de capital<br><em>para el sector logístico</em></h2>
+  <div class="serv-grid">
+    <div class="serv-card rev">
+      <div class="serv-inner">
+        <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+        <div class="serv-num">01</div>
+        <h3 class="serv-title" data-i18n="serv.t1">Asesoría en M&A</h3>
+        <p class="serv-desc" data-i18n="serv.d1">Acompañamos procesos de fusión, adquisición y desinversión en el sector logístico y de transporte. Identificación de targets, estructuración de la transacción, negociación y cierre con conocimiento profundo del sector.</p>
+        <div class="serv-tags"><span class="serv-tag" data-i18n="serv.tag1a">Fusiones</span><span class="serv-tag" data-i18n="serv.tag1b">Adquisiciones</span><span class="serv-tag" data-i18n="serv.tag1c">Desinversiones</span></div>
+      </div>
+    </div>
+    <div class="serv-card rev rev2">
+      <div class="serv-inner">
+        <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="serv-num">02</div>
+        <h3 class="serv-title" data-i18n="serv.t2">Financiamiento de Flota y Activos</h3>
+        <p class="serv-desc" data-i18n="serv.d2">Estructuramos soluciones de financiamiento para adquisición y renovación de flota, equipos logísticos e infraestructura. Acceso a líneas de crédito, leasing y esquemas alternativos adaptados al flujo de caja del negocio.</p>
+        <div class="serv-tags"><span class="serv-tag" data-i18n="serv.tag2a">Crédito</span><span class="serv-tag" data-i18n="serv.tag2b">Leasing</span><span class="serv-tag" data-i18n="serv.tag2c">Flota</span></div>
+      </div>
+    </div>
+    <div class="serv-card rev">
+      <div class="serv-inner">
+        <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <div class="serv-num">03</div>
+        <h3 class="serv-title" data-i18n="serv.t3">Valoración y Due Diligence</h3>
+        <p class="serv-desc" data-i18n="serv.d3">Valoración especializada de empresas logísticas y de transporte con metodologías ajustadas al sector. Due diligence financiero, operativo y comercial para fundamentar decisiones de inversión con información sólida.</p>
+        <div class="serv-tags"><span class="serv-tag" data-i18n="serv.tag3a">Valoración</span><span class="serv-tag" data-i18n="serv.tag3b">Due diligence</span><span class="serv-tag" data-i18n="serv.tag3c">Análisis financiero</span></div>
+      </div>
+    </div>
+    <div class="serv-card rev rev2">
+      <div class="serv-inner">
+        <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="serv-num">04</div>
+        <h3 class="serv-title" data-i18n="serv.t4">Conexión con Fondos e Inversionistas</h3>
+        <p class="serv-desc" data-i18n="serv.d4">Conectamos empresas del sector logístico con fondos de capital privado, family offices e inversionistas estratégicos especializados en transporte e infraestructura logística en Latinoamérica.</p>
+        <div class="serv-tags"><span class="serv-tag" data-i18n="serv.tag4a">Capital privado</span><span class="serv-tag" data-i18n="serv.tag4b">Inversionistas</span><span class="serv-tag" data-i18n="serv.tag4c">Fondos</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="clientes">
+  <div class="cli-bg"></div>
+  <div class="cli-overlay"></div>
+  <div class="cli-inner">
+    <div>
+      <div class="s-label rev" data-i18n="cli.label">¿A quién va dirigido?</div>
+      <h2 class="s-title rev rev2" data-i18n-html="cli.title">Para empresas que<br><em>buscan crecer</em></h2>
+      <p class="cli-text rev rev3" data-i18n="cli.text">SG Global Capital trabaja con empresas del sector logístico en distintas etapas de su ciclo de vida — desde la expansión hasta la consolidación o el exit.</p>
+    </div>
+    <div>
+      <div class="client-list">
+        <div class="client-item"><div class="client-num">01</div><div class="client-content"><h4 data-i18n="cli.c1t">Empresas en Expansión</h4><p data-i18n="cli.c1d">Compañías que necesitan capital para crecer orgánicamente o mediante adquisiciones. Estructuramos el financiamiento o conectamos con los inversionistas adecuados.</p></div></div>
+        <div class="client-item"><div class="client-num">02</div><div class="client-content"><h4 data-i18n="cli.c2t">Propietarios que Buscan Socios</h4><p data-i18n="cli.c2d">Fundadores y dueños que quieren incorporar capital o un socio estratégico para acelerar el crecimiento sin perder el control de la compañía.</p></div></div>
+        <div class="client-item"><div class="client-num">03</div><div class="client-content"><h4 data-i18n="cli.c3t">Empresas en Procesos de Venta</h4><p data-i18n="cli.c3d">Propietarios que han decidido vender total o parcialmente su compañía. Maximizamos el valor de la transacción y acompañamos el proceso de punta a punta.</p></div></div>
+        <div class="client-item"><div class="client-num">04</div><div class="client-content"><h4 data-i18n="cli.c4t">Inversionistas que Ingresan al Sector</h4><p data-i18n="cli.c4d">Fondos e inversionistas que quieren entrar al sector logístico. Los guiamos en la identificación de oportunidades, due diligence y estructuración de la inversión.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso">
+  <div class="proc-bg"></div>
+  <div class="proc-overlay"></div>
+  <div class="proc-inner">
+    <div class="s-label rev" data-i18n="proc.label">Proceso</div>
+    <h2 class="s-title rev rev2" data-i18n-html="proc.title">Asesoría estructurada,<br><em>resultados concretos</em></h2>
+    <div class="proc-steps">
+      <div class="step"><div class="step-circle"><span class="step-n">01</span></div><h4 class="step-title" data-i18n="proc.s1t">Mandato</h4><p class="step-desc" data-i18n="proc.s1d">Definimos los objetivos, alcance y condiciones del proceso. Establecemos el mandato de asesoría con total claridad.</p></div>
+      <div class="step"><div class="step-circle"><span class="step-n">02</span></div><h4 class="step-title" data-i18n="proc.s2t">Análisis</h4><p class="step-desc" data-i18n="proc.s2d">Valoración del negocio, análisis financiero profundo y preparación de materiales para el proceso (teaser, IM, modelo financiero).</p></div>
+      <div class="step"><div class="step-circle"><span class="step-n">03</span></div><h4 class="step-title" data-i18n="proc.s3t">Proceso</h4><p class="step-desc" data-i18n="proc.s3d">Identificación y contacto con potenciales compradores o inversionistas, recepción de ofertas y negociación de términos.</p></div>
+      <div class="step"><div class="step-circle"><span class="step-n">04</span></div><h4 class="step-title" data-i18n="proc.s4t">Cierre</h4><p class="step-desc" data-i18n="proc.s4d">Due diligence final, negociación de contratos y acompañamiento hasta el cierre exitoso de la transacción.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="diferenciadores">
+  <div class="dif-bg"></div>
+  <div class="dif-overlay"></div>
+  <div class="dif-inner">
+    <div class="s-label" data-i18n="dif.label">Por qué SG Global Capital</div>
+    <h2 class="s-title" data-i18n-html="dif.title">Asesores que<br><em>conocen el sector</em></h2>
+    <div class="dif-grid">
+      <div class="dif-item"><div class="dif-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3 class="dif-title" data-i18n="dif.t1">Especialización Logística</h3><p class="dif-desc" data-i18n="dif.d1">No somos un banco de inversión genérico. Conocemos en detalle la economía del negocio logístico: márgenes, ciclos de capital, activos y riesgos específicos del sector. Eso se traduce en mejores valoraciones y mejores transacciones.</p></div>
+      <div class="dif-item"><div class="dif-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3 class="dif-title" data-i18n="dif.t2">Red de Inversionistas Activos</h3><p class="dif-desc" data-i18n="dif.d2">Mantenemos relaciones activas con fondos, family offices e inversionistas estratégicos con tesis de inversión en logística y transporte en Latinoamérica. Acceso real, no solo promesas de introducción.</p></div>
+      <div class="dif-item"><div class="dif-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3 class="dif-title" data-i18n="dif.t3">Ecosistema Integrado</h3><p class="dif-desc" data-i18n="dif.d3">Los datos de telemetría de SG Data y el diagnóstico operativo de SG Operations enriquecen el due diligence y la valoración. Un ecosistema único que genera información privilegiada para tomar mejores decisiones de capital.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="cont-bg"></div>
+  <div class="cont-overlay"></div>
+  <div class="cont-inner">
+    <div class="s-label rev" data-i18n="cont.label">Contacto</div>
+    <h2 class="s-title rev rev2" data-i18n-html="cont.title">Hablemos de<br><em>su próxima transacción</em></h2>
+    <p class="cont-sub rev rev3" data-i18n="cont.sub">Cuéntenos sobre su empresa y sus objetivos de capital. Un asesor de SG Global Capital le contactará de forma confidencial.</p>
+    <form class="cform rev" onsubmit="handleForm(event)">
+      <div class="crow">
+        <div class="cgrp"><label data-i18n="cf.name">Nombre</label><input type="text" name="nombre" data-i18n-ph="cf.namePh" placeholder="Su nombre completo" required></div>
+        <div class="cgrp"><label data-i18n="cf.company">Empresa</label><input type="text" name="empresa" data-i18n-ph="cf.companyPh" placeholder="Nombre de su compañía" required></div>
+      </div>
+      <div class="crow">
+        <div class="cgrp"><label data-i18n="cf.email">Email</label><input type="email" name="email" placeholder="correo@empresa.com" required></div>
+        <div class="cgrp"><label data-i18n="cf.phone">Teléfono</label><input type="tel" name="telefono" placeholder="+57 300 000 0000"></div>
+      </div>
+      <div class="cgrp">
+        <label data-i18n="cf.service">Servicio de interés</label>
+        <select name="servicio">
+          <option value="" disabled selected data-i18n="cf.sv0">Seleccione un servicio</option>
+          <option data-i18n="cf.sv1">Asesoría en M&A</option>
+          <option data-i18n="cf.sv2">Financiamiento de flota y activos</option>
+          <option data-i18n="cf.sv3">Valoración y due diligence</option>
+          <option data-i18n="cf.sv4">Conexión con inversionistas</option>
+          <option data-i18n="cf.sv5">Varios / No estoy seguro</option>
+        </select>
+      </div>
+      <div class="cgrp"><label data-i18n="cf.msg">Su objetivo</label><textarea name="mensaje" data-i18n-ph="cf.msgPh" placeholder="Cuéntenos sobre su empresa, sus objetivos de capital y el horizonte de tiempo…"></textarea></div>
+      <button type="submit" class="csub" id="form-btn" data-i18n="cf.submit">Enviar Consulta</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <a class="f-logo" href="index.html">SG <em>Global</em></a>
+  <ul class="f-nav">
+    <li><a href="index.html#nosotros" data-i18n="nav.about">Nosotros</a></li>
+    <li><a href="data.html"           data-i18n="nav.data">Data</a></li>
+    <li><a href="seguros.html"        data-i18n="nav.insurance">Insurance</a></li>
+    <li><a href="operations.html"     data-i18n="nav.ops">Operations</a></li>
+    <li><a href="capital.html"        data-i18n="nav.cap">Capital</a></li>
+    <li><a href="#contacto"           data-i18n="nav.contact">Contacto</a></li>
+  </ul>
+  <div class="f-copy" data-i18n="footer.copy">© 2025 SG Global Capital. Todos los derechos reservados.</div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');if(e.target.classList.contains('client-list'))e.target.querySelectorAll('.client-item').forEach((p,i)=>setTimeout(()=>p.classList.add('vis'),i*100));if(e.target.classList.contains('proc-steps'))e.target.querySelectorAll('.step').forEach((el,i)=>setTimeout(()=>el.classList.add('vis'),i*140));}});},{threshold:0.1});
+document.querySelectorAll('.rev,.client-list,.proc-steps').forEach(el=>io.observe(el));
+document.querySelectorAll('.dif-item,.step').forEach(el=>io.observe(el));
+
+const T={
+  es:{
+    "nav.about":"Nosotros","nav.lines":"Líneas","nav.data":"Data","nav.insurance":"Insurance","nav.ops":"Operations","nav.cap":"Capital","nav.contact":"Contacto","nav.cta":"Contactar",
+    "hero.eyebrow":"SG Global Capital","hero.title":"Capital <em>estratégico</em><br>para la logística",
+    "hero.sub":"Asesoría en M&A, estructuración de financiamiento y conexión con inversionistas especializados para compañías del sector logístico que buscan crecer o transformarse.",
+    "hero.cta1":"Hablar con un Asesor","hero.cta2":"Ver servicios","hero.scroll":"Scroll",
+    "serv.label":"Servicios","serv.title":"Soluciones de capital<br><em>para el sector logístico</em>",
+    "serv.t1":"Asesoría en M&A","serv.d1":"Acompañamos procesos de fusión, adquisición y desinversión en el sector logístico. Identificación de targets, estructuración, negociación y cierre con conocimiento profundo del sector.",
+    "serv.tag1a":"Fusiones","serv.tag1b":"Adquisiciones","serv.tag1c":"Desinversiones",
+    "serv.t2":"Financiamiento de Flota y Activos","serv.d2":"Estructuramos soluciones para adquisición de flota, equipos e infraestructura. Acceso a crédito, leasing y esquemas alternativos adaptados al flujo de caja.",
+    "serv.tag2a":"Crédito","serv.tag2b":"Leasing","serv.tag2c":"Flota",
+    "serv.t3":"Valoración y Due Diligence","serv.d3":"Valoración especializada de empresas logísticas con metodologías ajustadas al sector. Due diligence financiero, operativo y comercial para decisiones de inversión sólidas.",
+    "serv.tag3a":"Valoración","serv.tag3b":"Due diligence","serv.tag3c":"Análisis financiero",
+    "serv.t4":"Conexión con Fondos e Inversionistas","serv.d4":"Conectamos empresas logísticas con fondos de capital privado, family offices e inversionistas estratégicos especializados en el sector en Latinoamérica.",
+    "serv.tag4a":"Capital privado","serv.tag4b":"Inversionistas","serv.tag4c":"Fondos",
+    "cli.label":"¿A quién va dirigido?","cli.title":"Para empresas que<br><em>buscan crecer</em>",
+    "cli.text":"SG Global Capital trabaja con empresas del sector logístico en distintas etapas de su ciclo de vida.",
+    "cli.c1t":"Empresas en Expansión","cli.c1d":"Compañías que necesitan capital para crecer. Estructuramos el financiamiento o conectamos con los inversionistas adecuados.",
+    "cli.c2t":"Propietarios que Buscan Socios","cli.c2d":"Fundadores que quieren incorporar capital o un socio estratégico para acelerar el crecimiento sin perder el control.",
+    "cli.c3t":"Empresas en Procesos de Venta","cli.c3d":"Propietarios que han decidido vender. Maximizamos el valor de la transacción y acompañamos el proceso de punta a punta.",
+    "cli.c4t":"Inversionistas que Ingresan al Sector","cli.c4d":"Fondos e inversionistas que quieren entrar al sector logístico. Los guiamos en identificación de oportunidades y estructuración.",
+    "proc.label":"Proceso","proc.title":"Asesoría estructurada,<br><em>resultados concretos</em>",
+    "proc.s1t":"Mandato","proc.s1d":"Definimos objetivos, alcance y condiciones del proceso con total claridad.",
+    "proc.s2t":"Análisis","proc.s2d":"Valoración, análisis financiero y preparación de materiales para el proceso.",
+    "proc.s3t":"Proceso","proc.s3d":"Contacto con compradores o inversionistas, recepción de ofertas y negociación.",
+    "proc.s4t":"Cierre","proc.s4d":"Due diligence final y acompañamiento hasta el cierre exitoso de la transacción.",
+    "dif.label":"Por qué SG Global Capital","dif.title":"Asesores que<br><em>conocen el sector</em>",
+    "dif.t1":"Especialización Logística","dif.d1":"Conocemos la economía del negocio logístico: márgenes, ciclos de capital y riesgos específicos. Eso se traduce en mejores valoraciones y mejores transacciones.",
+    "dif.t2":"Red de Inversionistas Activos","dif.d2":"Relaciones activas con fondos, family offices e inversionistas con tesis en logística y transporte en Latinoamérica. Acceso real, no solo promesas.",
+    "dif.t3":"Ecosistema Integrado","dif.d3":"Los datos de SG Data y el diagnóstico de SG Operations enriquecen el due diligence. Un ecosistema único que genera información privilegiada para decisiones de capital.",
+    "cont.label":"Contacto","cont.title":"Hablemos de<br><em>su próxima transacción</em>",
+    "cont.sub":"Cuéntenos sobre su empresa y sus objetivos de capital. Le contactaremos de forma confidencial.",
+    "cf.name":"Nombre","cf.namePh":"Su nombre completo","cf.company":"Empresa","cf.companyPh":"Nombre de su compañía",
+    "cf.email":"Email","cf.phone":"Teléfono","cf.service":"Servicio de interés",
+    "cf.sv0":"Seleccione un servicio","cf.sv1":"Asesoría en M&A","cf.sv2":"Financiamiento de flota","cf.sv3":"Valoración y due diligence","cf.sv4":"Conexión con inversionistas","cf.sv5":"Varios / No estoy seguro",
+    "cf.msg":"Su objetivo","cf.msgPh":"Cuéntenos sobre su empresa, objetivos de capital y horizonte de tiempo…",
+    "cf.submit":"Enviar Consulta","cf.success":"✓ Consulta enviada",
+    "footer.copy":"© 2025 SG Global Capital. Todos los derechos reservados."
+  },
+  en:{
+    "nav.about":"About","nav.lines":"Solutions","nav.data":"Data","nav.insurance":"Insurance","nav.ops":"Operations","nav.cap":"Capital","nav.contact":"Contact","nav.cta":"Contact Us",
+    "hero.eyebrow":"SG Global Capital","hero.title":"<em>Strategic</em> capital<br>for logistics",
+    "hero.sub":"M&A advisory, financing structuring and connection with specialized investors for logistics and transportation companies seeking growth or transformation.",
+    "hero.cta1":"Talk to an Advisor","hero.cta2":"View services","hero.scroll":"Scroll",
+    "serv.label":"Services","serv.title":"Capital solutions<br><em>for the logistics sector</em>",
+    "serv.t1":"M&A Advisory","serv.d1":"We guide merger, acquisition and divestiture processes in the logistics sector. Target identification, deal structuring, negotiation and closing with deep sector expertise.",
+    "serv.tag1a":"Mergers","serv.tag1b":"Acquisitions","serv.tag1c":"Divestitures",
+    "serv.t2":"Fleet & Asset Financing","serv.d2":"We structure financing solutions for fleet acquisition, logistics equipment and infrastructure. Access to credit lines, leasing and alternative schemes adapted to cash flow.",
+    "serv.tag2a":"Credit","serv.tag2b":"Leasing","serv.tag2c":"Fleet",
+    "serv.t3":"Valuation & Due Diligence","serv.d3":"Specialized valuation of logistics companies with sector-adjusted methodologies. Financial, operational and commercial due diligence to support solid investment decisions.",
+    "serv.tag3a":"Valuation","serv.tag3b":"Due diligence","serv.tag3c":"Financial analysis",
+    "serv.t4":"Investor & Fund Connections","serv.d4":"We connect logistics companies with private equity funds, family offices and strategic investors with a logistics and transportation investment thesis in Latin America.",
+    "serv.tag4a":"Private equity","serv.tag4b":"Investors","serv.tag4c":"Funds",
+    "cli.label":"Who is it for?","cli.title":"For companies<br><em>seeking growth</em>",
+    "cli.text":"SG Global Capital works with logistics sector companies at different stages of their lifecycle.",
+    "cli.c1t":"Companies in Expansion","cli.c1d":"Companies that need capital to grow. We structure the financing or connect them with the right investors.",
+    "cli.c2t":"Owners Seeking Partners","cli.c2d":"Founders who want to bring in capital or a strategic partner to accelerate growth without losing control.",
+    "cli.c3t":"Companies in Sale Processes","cli.c3d":"Owners who have decided to sell. We maximize transaction value and accompany the process from start to finish.",
+    "cli.c4t":"Investors Entering the Sector","cli.c4d":"Funds and investors looking to enter logistics. We guide them through opportunity identification and deal structuring.",
+    "proc.label":"Process","proc.title":"Structured advisory,<br><em>concrete results</em>",
+    "proc.s1t":"Mandate","proc.s1d":"We define objectives, scope and process conditions with full clarity.",
+    "proc.s2t":"Analysis","proc.s2d":"Valuation, financial analysis and preparation of process materials.",
+    "proc.s3t":"Process","proc.s3d":"Contact with buyers or investors, offer reception and term negotiation.",
+    "proc.s4t":"Closing","proc.s4d":"Final due diligence and support until successful transaction closing.",
+    "dif.label":"Why SG Global Capital","dif.title":"Advisors who<br><em>know the sector</em>",
+    "dif.t1":"Logistics Specialization","dif.d1":"We understand logistics business economics: margins, capital cycles and sector-specific risks. That translates into better valuations and better deals.",
+    "dif.t2":"Active Investor Network","dif.d2":"Active relationships with funds, family offices and strategic investors with logistics and transportation theses in Latin America. Real access, not just introductions.",
+    "dif.t3":"Integrated Ecosystem","dif.d3":"SG Data telemetry and SG Operations diagnostics enrich due diligence. A unique ecosystem generating privileged information for better capital decisions.",
+    "cont.label":"Contact","cont.title":"Let's talk about<br><em>your next transaction</em>",
+    "cont.sub":"Tell us about your company and your capital objectives. We will reach out confidentially.",
+    "cf.name":"Name","cf.namePh":"Your full name","cf.company":"Company","cf.companyPh":"Your company name",
+    "cf.email":"Email","cf.phone":"Phone","cf.service":"Service of interest",
+    "cf.sv0":"Select a service","cf.sv1":"M&A advisory","cf.sv2":"Fleet & asset financing","cf.sv3":"Valuation & due diligence","cf.sv4":"Investor connections","cf.sv5":"Multiple / Not sure yet",
+    "cf.msg":"Your objective","cf.msgPh":"Tell us about your company, capital objectives and timeline…",
+    "cf.submit":"Send Inquiry","cf.success":"✓ Inquiry sent",
+    "footer.copy":"© 2025 SG Global Capital. All rights reserved."
+  }
+};
+let lang='es';
+function setLang(l){lang=l;document.documentElement.lang=l;document.getElementById('btn-es').classList.toggle('active',l==='es');document.getElementById('btn-en').classList.toggle('active',l==='en');const t=T[l];document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.textContent=t[k];});document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');if(t[k]!==undefined)el.innerHTML=t[k];});document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(t[k]!==undefined)el.placeholder=t[k];});}
+function handleForm(e){e.preventDefault();const btn=document.getElementById('form-btn');btn.textContent=T[lang]['cf.success'];btn.style.background='#22c55e';btn.style.color='#fff';setTimeout(()=>{btn.textContent=T[lang]['cf.submit'];btn.style.background='';btn.style.color='';e.target.reset();},3500);}
+window.addEventListener('scroll',()=>{document.querySelector('nav').style.background=window.scrollY>60?'rgba(10,20,38,0.96)':'rgba(15,30,51,0.75)';});
+(function(){
+  const canvas=document.getElementById('neural-canvas');const ctx=canvas.getContext('2d');
+  let W,H,nodes,mouse={x:-9999,y:-9999};
+  const SKY={r:56,g:189,b:248},LIGHT={r:125,g:211,b:252},INDIGO={r:99,g:102,b:241},BLUE={r:37,g:99,b:235};
+  const COLS=[SKY,LIGHT,INDIGO,BLUE];
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  function rand(a,b){return a+Math.random()*(b-a);}
+  function makeNode(){const col=COLS[Math.floor(Math.random()*COLS.length)];return{x:rand(0,W),y:rand(0,H),vx:rand(-0.25,0.25),vy:rand(-0.20,0.20),r:rand(1.5,4),col,phase:rand(0,Math.PI*2),pulseR:rand(6,14),opacity:rand(0.35,0.85)};}
+  function init(){resize();nodes=Array.from({length:110},makeNode);}
+  function rgba(c,a){return `rgba(${c.r},${c.g},${c.b},${a})`;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const grd=ctx.createRadialGradient(W*.5,H*.55,0,W*.5,H*.55,Math.max(W,H)*.6);
+    grd.addColorStop(0,'rgba(56,189,248,0.04)');grd.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+    const t=performance.now()*0.001;
+    for(let i=0;i<nodes.length;i++){const a=nodes[i];for(let j=i+1;j<nodes.length;j++){const b=nodes[j];const dx=a.x-b.x,dy=a.y-b.y,d=Math.sqrt(dx*dx+dy*dy);if(d>180)continue;const alpha=(1-d/180)*0.18;const r=(a.col.r+b.col.r)>>1,g=(a.col.g+b.col.g)>>1,bl=(a.col.b+b.col.b)>>1;ctx.beginPath();ctx.strokeStyle=`rgba(${r},${g},${bl},${alpha})`;ctx.lineWidth=0.7;ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();const pr=(Math.sin(t*1.2+i*0.4+j*0.3)*0.5+0.5);ctx.beginPath();ctx.arc(a.x+(b.x-a.x)*pr,a.y+(b.y-a.y)*pr,1.4,0,Math.PI*2);ctx.fillStyle=`rgba(${r},${g},${bl},${alpha*3})`;ctx.fill();}}
+    nodes.forEach(n=>{const dx=n.x-mouse.x,dy=n.y-mouse.y,d=Math.sqrt(dx*dx+dy*dy);if(d<220){ctx.beginPath();ctx.strokeStyle=rgba(SKY,(1-d/220)*0.35);ctx.lineWidth=0.9;ctx.moveTo(n.x,n.y);ctx.lineTo(mouse.x,mouse.y);ctx.stroke();}});
+    nodes.forEach(n=>{n.phase+=0.012;const glow=0.5+0.5*Math.sin(n.phase);const halo=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.pulseR*glow);halo.addColorStop(0,rgba(n.col,0.18*glow));halo.addColorStop(1,rgba(n.col,0));ctx.beginPath();ctx.arc(n.x,n.y,n.pulseR*glow,0,Math.PI*2);ctx.fillStyle=halo;ctx.fill();ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle=rgba(n.col,n.opacity);ctx.fill();n.x+=n.vx;n.y+=n.vy;if(n.x<-20)n.x=W+20;if(n.x>W+20)n.x=-20;if(n.y<-20)n.y=H+20;if(n.y>H+20)n.y=-20;const dx2=n.x-mouse.x,dy2=n.y-mouse.y,d2=Math.sqrt(dx2*dx2+dy2*dy2);if(d2<100&&d2>0){const f=(100-d2)/100*0.4;n.vx+=(dx2/d2)*f;n.vy+=(dy2/d2)*f;n.vx*=0.96;n.vy*=0.96;}});
+    requestAnimationFrame(draw);
+  }
+  init();draw();
+  window.addEventListener('resize',()=>resize());
+  const hero=document.querySelector('.hero');
+  hero.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+  hero.addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999;});
+})();
+</script>
+</body>
+</html>

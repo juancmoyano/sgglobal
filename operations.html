@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SG Global Operations — Operación y Estructuración Logística</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Sora:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1A2F4E;--navy2:#0f1e33;
+  --acc:#06B6D4;--acc2:#0891b2;--acc-light:#22d3ee;
+  --white:#FFFFFF;--offwhite:#F8FAFC;
+  --line:rgba(255,255,255,0.1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Sora',sans-serif;background:var(--navy2);color:var(--white);overflow-x:hidden;}
+.lang-toggle{display:flex;align-items:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:100px;overflow:hidden;flex-shrink:0;}
+.lang-btn{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:7px 16px;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,0.4);transition:background .2s,color .2s;font-family:'Sora',sans-serif;}
+.lang-btn.active{background:var(--acc);color:var(--white);border-radius:100px;}
+.lang-btn:not(.active):hover{color:var(--white);}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 64px;background:rgba(15,30,51,0.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);gap:20px;transition:background .3s;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;letter-spacing:.1em;color:var(--white);flex-shrink:0;text-decoration:none;}
+.logo em{font-style:normal;color:var(--acc);}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{font-size:12px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.nav-cta{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--acc-light);border:1px solid rgba(6,182,212,0.4);padding:9px 24px;border-radius:100px;text-decoration:none;transition:all .25s;white-space:nowrap;}
+.nav-cta:hover{background:var(--acc);color:var(--white);border-color:var(--acc);}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 64px 96px;overflow:hidden;}
+.hero-img{position:absolute;inset:0;background:linear-gradient(135deg,#030e18 0%,#061520 50%,#041018 100%);overflow:hidden;}
+#neural-canvas{position:absolute;inset:0;width:100%;height:100%;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,30,51,0.92) 0%,rgba(15,30,51,0.6) 55%,rgba(15,30,51,0.25) 100%),linear-gradient(to top,rgba(15,30,51,0.97) 0%,transparent 55%);}
+.hero-badge{position:absolute;top:120px;right:64px;z-index:2;display:flex;align-items:center;gap:10px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);border-radius:100px;padding:8px 18px;}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--acc-light);}
+.hero-badge-text{font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--acc-light);}
+.hero-pulse{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:min(420px,38vw);opacity:0.06;pointer-events:none;}
+.hero-content{position:relative;z-index:2;max-width:700px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--acc-light);margin-bottom:32px;}
+.eyebrow-line{width:32px;height:1px;background:var(--acc);}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,96px);font-weight:300;line-height:.97;letter-spacing:-.025em;color:var(--white);margin-bottom:32px;}
+.hero-title em{font-style:italic;color:var(--acc-light);}
+.hero-sub{font-size:15px;font-weight:300;line-height:1.82;color:rgba(255,255,255,0.62);max-width:480px;margin-bottom:48px;}
+.hero-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+.btn-primary{font-size:13px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;background:var(--acc);color:var(--white);padding:15px 36px;border-radius:100px;text-decoration:none;display:inline-block;transition:background .25s,transform .2s;}
+.btn-primary:hover{background:var(--acc-light);transform:translateY(-2px);}
+.btn-ghost{font-size:13px;font-weight:300;color:rgba(255,255,255,0.6);text-decoration:none;display:flex;align-items:center;gap:7px;transition:color .2s;}
+.btn-ghost:hover{color:var(--white);}
+.btn-ghost svg{transition:transform .2s;}
+.btn-ghost:hover svg{transform:translateX(4px);}
+.hero-scroll{position:absolute;bottom:36px;left:64px;z-index:2;display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.scroll-bar{width:40px;height:1px;background:rgba(255,255,255,0.15);position:relative;overflow:hidden;}
+.scroll-bar::after{content:'';position:absolute;inset:0;background:var(--acc);transform:translateX(-100%);animation:scanBar 2.4s ease-in-out infinite;}
+@keyframes scanBar{0%{transform:translateX(-100%)}50%{transform:translateX(0)}100%{transform:translateX(100%)}}
+@keyframes pulseRing{0%,100%{r:42;opacity:.6}50%{r:48;opacity:.2}}
+@keyframes nodeGlow{0%,100%{opacity:.5}50%{opacity:1}}
+.p-ring{animation:pulseRing 3s ease-in-out infinite;}
+.p-node{animation:nodeGlow 2.5s ease-in-out infinite;}
+.p-node:nth-child(2){animation-delay:.4s;}.p-node:nth-child(3){animation-delay:.8s;}.p-node:nth-child(4){animation-delay:1.2s;}.p-node:nth-child(5){animation-delay:1.6s;}.p-node:nth-child(6){animation-delay:2s;}
+.s-label{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--acc-light);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.s-label::before{content:'';width:20px;height:1px;background:var(--acc);}
+.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4.5vw,54px);font-weight:300;line-height:1.08;}
+.s-title em{font-style:italic;color:var(--acc-light);}
+.pulse-mark{display:block;width:48px;height:48px;margin-bottom:16px;}
+
+/* SERVICIOS */
+#servicios{background:var(--navy2);padding:120px 64px;}
+.serv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);margin-top:64px;}
+.serv-card{background:rgba(15,25,44,0.8);padding:48px 40px;position:relative;overflow:hidden;transition:background .3s;}
+.serv-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(6,182,212,0.08),transparent);opacity:0;transition:opacity .3s;}
+.serv-card:hover::after{opacity:1;}
+.serv-inner{position:relative;z-index:1;}
+.serv-icon{width:48px;height:48px;border-radius:10px;background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.22);display:flex;align-items:center;justify-content:center;margin-bottom:24px;transition:background .3s;}
+.serv-card:hover .serv-icon{background:rgba(6,182,212,0.22);}
+.serv-icon svg{width:22px;height:22px;stroke:var(--acc-light);}
+.serv-num{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc-light);opacity:.6;margin-bottom:8px;}
+.serv-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;line-height:1.2;color:var(--white);margin-bottom:14px;}
+.serv-desc{font-size:13px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.5);margin-bottom:18px;}
+.serv-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.serv-tag{font-size:11px;font-weight:400;letter-spacing:.08em;color:var(--acc-light);background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.18);border-radius:100px;padding:4px 12px;}
+
+/* SECTORES — light */
+#sectores{position:relative;padding:0;overflow:hidden;}
+.sect-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;}
+.sect-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(248,250,252,0.97) 0%,rgba(248,250,252,0.97) 55%,rgba(248,250,252,0.65) 100%);}
+.sect-inner{position:relative;z-index:2;padding:120px 64px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+#sectores .s-label{color:var(--navy);}
+#sectores .s-label::before{background:var(--acc2);}
+#sectores .s-title{color:var(--navy);}
+#sectores .s-title em{color:var(--acc2);}
+.sect-text{font-size:15px;font-weight:300;line-height:1.85;color:#3a4a5c;margin-bottom:32px;}
+.sect-list{display:flex;flex-direction:column;border-top:1px solid rgba(26,47,78,0.12);}
+.sect-item{display:flex;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid rgba(26,47,78,0.08);opacity:0;transform:translateX(-12px);transition:opacity .5s,transform .5s;}
+.sect-item.vis{opacity:1;transform:none;}
+.sect-dot{width:8px;height:8px;border-radius:50%;background:var(--acc);flex-shrink:0;}
+.sect-item span{font-size:13px;font-weight:400;color:var(--navy);letter-spacing:.04em;}
+
+/* METODOLOGIA — dark */
+#metodologia{position:relative;padding:0;overflow:hidden;}
+.met-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;}
+.met-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(4,14,26,0.97) 0%,rgba(8,22,40,0.95) 100%);}
+.met-inner{position:relative;z-index:2;padding:120px 64px;}
+.met-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:72px;position:relative;}
+.met-steps::before{content:'';position:absolute;top:28px;left:calc(12.5% + 16px);right:calc(12.5% + 16px);height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.4),rgba(6,182,212,0.4),transparent);}
+.step{text-align:center;padding:0 24px;opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+.step.vis{opacity:1;transform:none;}
+.step:nth-child(2){transition-delay:.15s;}.step:nth-child(3){transition-delay:.30s;}.step:nth-child(4){transition-delay:.45s;}
+.step-circle{width:56px;height:56px;border-radius:50%;background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.step-circle:hover{background:rgba(6,182,212,0.25);}
+.step-n{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--acc-light);}
+.step-title{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--white);margin-bottom:10px;}
+.step-desc{font-size:13px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.5);}
+
+/* DIFERENCIADORES — light */
+#diferenciadores{position:relative;padding:0;overflow:hidden;}
+.dif-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80') center 30%/cover no-repeat;}
+.dif-overlay{position:absolute;inset:0;background:rgba(248,250,252,0.95);}
+.dif-inner{position:relative;z-index:2;padding:120px 64px;}
+#diferenciadores .s-label{color:var(--navy);}
+#diferenciadores .s-label::before{background:var(--acc2);}
+#diferenciadores .s-title{color:var(--navy);}
+#diferenciadores .s-title em{color:var(--acc2);}
+.dif-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px;}
+.dif-item{background:#fff;border:1px solid rgba(26,47,78,0.08);border-radius:12px;padding:36px 28px;border-top:3px solid var(--acc);opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease,box-shadow .3s;}
+.dif-item.vis{opacity:1;transform:none;}
+.dif-item:nth-child(2){transition-delay:.12s;}.dif-item:nth-child(3){transition-delay:.24s;}
+.dif-item:hover{box-shadow:0 12px 36px rgba(6,182,212,0.1);}
+.dif-icon{width:40px;height:40px;border-radius:8px;background:rgba(6,182,212,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.dif-icon svg{width:18px;height:18px;stroke:var(--acc2);}
+.dif-title{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:10px;}
+.dif-desc{font-size:13px;font-weight:300;line-height:1.8;color:#4a5e73;}
+
+/* CONTACTO */
+#contacto{position:relative;padding:0;overflow:hidden;}
+.cont-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1611095565494-8b0e18c7e58b?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;}
+.cont-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,12,28,0.95),rgba(4,12,28,0.98));}
+.cont-inner{position:relative;z-index:2;padding:120px 64px;max-width:760px;margin:0 auto;text-align:center;}
+.cont-inner .s-label{justify-content:center;color:var(--acc-light);}
+.cont-inner .s-label::before{display:none;}
+.cont-inner .s-label::after{content:'';width:20px;height:1px;background:var(--acc);}
+.cont-inner .s-title{color:var(--white);}
+.cont-sub{font-size:15px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.48);margin:22px auto 52px;max-width:480px;}
+.cform{display:flex;flex-direction:column;gap:14px;text-align:left;}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.cgrp{display:flex;flex-direction:column;gap:6px;}
+.cgrp label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.cgrp input,.cgrp select,.cgrp textarea{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px 16px;color:var(--white);font-family:'Sora',sans-serif;font-size:14px;font-weight:300;outline:none;width:100%;transition:border-color .2s,background .2s;}
+.cgrp input::placeholder,.cgrp textarea::placeholder{color:rgba(255,255,255,0.2);}
+.cgrp input:focus,.cgrp select:focus,.cgrp textarea:focus{border-color:var(--acc-light);background:rgba(6,182,212,0.05);}
+.cgrp select option{background:#0f1e33;color:var(--white);}
+.cgrp textarea{resize:vertical;min-height:110px;}
+.csub{margin-top:8px;background:var(--acc);border:none;color:var(--white);font-family:'Sora',sans-serif;font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:16px 40px;border-radius:100px;cursor:pointer;width:100%;transition:background .2s,transform .2s;}
+.csub:hover{background:var(--acc-light);transform:translateY(-1px);}
+footer{padding:40px 64px;border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;background:var(--navy2);}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;letter-spacing:.08em;color:var(--white);text-decoration:none;}
+.f-logo em{font-style:normal;color:var(--acc-light);}
+.f-nav{display:flex;gap:28px;list-style:none;}
+.f-nav a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);text-decoration:none;transition:color .2s;}
+.f-nav a:hover{color:var(--acc-light);}
+.f-copy{font-size:11px;color:rgba(255,255,255,0.18);}
+.rev{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+.rev.vis{opacity:1;transform:none;}
+.rev2{transition-delay:.1s;}.rev3{transition-delay:.2s;}
+@media(max-width:900px){
+  nav{padding:16px 24px;}.nav-links{display:none;}
+  .hero{padding:0 24px 80px;}.hero-badge{display:none;}.hero-scroll{left:24px;}
+  #servicios{padding:80px 24px;}.serv-grid{grid-template-columns:1fr;}
+  .sect-inner{grid-template-columns:1fr;gap:48px;padding:80px 24px;}.sect-overlay{background:rgba(248,250,252,0.97)!important;}
+  .met-inner{padding:80px 24px;}.met-steps{grid-template-columns:1fr 1fr;gap:40px;}.met-steps::before{display:none;}
+  .dif-inner{padding:80px 24px;}.dif-grid{grid-template-columns:1fr;}
+  .cont-inner{padding:80px 24px;}.crow{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:20px;text-align:center;padding:32px 24px;}.f-nav{flex-wrap:wrap;justify-content:center;}
+}
+@media(max-width:480px){.met-steps{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">SG <em>Global</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html#nosotros" data-i18n="nav.about">Nosotros</a></li>
+    <li><a href="index.html#lineas"   data-i18n="nav.lines">Líneas</a></li>
+    <li><a href="data.html"           data-i18n="nav.data">Data</a></li>
+    <li><a href="seguros.html"        data-i18n="nav.insurance">Insurance</a></li>
+    <li><a href="operations.html"     class="active" data-i18n="nav.ops">Operations</a></li>
+    <li><a href="capital.html"        data-i18n="nav.cap">Capital</a></li>
+    <li><a href="#contacto"           data-i18n="nav.contact">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn"        id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="#contacto" class="nav-cta" data-i18n="nav.cta">Contactar</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-img"><canvas id="neural-canvas"></canvas></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-badge"><span class="hero-badge-dot"></span><span class="hero-badge-text">SG Global Operations</span></div>
+  <svg class="hero-pulse" viewBox="0 0 400 400" fill="none">
+    <circle class="p-ring" cx="200" cy="200" r="42" stroke="white" stroke-width="1.5"/>
+    <circle cx="200" cy="200" r="10" fill="white"/>
+    <line x1="200" y1="190" x2="200" y2="80" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="200" y1="210" x2="200" y2="320" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="190" y1="200" x2="90" y2="140" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="210" y1="200" x2="310" y2="140" stroke="white" stroke-width="1" opacity=".6"/>
+    <line x1="210" y1="200" x2="310" y2="270" stroke="white" stroke-width="1" opacity=".6"/>
+    <circle class="p-node" cx="200" cy="72" r="8" fill="white"/>
+    <circle class="p-node" cx="200" cy="328" r="8" fill="white"/>
+    <circle class="p-node" cx="82" cy="132" r="8" fill="white"/>
+    <circle class="p-node" cx="318" cy="132" r="8" fill="white"/>
+    <circle class="p-node" cx="318" cy="278" r="8" fill="white"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="eyebrow-line"></span><span data-i18n="hero.eyebrow">SG Global Operations</span></div>
+    <h1 class="hero-title" data-i18n-html="hero.title">Operaciones <em>eficientes</em><br>desde el diseño</h1>
+    <p class="hero-sub" data-i18n="hero.sub">Consultoría y acompañamiento integral para estructurar, optimizar y escalar operaciones logísticas. Diagnóstico, rediseño de procesos, formación de equipos y cultura operativa de alto rendimiento.</p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-primary" data-i18n="hero.cta1">Hablar con un Experto</a>
+      <a href="#servicios" class="btn-ghost">
+        <span data-i18n="hero.cta2">Ver servicios</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-bar"></div><span data-i18n="hero.scroll">Scroll</span></div>
+</section>
+
+<section id="servicios">
+  <svg class="pulse-mark" viewBox="0 0 48 48" fill="none">
+    <circle cx="24" cy="24" r="5" fill="var(--acc)"/>
+    <line x1="24" y1="19" x2="24" y2="8" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+    <line x1="24" y1="29" x2="24" y2="40" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+    <line x1="20" y1="22" x2="10" y2="16" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+    <line x1="28" y1="22" x2="38" y2="16" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+    <line x1="28" y1="26" x2="38" y2="32" stroke="var(--acc)" stroke-width="1.2" opacity=".6"/>
+    <circle cx="24" cy="6" r="3" fill="var(--acc)" opacity=".7"/>
+    <circle cx="24" cy="42" r="3" fill="var(--acc)" opacity=".7"/>
+    <circle cx="8" cy="14" r="3" fill="var(--acc)" opacity=".7"/>
+    <circle cx="40" cy="14" r="3" fill="var(--acc)" opacity=".7"/>
+    <circle cx="40" cy="34" r="3" fill="var(--acc)" opacity=".7"/>
+  </svg>
+  <div class="s-label rev" data-i18n="serv.label">Servicios</div>
+  <h2 class="s-title rev rev2" data-i18n-html="serv.title">Cómo transformamos<br><em>su operación logística</em></h2>
+  <div class="serv-grid">
+    <div class="serv-card rev">
+      <div class="serv-inner">
+        <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+        <div class="serv-num">01</div>
+        <h3 class="serv-title" data-i18n="serv.t1">Montaje de Operaciones Logísticas</h3>
+        <p class="serv-desc" data-i18n="serv.d1">Diseñamos y ponemos en marcha operaciones logísticas desde cero o restructuramos las existentes. Definición de procesos, selección de tecnología, configuración de infraestructura y arranque operativo acompañado.</p>
+        <div class="serv-tags"><span class="serv-tag" data-i18n="serv.tag1a">Diseño de operaciones</span><span class="serv-tag" data-i18n="serv.tag1b">Arranque operativo</span><span class="serv-tag" data-i18n="serv.tag1c">Infraestructura</span></div>
+      </div>
+    </div>
+    <div class="serv-card rev rev2">
+      <div class="serv-inner">
+        <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div class="serv-num">02</div>
+        <h3 class="serv-title" data-i18n="serv.t2">Diagnóstico y Rediseño de Procesos</h3>
+        <p class="serv-desc" data-i18n="serv.d2">Auditoría profunda de sus procesos logísticos actuales. Identificamos ineficiencias, cuellos de botella y oportunidades de mejora. Entregamos un plan de acción concreto con impacto medible en costos y tiempos.</p>
+        <div class="serv-tags"><span class="serv-tag" data-i18n="serv.tag2a">Auditoría operativa</span><span class="serv-tag" data-i18n="serv.tag2b">Mejora continua</span><span class="serv-tag" data-i18n="serv.tag2c">KPIs</span></div>
+      </div>
+    </div>
+    <div class="serv-card rev">
+      <div class="serv-inner">
+        <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <div class="serv-num">03</div>
+        <h3 class="serv-title" data-i18n="serv.t3">Análisis de Datos y Brechas Operativas</h3>
+        <p class="serv-desc" data-i18n="serv.d3">Analizamos los datos de su operación para identificar brechas en continuidad de negocio, riesgos operativos y oportunidades de optimización. Integramos la telemetría de SG Global Data para un diagnóstico preciso.</p>
+        <div class="serv-tags"><span class="serv-tag" data-i18n="serv.tag3a">Análisis de datos</span><span class="serv-tag" data-i18n="serv.tag3b">Continuidad de negocio</span><span class="serv-tag" data-i18n="serv.tag3c">Riesgos</span></div>
+      </div>
+    </div>
+    <div class="serv-card rev rev2">
+      <div class="serv-inner">
+        <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="serv-num">04</div>
+        <h3 class="serv-title" data-i18n="serv.t4">Formación de Equipos y Cultura Operativa</h3>
+        <p class="serv-desc" data-i18n="serv.d4">Desarrollamos las capacidades de su equipo logístico. Programas de formación especializados, definición de roles, estándares operativos y construcción de una cultura de eficiencia y mejora continua.</p>
+        <div class="serv-tags"><span class="serv-tag" data-i18n="serv.tag4a">Capacitación</span><span class="serv-tag" data-i18n="serv.tag4b">Cultura operativa</span><span class="serv-tag" data-i18n="serv.tag4c">Estándares</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sectores">
+  <div class="sect-bg"></div>
+  <div class="sect-overlay"></div>
+  <div class="sect-inner">
+    <div>
+      <div class="s-label rev" data-i18n="sec.label">Sectores</div>
+      <h2 class="s-title rev rev2" data-i18n-html="sec.title">Experiencia en<br><em>todos los sectores</em></h2>
+      <p class="sect-text rev rev3" data-i18n="sec.text">Nuestra consultoría operativa abarca todos los sectores que dependen de una cadena logística eficiente. Llevamos el conocimiento sectorial específico a cada proyecto.</p>
+    </div>
+    <div>
+      <div class="sect-list">
+        <div class="sect-item"><span class="sect-dot"></span><span data-i18n="sec.s1">Transporte de carga terrestre</span></div>
+        <div class="sect-item"><span class="sect-dot"></span><span data-i18n="sec.s2">Distribución y última milla</span></div>
+        <div class="sect-item"><span class="sect-dot"></span><span data-i18n="sec.s3">Operadores logísticos 3PL y 4PL</span></div>
+        <div class="sect-item"><span class="sect-dot"></span><span data-i18n="sec.s4">Retail y consumo masivo</span></div>
+        <div class="sect-item"><span class="sect-dot"></span><span data-i18n="sec.s5">Industria farmacéutica y cadena de frío</span></div>
+        <div class="sect-item"><span class="sect-dot"></span><span data-i18n="sec.s6">Comercio exterior y aduanas</span></div>
+        <div class="sect-item"><span class="sect-dot"></span><span data-i18n="sec.s7">Minería y materiales industriales</span></div>
+        <div class="sect-item"><span class="sect-dot"></span><span data-i18n="sec.s8">E-commerce y fulfillment</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="metodologia">
+  <div class="met-bg"></div>
+  <div class="met-overlay"></div>
+  <div class="met-inner">
+    <div class="s-label rev" data-i18n="met.label">Metodología</div>
+    <h2 class="s-title rev rev2" data-i18n-html="met.title">Un proceso probado,<br><em>resultados medibles</em></h2>
+    <div class="met-steps">
+      <div class="step"><div class="step-circle"><span class="step-n">01</span></div><h4 class="step-title" data-i18n="met.s1t">Diagnóstico</h4><p class="step-desc" data-i18n="met.s1d">Levantamiento detallado de procesos, tecnología, indicadores y equipo actual. Identificación de brechas y oportunidades.</p></div>
+      <div class="step"><div class="step-circle"><span class="step-n">02</span></div><h4 class="step-title" data-i18n="met.s2t">Diseño</h4><p class="step-desc" data-i18n="met.s2d">Propuesta de modelo operativo objetivo con procesos rediseñados, tecnología recomendada y plan de implementación.</p></div>
+      <div class="step"><div class="step-circle"><span class="step-n">03</span></div><h4 class="step-title" data-i18n="met.s3t">Implementación</h4><p class="step-desc" data-i18n="met.s3d">Acompañamiento en la ejecución del plan. Gestión del cambio, formación del equipo y puesta en marcha controlada.</p></div>
+      <div class="step"><div class="step-circle"><span class="step-n">04</span></div><h4 class="step-title" data-i18n="met.s4t">Seguimiento</h4><p class="step-desc" data-i18n="met.s4d">Monitoreo de KPIs, ajustes y mejora continua. Nos aseguramos de que los resultados se sostengan en el tiempo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="diferenciadores">
+  <div class="dif-bg"></div>
+  <div class="dif-overlay"></div>
+  <div class="dif-inner">
+    <div class="s-label" data-i18n="dif.label">Por qué SG Global Operations</div>
+    <h2 class="s-title" data-i18n-html="dif.title">Consultoría con<br><em>visión de operador</em></h2>
+    <div class="dif-grid">
+      <div class="dif-item"><div class="dif-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3 class="dif-title" data-i18n="dif.t1">Expertos que han Operado</h3><p class="dif-desc" data-i18n="dif.d1">Nuestro equipo no solo asesora — ha dirigido y transformado operaciones logísticas reales en Latinoamérica. Llevamos experiencia práctica, no solo marcos teóricos.</p></div>
+      <div class="dif-item"><div class="dif-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3 class="dif-title" data-i18n="dif.t2">Datos + Operación</h3><p class="dif-desc" data-i18n="dif.d2">Combinamos la consultoría operativa con los datos reales de telemetría de SG Global Data. El diagnóstico no se basa en supuestos — se basa en lo que sus vehículos y operaciones realmente hacen.</p></div>
+      <div class="dif-item"><div class="dif-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3 class="dif-title" data-i18n="dif.t3">Alianza a Largo Plazo</h3><p class="dif-desc" data-i18n="dif.d3">No entregamos un informe y nos retiramos. Nuestro modelo es de alianza estratégica: nos comprometemos con los resultados y acompañamos la transformación hasta que sea sostenible.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="cont-bg"></div>
+  <div class="cont-overlay"></div>
+  <div class="cont-inner">
+    <div class="s-label rev" data-i18n="cont.label">Contacto</div>
+    <h2 class="s-title rev rev2" data-i18n-html="cont.title">Hablemos de<br><em>su operación</em></h2>
+    <p class="cont-sub rev rev3" data-i18n="cont.sub">Cuéntenos sobre sus retos operativos y un especialista de SG Global Operations le contactará para explorar cómo podemos ayudarle.</p>
+    <form class="cform rev" onsubmit="handleForm(event)">
+      <div class="crow">
+        <div class="cgrp"><label data-i18n="cf.name">Nombre</label><input type="text" name="nombre" data-i18n-ph="cf.namePh" placeholder="Su nombre completo" required></div>
+        <div class="cgrp"><label data-i18n="cf.company">Empresa</label><input type="text" name="empresa" data-i18n-ph="cf.companyPh" placeholder="Nombre de su compañía" required></div>
+      </div>
+      <div class="crow">
+        <div class="cgrp"><label data-i18n="cf.email">Email</label><input type="email" name="email" placeholder="correo@empresa.com" required></div>
+        <div class="cgrp"><label data-i18n="cf.phone">Teléfono</label><input type="tel" name="telefono" placeholder="+57 300 000 0000"></div>
+      </div>
+      <div class="cgrp">
+        <label data-i18n="cf.service">Servicio de interés</label>
+        <select name="servicio">
+          <option value="" disabled selected data-i18n="cf.sv0">Seleccione un servicio</option>
+          <option data-i18n="cf.sv1">Montaje de operación logística</option>
+          <option data-i18n="cf.sv2">Diagnóstico y rediseño de procesos</option>
+          <option data-i18n="cf.sv3">Análisis de datos y brechas operativas</option>
+          <option data-i18n="cf.sv4">Formación de equipos</option>
+          <option data-i18n="cf.sv5">Varios / No estoy seguro</option>
+        </select>
+      </div>
+      <div class="cgrp"><label data-i18n="cf.msg">Cuéntenos su reto</label><textarea name="mensaje" data-i18n-ph="cf.msgPh" placeholder="Descríbanos brevemente su operación y el principal reto que enfrenta…"></textarea></div>
+      <button type="submit" class="csub" id="form-btn" data-i18n="cf.submit">Enviar Mensaje</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <a class="f-logo" href="index.html">SG <em>Global</em></a>
+  <ul class="f-nav">
+    <li><a href="index.html#nosotros" data-i18n="nav.about">Nosotros</a></li>
+    <li><a href="data.html"           data-i18n="nav.data">Data</a></li>
+    <li><a href="seguros.html"        data-i18n="nav.insurance">Insurance</a></li>
+    <li><a href="operations.html"     data-i18n="nav.ops">Operations</a></li>
+    <li><a href="capital.html"        data-i18n="nav.cap">Capital</a></li>
+    <li><a href="#contacto"           data-i18n="nav.contact">Contacto</a></li>
+  </ul>
+  <div class="f-copy" data-i18n="footer.copy">© 2025 SG Global Operations. Todos los derechos reservados.</div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');if(e.target.classList.contains('sect-list'))e.target.querySelectorAll('.sect-item').forEach((p,i)=>setTimeout(()=>p.classList.add('vis'),i*80));if(e.target.classList.contains('met-steps'))e.target.querySelectorAll('.step').forEach((el,i)=>setTimeout(()=>el.classList.add('vis'),i*140));}});},{threshold:0.1});
+document.querySelectorAll('.rev,.sect-list,.met-steps').forEach(el=>io.observe(el));
+document.querySelectorAll('.dif-item,.step').forEach(el=>io.observe(el));
+
+const T={
+  es:{
+    "nav.about":"Nosotros","nav.lines":"Líneas","nav.data":"Data","nav.insurance":"Insurance","nav.ops":"Operations","nav.cap":"Capital","nav.contact":"Contacto","nav.cta":"Contactar",
+    "hero.eyebrow":"SG Global Operations","hero.title":"Operaciones <em>eficientes</em><br>desde el diseño",
+    "hero.sub":"Consultoría y acompañamiento integral para estructurar, optimizar y escalar operaciones logísticas. Diagnóstico, rediseño de procesos, formación de equipos y cultura operativa de alto rendimiento.",
+    "hero.cta1":"Hablar con un Experto","hero.cta2":"Ver servicios","hero.scroll":"Scroll",
+    "serv.label":"Servicios","serv.title":"Cómo transformamos<br><em>su operación logística</em>",
+    "serv.t1":"Montaje de Operaciones Logísticas","serv.d1":"Diseñamos y ponemos en marcha operaciones logísticas desde cero o restructuramos las existentes. Definición de procesos, selección de tecnología y arranque operativo acompañado.",
+    "serv.tag1a":"Diseño de operaciones","serv.tag1b":"Arranque operativo","serv.tag1c":"Infraestructura",
+    "serv.t2":"Diagnóstico y Rediseño de Procesos","serv.d2":"Auditoría profunda de sus procesos logísticos actuales. Identificamos ineficiencias y oportunidades de mejora con un plan de acción concreto con impacto medible.",
+    "serv.tag2a":"Auditoría operativa","serv.tag2b":"Mejora continua","serv.tag2c":"KPIs",
+    "serv.t3":"Análisis de Datos y Brechas Operativas","serv.d3":"Analizamos los datos de su operación para identificar brechas en continuidad de negocio y oportunidades de optimización. Integramos la telemetría de SG Data para un diagnóstico preciso.",
+    "serv.tag3a":"Análisis de datos","serv.tag3b":"Continuidad de negocio","serv.tag3c":"Riesgos",
+    "serv.t4":"Formación de Equipos y Cultura Operativa","serv.d4":"Desarrollamos las capacidades de su equipo. Programas de formación especializados, estándares operativos y construcción de una cultura de eficiencia y mejora continua.",
+    "serv.tag4a":"Capacitación","serv.tag4b":"Cultura operativa","serv.tag4c":"Estándares",
+    "sec.label":"Sectores","sec.title":"Experiencia en<br><em>todos los sectores</em>",
+    "sec.text":"Nuestra consultoría abarca todos los sectores que dependen de una cadena logística eficiente.",
+    "sec.s1":"Transporte de carga terrestre","sec.s2":"Distribución y última milla","sec.s3":"Operadores logísticos 3PL y 4PL","sec.s4":"Retail y consumo masivo","sec.s5":"Industria farmacéutica y cadena de frío","sec.s6":"Comercio exterior y aduanas","sec.s7":"Minería y materiales industriales","sec.s8":"E-commerce y fulfillment",
+    "met.label":"Metodología","met.title":"Un proceso probado,<br><em>resultados medibles</em>",
+    "met.s1t":"Diagnóstico","met.s1d":"Levantamiento de procesos, tecnología, indicadores y equipo. Identificación de brechas y oportunidades.",
+    "met.s2t":"Diseño","met.s2d":"Propuesta de modelo operativo objetivo con procesos rediseñados y plan de implementación.",
+    "met.s3t":"Implementación","met.s3d":"Acompañamiento en la ejecución. Gestión del cambio, formación del equipo y puesta en marcha.",
+    "met.s4t":"Seguimiento","met.s4d":"Monitoreo de KPIs y mejora continua. Garantizamos que los resultados se sostengan en el tiempo.",
+    "dif.label":"Por qué SG Global Operations","dif.title":"Consultoría con<br><em>visión de operador</em>",
+    "dif.t1":"Expertos que han Operado","dif.d1":"Nuestro equipo ha dirigido operaciones logísticas reales en Latinoamérica. Llevamos experiencia práctica, no solo marcos teóricos.",
+    "dif.t2":"Datos + Operación","dif.d2":"Combinamos consultoría operativa con datos reales de telemetría. El diagnóstico se basa en lo que sus vehículos y operaciones realmente hacen.",
+    "dif.t3":"Alianza a Largo Plazo","dif.d3":"No entregamos un informe y nos retiramos. Nos comprometemos con los resultados y acompañamos la transformación hasta que sea sostenible.",
+    "cont.label":"Contacto","cont.title":"Hablemos de<br><em>su operación</em>",
+    "cont.sub":"Cuéntenos sus retos operativos y un especialista le contactará para explorar cómo podemos ayudarle.",
+    "cf.name":"Nombre","cf.namePh":"Su nombre completo","cf.company":"Empresa","cf.companyPh":"Nombre de su compañía",
+    "cf.email":"Email","cf.phone":"Teléfono","cf.service":"Servicio de interés",
+    "cf.sv0":"Seleccione un servicio","cf.sv1":"Montaje de operación logística","cf.sv2":"Diagnóstico y rediseño de procesos","cf.sv3":"Análisis de datos y brechas","cf.sv4":"Formación de equipos","cf.sv5":"Varios / No estoy seguro",
+    "cf.msg":"Cuéntenos su reto","cf.msgPh":"Descríbanos su operación y el principal reto que enfrenta…",
+    "cf.submit":"Enviar Mensaje","cf.success":"✓ Mensaje enviado",
+    "footer.copy":"© 2025 SG Global Operations. Todos los derechos reservados."
+  },
+  en:{
+    "nav.about":"About","nav.lines":"Solutions","nav.data":"Data","nav.insurance":"Insurance","nav.ops":"Operations","nav.cap":"Capital","nav.contact":"Contact","nav.cta":"Contact Us",
+    "hero.eyebrow":"SG Global Operations","hero.title":"<em>Efficient</em> operations<br>by design",
+    "hero.sub":"Comprehensive consulting and support to structure, optimize and scale logistics operations. Diagnosis, process redesign, team development and high-performance operational culture.",
+    "hero.cta1":"Talk to an Expert","hero.cta2":"View services","hero.scroll":"Scroll",
+    "serv.label":"Services","serv.title":"How we transform<br><em>your logistics operation</em>",
+    "serv.t1":"Logistics Operation Setup","serv.d1":"We design and launch logistics operations from scratch or restructure existing ones. Process definition, technology selection and accompanied operational start-up.",
+    "serv.tag1a":"Operation design","serv.tag1b":"Operational start-up","serv.tag1c":"Infrastructure",
+    "serv.t2":"Process Diagnosis & Redesign","serv.d2":"In-depth audit of your current logistics processes. We identify inefficiencies and improvement opportunities with a concrete action plan with measurable impact.",
+    "serv.tag2a":"Operational audit","serv.tag2b":"Continuous improvement","serv.tag2c":"KPIs",
+    "serv.t3":"Data Analysis & Operational Gaps","serv.d3":"We analyze your operation's data to identify business continuity gaps and optimization opportunities, integrating SG Data telemetry for a precise diagnosis.",
+    "serv.tag3a":"Data analysis","serv.tag3b":"Business continuity","serv.tag3c":"Risk",
+    "serv.t4":"Team Development & Operational Culture","serv.d4":"We build your logistics team's capabilities. Specialized training programs, operational standards and a culture of efficiency and continuous improvement.",
+    "serv.tag4a":"Training","serv.tag4b":"Operational culture","serv.tag4c":"Standards",
+    "sec.label":"Sectors","sec.title":"Experience across<br><em>all sectors</em>",
+    "sec.text":"Our operational consulting spans every sector that depends on an efficient logistics chain.",
+    "sec.s1":"Land freight transportation","sec.s2":"Distribution and last mile","sec.s3":"3PL and 4PL logistics operators","sec.s4":"Retail and mass consumption","sec.s5":"Pharmaceutical industry and cold chain","sec.s6":"Foreign trade and customs","sec.s7":"Mining and industrial materials","sec.s8":"E-commerce and fulfillment",
+    "met.label":"Methodology","met.title":"A proven process,<br><em>measurable results</em>",
+    "met.s1t":"Diagnosis","met.s1d":"Detailed mapping of processes, technology, KPIs and current team. Gap and opportunity identification.",
+    "met.s2t":"Design","met.s2d":"Target operating model proposal with redesigned processes and implementation plan.",
+    "met.s3t":"Implementation","met.s3d":"Hands-on execution support. Change management, team training and controlled launch.",
+    "met.s4t":"Follow-up","met.s4d":"KPI monitoring and continuous improvement. We ensure results are sustained over time.",
+    "dif.label":"Why SG Global Operations","dif.title":"Consulting with an<br><em>operator's perspective</em>",
+    "dif.t1":"Experts Who Have Operated","dif.d1":"Our team has managed real logistics operations across Latin America. We bring practical experience, not just theoretical frameworks.",
+    "dif.t2":"Data + Operations","dif.d2":"We combine operational consulting with real telemetry data. The diagnosis is based on what your vehicles and operations actually do.",
+    "dif.t3":"Long-term Partnership","dif.d3":"We don't deliver a report and walk away. We commit to results and accompany the transformation until it becomes self-sustaining.",
+    "cont.label":"Contact","cont.title":"Let's talk about<br><em>your operation</em>",
+    "cont.sub":"Tell us about your operational challenges and a specialist will reach out to explore how we can help.",
+    "cf.name":"Name","cf.namePh":"Your full name","cf.company":"Company","cf.companyPh":"Your company name",
+    "cf.email":"Email","cf.phone":"Phone","cf.service":"Service of interest",
+    "cf.sv0":"Select a service","cf.sv1":"Logistics operation setup","cf.sv2":"Process diagnosis & redesign","cf.sv3":"Data analysis & operational gaps","cf.sv4":"Team development","cf.sv5":"Multiple / Not sure yet",
+    "cf.msg":"Tell us your challenge","cf.msgPh":"Describe your operation and the main challenge you face…",
+    "cf.submit":"Send Message","cf.success":"✓ Message sent",
+    "footer.copy":"© 2025 SG Global Operations. All rights reserved."
+  }
+};
+let lang='es';
+function setLang(l){lang=l;document.documentElement.lang=l;document.getElementById('btn-es').classList.toggle('active',l==='es');document.getElementById('btn-en').classList.toggle('active',l==='en');const t=T[l];document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.textContent=t[k];});document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');if(t[k]!==undefined)el.innerHTML=t[k];});document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(t[k]!==undefined)el.placeholder=t[k];});}
+function handleForm(e){e.preventDefault();const btn=document.getElementById('form-btn');btn.textContent=T[lang]['cf.success'];btn.style.background='#22c55e';btn.style.color='#fff';setTimeout(()=>{btn.textContent=T[lang]['cf.submit'];btn.style.background='';btn.style.color='';e.target.reset();},3500);}
+window.addEventListener('scroll',()=>{document.querySelector('nav').style.background=window.scrollY>60?'rgba(10,20,38,0.96)':'rgba(15,30,51,0.75)';});
+(function(){
+  const canvas=document.getElementById('neural-canvas');const ctx=canvas.getContext('2d');
+  let W,H,nodes,mouse={x:-9999,y:-9999};
+  const AQUA={r:6,g:182,b:212},CYAN={r:34,g:211,b:238},TEAL={r:20,g:184,b:166},SKY={r:56,g:189,b:248};
+  const COLS=[AQUA,CYAN,TEAL,SKY];
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  function rand(a,b){return a+Math.random()*(b-a);}
+  function makeNode(){const col=COLS[Math.floor(Math.random()*COLS.length)];return{x:rand(0,W),y:rand(0,H),vx:rand(-0.25,0.25),vy:rand(-0.20,0.20),r:rand(1.5,4),col,phase:rand(0,Math.PI*2),pulseR:rand(6,14),opacity:rand(0.35,0.85)};}
+  function init(){resize();nodes=Array.from({length:110},makeNode);}
+  function rgba(c,a){return `rgba(${c.r},${c.g},${c.b},${a})`;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const grd=ctx.createRadialGradient(W*.5,H*.55,0,W*.5,H*.55,Math.max(W,H)*.6);
+    grd.addColorStop(0,'rgba(6,182,212,0.04)');grd.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+    const t=performance.now()*0.001;
+    for(let i=0;i<nodes.length;i++){const a=nodes[i];for(let j=i+1;j<nodes.length;j++){const b=nodes[j];const dx=a.x-b.x,dy=a.y-b.y,d=Math.sqrt(dx*dx+dy*dy);if(d>180)continue;const alpha=(1-d/180)*0.18;const r=(a.col.r+b.col.r)>>1,g=(a.col.g+b.col.g)>>1,bl=(a.col.b+b.col.b)>>1;ctx.beginPath();ctx.strokeStyle=`rgba(${r},${g},${bl},${alpha})`;ctx.lineWidth=0.7;ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();const pr=(Math.sin(t*1.2+i*0.4+j*0.3)*0.5+0.5);ctx.beginPath();ctx.arc(a.x+(b.x-a.x)*pr,a.y+(b.y-a.y)*pr,1.4,0,Math.PI*2);ctx.fillStyle=`rgba(${r},${g},${bl},${alpha*3})`;ctx.fill();}}
+    nodes.forEach(n=>{const dx=n.x-mouse.x,dy=n.y-mouse.y,d=Math.sqrt(dx*dx+dy*dy);if(d<220){ctx.beginPath();ctx.strokeStyle=rgba(AQUA,(1-d/220)*0.35);ctx.lineWidth=0.9;ctx.moveTo(n.x,n.y);ctx.lineTo(mouse.x,mouse.y);ctx.stroke();}});
+    nodes.forEach(n=>{n.phase+=0.012;const glow=0.5+0.5*Math.sin(n.phase);const halo=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.pulseR*glow);halo.addColorStop(0,rgba(n.col,0.18*glow));halo.addColorStop(1,rgba(n.col,0));ctx.beginPath();ctx.arc(n.x,n.y,n.pulseR*glow,0,Math.PI*2);ctx.fillStyle=halo;ctx.fill();ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle=rgba(n.col,n.opacity);ctx.fill();n.x+=n.vx;n.y+=n.vy;if(n.x<-20)n.x=W+20;if(n.x>W+20)n.x=-20;if(n.y<-20)n.y=H+20;if(n.y>H+20)n.y=-20;const dx2=n.x-mouse.x,dy2=n.y-mouse.y,d2=Math.sqrt(dx2*dx2+dy2*dy2);if(d2<100&&d2>0){const f=(100-d2)/100*0.4;n.vx+=(dx2/d2)*f;n.vy+=(dy2/d2)*f;n.vx*=0.96;n.vy*=0.96;}});
+    requestAnimationFrame(draw);
+  }
+  init();draw();
+  window.addEventListener('resize',()=>resize());
+  const hero=document.querySelector('.hero');
+  hero.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+  hero.addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999;});
+})();
+</script>
+</body>
+</html>
