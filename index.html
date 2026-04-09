@@ -82,6 +82,51 @@ nav{
   text-decoration:none;transition:color .2s;
 }
 .nav-links a:hover{color:var(--cyan);}
+
+/* ── DROPDOWN LÍNEAS ── */
+.nav-links li{position:relative;}
+.nav-links .has-dropdown>a{
+  display:flex;align-items:center;gap:5px;
+}
+.nav-links .has-dropdown>a::after{
+  content:'';display:inline-block;
+  width:6px;height:6px;
+  border-right:1px solid rgba(255,255,255,0.4);
+  border-bottom:1px solid rgba(255,255,255,0.4);
+  transform:rotate(45deg) translateY(-2px);
+  transition:transform .2s;
+}
+.nav-links .has-dropdown:hover>a::after{transform:rotate(225deg) translateY(-2px);}
+.nav-dropdown{
+  display:none;position:absolute;
+  top:calc(100% + 12px);left:50%;transform:translateX(-50%);
+  background:rgba(10,20,38,0.97);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px;padding:8px 0;
+  min-width:200px;list-style:none;
+  box-shadow:0 16px 40px rgba(0,0,0,0.4);
+}
+.nav-dropdown::before{
+  content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+  width:10px;height:10px;background:rgba(10,20,38,0.97);
+  border-left:1px solid rgba(255,255,255,0.1);
+  border-top:1px solid rgba(255,255,255,0.1);
+  rotate:45deg;
+}
+.nav-dropdown li{padding:0;}
+.nav-dropdown a{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 20px;white-space:nowrap;
+  font-size:11px;font-weight:400;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,0.55);
+  text-decoration:none;transition:color .2s,background .2s;
+}
+.nav-dropdown a:hover{color:var(--cyan);background:rgba(77,217,224,0.06);}
+.nav-dropdown .dd-dot{
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;
+}
+.has-dropdown:hover .nav-dropdown{display:block;}
 .nav-right{display:flex;align-items:center;gap:14px;}
 .nav-cta{
   font-size:12px;font-weight:500;letter-spacing:.08em;
@@ -637,11 +682,18 @@ footer{
   <div class="logo">SG <em>Global</em></div>
   <ul class="nav-links">
     <li><a href="#nosotros" data-i18n="nav.about">Nosotros</a></li>
-    <li><a href="#lineas"   data-i18n="nav.lines">Líneas</a></li>
-    <li><a href="#enfoque"  data-i18n="nav.why">Enfoque</a></li>
-    <li><a href="seguros.html" data-i18n="nav.insurance">Insurance</a></li>
+    <li class="has-dropdown">
+      <a href="#lineas" data-i18n="nav.lines">Líneas</a>
+      <ul class="nav-dropdown">
+        <li><a href="data.html"><span class="dd-dot" style="background:#4DD9E0"></span><span data-i18n="nav.data">Data</span></a></li>
+        <li><a href="seguros.html"><span class="dd-dot" style="background:#2563EB"></span><span data-i18n="nav.insurance">Insurance</span></a></li>
+        <li><a href="operations.html"><span class="dd-dot" style="background:#06B6D4"></span><span data-i18n="nav.ops">Operations</span></a></li>
+        <li><a href="capital.html"><span class="dd-dot" style="background:#38BDF8"></span><span data-i18n="nav.cap">Capital</span></a></li>
+      </ul>
+    </li>
+    <li><a href="#enfoque"   data-i18n="nav.why">Enfoque</a></li>
     <li><a href="#articulos" data-i18n="nav.articles">Artículos</a></li>
-    <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+    <li><a href="#contacto"  data-i18n="nav.contact">Contacto</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-toggle">
@@ -1029,7 +1081,7 @@ document.querySelectorAll('.e-item').forEach(el=>io.observe(el));
 /* ══ i18n ══ */
 const T={
   es:{
-    "nav.about":"Nosotros","nav.lines":"Líneas","nav.why":"Enfoque","nav.insurance":"Insurance","nav.contact":"Contacto","nav.cta":"Conectar",
+    "nav.about":"Nosotros","nav.lines":"Líneas","nav.data":"Data","nav.insurance":"Insurance","nav.ops":"Operations","nav.cap":"Capital","nav.why":"Enfoque","nav.contact":"Contacto","nav.cta":"Conectar",
     "hero.eyebrow":"Soluciones Logísticas Integradas",
     "hero.title":"Inteligencia<br><em>para mover</em><br>el mundo",
     "hero.sub":"Cuatro líneas especializadas que integran datos, seguros, operaciones y capital para transformar la cadena logística en una ventaja competitiva sostenible.",
@@ -1100,7 +1152,7 @@ const T={
     "footer.copy":"© 2025 SG Global. Todos los derechos reservados."
   },
   en:{
-    "nav.about":"About","nav.lines":"Solutions","nav.why":"Approach","nav.insurance":"Insurance","nav.contact":"Contact","nav.cta":"Connect",
+    "nav.about":"About","nav.lines":"Solutions","nav.data":"Data","nav.insurance":"Insurance","nav.ops":"Operations","nav.cap":"Capital","nav.why":"Approach","nav.contact":"Contact","nav.cta":"Connect",
     "hero.eyebrow":"Integrated Logistics Solutions",
     "hero.title":"Intelligence<br><em>to move</em><br>the world",
     "hero.sub":"Four specialized business lines integrating data, insurance, operations and capital to transform the logistics chain into a sustainable competitive advantage.",
